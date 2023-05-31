@@ -5,9 +5,11 @@
 ## 🚀 Demo
 
 ## 🛠 Tech Stacks
+
 ### Front-end
 
 ### Back-end
+
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
@@ -22,6 +24,7 @@
 ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 
 ### Collaboration
+
 ![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
 
 ## ⚙️ Infrastructure
@@ -31,7 +34,8 @@
 ## 📕 ERD
 
 ## 🏠 Crews (Members)
-| Backend | Backend | 
-| :-----: | :-----: |
+
+|                                            Backend                                             |                                             Backend                                              | 
+|:----------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------:|
 | <img src="https://avatars.githubusercontent.com/u/75304316?v=4" width=100px alt="destitutor"/> | <img src="https://avatars.githubusercontent.com/u/115459147?v=4" width=100px alt="GangminRYOU"/> |
-| [destitutor](https://github.com/destitutor) | [GangminRYOU](https://github.com/GangminRYOU) |
+|                          [destitutor](https://github.com/destitutor)                           |                          [GangminRYOU](https://github.com/GangminRYOU)                           |
