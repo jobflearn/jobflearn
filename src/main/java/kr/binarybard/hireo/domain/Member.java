@@ -35,10 +35,11 @@ public class Member {
 	private final LocalDateTime createAt = LocalDateTime.now();
 	private LocalDateTime updatedAt = LocalDateTime.now();
 
-	public Member(String email, String password, Role role) {
+	public Member(String email, String password, String name, Role role) {
 		this.email = email;
 		this.password = password;
 		this.role = role;
+		this.name = name;
 	}
 
 	public void changeRole(Role role) {
