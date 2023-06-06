@@ -6,6 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.binarybard.hireo.domain.Member;
+import kr.binarybard.hireo.domain.MemberDto;
+import kr.binarybard.hireo.domain.MemberMapper;
 import kr.binarybard.hireo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -13,11 +15,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberService {
 
-	MemberRepository memberRepository;
-	PasswordEncoder passwordEncoder;
+	private final MemberRepository memberRepository;
+	private final PasswordEncoder passwordEncoder;
+	private final MemberMapper memberMapper;
 
-	public Long join(Member member) {
-		validateDuplicateEmail(member.getEmail());
+	public Long join(MemberDto memberDto) {
+		validateDuplicateEmail(memberDto.getEmail());
+		//MemberDto to Member
+		Member member = memberMapper.memberDtoToMember(memberDto);
 		member.getEncodedPassword(passwordEncoder);
 		memberRepository.save(member);
 		return member.getId();
