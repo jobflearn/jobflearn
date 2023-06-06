@@ -10,9 +10,11 @@ import kr.binarybard.hireo.domain.MemberDto;
 import kr.binarybard.hireo.domain.MemberMapper;
 import kr.binarybard.hireo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberService {
 
 	private final MemberRepository memberRepository;
