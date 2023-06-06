@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,8 @@ class MemberRepositoryTest {
 
 	@Autowired
 	MemberRepository memberRepository;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@Test
 	@Transactional
@@ -69,7 +72,7 @@ class MemberRepositoryTest {
 		Member findMember = memberRepository.findOneByEmail(memberCEmail);
 		Long findMemberId = findMember.getId();
 		//then
-		assertThat(findMemberId).isEqualTo(memberB.getId());
+		assertThat(findMemberId).isEqualTo(memberC.getId());
 
 	}
 
