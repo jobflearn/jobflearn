@@ -1,11 +1,5 @@
 package kr.binarybard.hireo.service;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.hibernate.type.descriptor.java.spi.MapEntryJavaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoginService {
 	private final MemberRepository memberRepository;
-	private  final PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 
-	public Boolean ValidateMember(Member member){
+	public Boolean login(Member member) {
 		member.getEncodedPassword(passwordEncoder);
-		Member found = memberRepository.findOneByEmail(member.getEmail()).get();
-		if(found.getPassword().equals(member.getPassword())) {
+		Member found = memberRepository.findOneByEmail(member.getEmail());
+		if (found.getPassword().equals(member.getPassword())) {
 			return true;
 		} else {
 			return false;

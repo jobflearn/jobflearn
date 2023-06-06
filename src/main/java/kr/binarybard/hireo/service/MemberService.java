@@ -1,7 +1,6 @@
 package kr.binarybard.hireo.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,22 +25,22 @@ public class MemberService {
 
 	private void validateDuplicateEmail(String email) {
 		List<Member> isExist = memberRepository.findByEmail(email);
-		if(isExist.size() > 0){
+		if (isExist.size() > 0) {
 			throw new IllegalStateException();
 		}
 	}
 
-	public Member findMember(Long id){
+	public Member findMember(Long id) {
 		return memberRepository.finOne(id);
 	}
 
-	public List<Member> findAllMembers(){
+	public List<Member> findAllMembers() {
 		return memberRepository.findAll();
 	}
 
-	public Member findMemberByEmail(String email){
-		Member member = memberRepository.findOneByEmail(email).get();
-		if(member == null) {
+	public Member findMemberByEmail(String email) {
+		Member member = memberRepository.findOneByEmail(email);
+		if (member == null) {
 			throw new IllegalStateException("존재하지 않는 회원 입니다.");
 		}
 		return member;
