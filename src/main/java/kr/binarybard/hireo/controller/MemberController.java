@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -14,7 +15,8 @@ import kr.binarybard.hireo.service.LoginService;
 import kr.binarybard.hireo.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
-@Controller("members")
+@Controller
+@RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
 	private final MemberService memberService;
@@ -38,14 +40,14 @@ public class MemberController {
 
 	@PostMapping("/login")
 	public String login(@ModelAttribute MemberDto memberDto, HttpServletRequest request, Model model) {
-		if (loginService.login(memberDto)) {
+		if (!loginService.isAuthenticated(memberDto)) {
+			return "redirect:/login-form";
+		} else {
 			HttpSession session = request.getSession();
 			session.setAttribute("email", memberDto.getEmail());
 			Member loginnedMember = memberService.findMemberByEmail(memberDto.getEmail());
 			model.addAttribute("member", loginnedMember);
 			return "/home";
-		} else {
-			return "redirect:/login-form";
 		}
 	}
 

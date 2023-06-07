@@ -1,14 +1,11 @@
 package kr.binarybard.hireo.domain;
 
-import java.time.LocalDateTime;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,9 +18,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseTimeEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue
 	private Long id;
 
 	private String email;
@@ -32,8 +29,6 @@ public class Member {
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
-	private final LocalDateTime createAt = LocalDateTime.now();
-	private LocalDateTime updatedAt = LocalDateTime.now();
 
 	public Member(String email, String password, String name, Role role) {
 		this.email = email;

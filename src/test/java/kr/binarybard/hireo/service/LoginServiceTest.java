@@ -32,10 +32,7 @@ class LoginServiceTest {
 		loginDto.setEmail(email);
 		loginDto.setPassword(password);
 		//then
-		System.out.println(passwordEncoder.matches(password, memberService.findMemberByEmail(email).getPassword()));
-		assertThat(loginService.login(loginDto)).isTrue();
-
-		//Assertions.assertThrows(IllegalStateException.class, ()->loginService.login(loginDto))
+		assertThat(loginService.isAuthenticated(loginDto)).isTrue();
 	}
 
 	public MemberDto getMemberDto(String email, String password, String name, String role) {

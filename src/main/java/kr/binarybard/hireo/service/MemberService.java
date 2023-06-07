@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.binarybard.hireo.domain.Member;
 import kr.binarybard.hireo.domain.MemberDto;
 import kr.binarybard.hireo.domain.MemberMapper;
+import kr.binarybard.hireo.exception.DuplicateEmailException;
 import kr.binarybard.hireo.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,16 +34,12 @@ public class MemberService {
 	private void validateDuplicateEmail(String email) {
 		List<Member> isExist = memberRepository.findByEmail(email);
 		if (isExist.size() > 0) {
-			throw new IllegalStateException();
+			throw new DuplicateEmailException("중복된 이메일 입니다.");
 		}
 	}
 
 	public Member findMember(Long id) {
 		return memberRepository.finOne(id);
-	}
-
-	public List<Member> findAllMembers() {
-		return memberRepository.findAll();
 	}
 
 	public Member findMemberByEmail(String email) {

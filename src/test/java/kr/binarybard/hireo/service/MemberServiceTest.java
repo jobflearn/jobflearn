@@ -1,7 +1,5 @@
 package kr.binarybard.hireo.service;
 
-import java.util.List;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,25 +48,6 @@ class MemberServiceTest {
 		Member member = memberService.findMemberByEmail(memberDto.getEmail());
 		//then
 		Assertions.assertThat(joinedId).isEqualTo(member.getId());
-
-	}
-
-	@Test
-	public void 전체_회원조회() throws Exception {
-		//given
-		MemberDto memberDtoA = getMemberDto("a@naver.com", "123", "fay", "FREELANCER");
-		MemberDto memberDtoB = getMemberDto("b@naver.com", "1234", "fay", "FREELANCER");
-		MemberDto memberDtoC = getMemberDto("c@naver.com", "1235", "fay", "FREELANCER");
-		MemberDto memberDtoD = getMemberDto("d@naver.com", "1236", "fay", "FREELANCER");
-		memberService.join(memberDtoA);
-		memberService.join(memberDtoB);
-		memberService.join(memberDtoC);
-		memberService.join(memberDtoD);
-		//when
-		List<Member> allMembers = memberService.findAllMembers();
-		//then
-		Assertions.assertThat(allMembers.size()).isEqualTo(4);
-
 	}
 
 	public MemberDto getMemberDto(String email, String password, String name, String role) {
@@ -79,5 +58,4 @@ class MemberServiceTest {
 		memberDto.setPassword(password);
 		return memberDto;
 	}
-
 }

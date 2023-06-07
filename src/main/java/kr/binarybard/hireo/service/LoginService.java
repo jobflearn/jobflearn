@@ -16,7 +16,7 @@ public class LoginService {
 	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
 
-	public Boolean login(MemberDto memberDto) {
+	public Boolean isAuthenticated(MemberDto memberDto) {
 		Member found = memberRepository.findOneByEmail(memberDto.getEmail());
 		if (passwordEncoder.matches(memberDto.getPassword(), found.getPassword())) {
 			return true;
