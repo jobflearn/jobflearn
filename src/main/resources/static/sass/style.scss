@@ -1,0 +1,121 @@
+@charset "UTF-8";
+
+/*
+* Author: Vasterad
+* URL: https://themeforest.net/user/vasterad/portfolio/
+*/
+
+@import 'variables';
+
+/* -------------------------------------------------------------- */
+/* 01. Layout Components
+----------------------------------------------------------------- */
+@import 'bootstrap-grid';
+@import 'form-styles';
+@import 'header';
+@import 'header-notifications';
+@import 'user-menu';
+@import 'navigation';
+@import 'mobile-navigation';
+@import 'titlebar';
+@import 'blog';
+@import 'contact-page';
+@import 'footer';
+@import 'sidebar-styles';
+@import 'single-freelancer-page';
+@import 'single-job-page';
+@import 'checkout-page';
+@import '404-page';
+
+/* -------------------------------------------------------------- */
+/* 02. Listings Styles
+----------------------------------------------------------------- */
+@import 'full-page-layout';
+@import 'jobs-list-layout';
+@import 'jobs-compact-list-layout';
+@import 'jobs-grid-layout';
+@import 'tasks-list-layout';
+@import 'tasks-grid-layout';
+@import 'freelancers-grid-layout';
+@import 'freelancers-list-layout';
+@import 'companies-list';
+
+/* -------------------------------------------------------------- */
+/* 03. Graphic User Interface Elements
+----------------------------------------------------------------- */
+@import 'buttons';
+@import 'lists';
+@import 'marks';
+@import 'notification-boxes';
+@import 'tables';
+@import 'accordion';
+@import 'tabs';
+@import 'copy-to-clipboard';
+@import 'share-buttons';
+@import 'verified-badge';
+@import 'star-rating';
+@import 'leave-rating-stars';
+@import 'ripple-effect';
+@import 'on-off-switch';
+@import 'radio-button';
+@import 'checkbox';
+@import 'custom-upload-button';
+@import 'intro-banner';
+@import 'category-boxes';
+@import 'photo-box';
+@import 'pricing-plans';
+@import 'icon-boxes';
+@import 'testimonials';
+@import 'photo-section';
+@import 'counters';
+@import 'countdown';
+@import 'bidding-widget';
+@import 'boxed-list';
+@import 'category-boxes';
+@import 'clickable-tags';
+@import 'icon-boxes';
+@import 'notify-box';
+@import 'pagination';
+@import 'back-to-top';
+
+/* -------------------------------------------------------------- */
+/* 04. Vendor (third party assets styles)
+----------------------------------------------------------------- */
+@import 'slick-carousel';
+@import 'custom-scrollbar';
+@import 'tooltips';
+@import 'popups';
+@import 'bootstrap-range-slider';
+@import 'bootstrap-select';
+@import 'snackbar';
+@import 'google-autocomplete';
+@import 'maps';
+@import 'leaflet-maps';
+
+/* -------------------------------------------------------------- */
+/* 05. Dashboard
+----------------------------------------------------------------- */
+@import 'dashboard-basics';
+@import 'dashboard-navigation';
+@import 'dashboard-gui-elements';
+@import 'dashboard-messages';
+
+/* -------------------------------------------------------------- */
+/* 06. Layout Basics
+----------------------------------------------------------------- */
+@import 'common-typography';
+@import 'offsets';
+
+/* -------------------------------------------------------------- */
+/* 07. Icon Sets
+----------------------------------------------------------------- */
+@import 'material-icons';
+@import 'feather-icons';
+@import 'line-awesome-icons';
+@import 'brand-icons';
+
+/* -------------------------------------------------------------- */
+/* 08. Custom CSS
+----------------------------------------------------------------- */
+@import 'custom';
+
