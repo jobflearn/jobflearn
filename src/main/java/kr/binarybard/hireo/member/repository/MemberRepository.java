@@ -1,4 +1,4 @@
-package kr.binarybard.hireo.repository;
+package kr.binarybard.hireo.member.repository;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class MemberRepository {
 		em.persist(member);
 	}
 
-	public Member finOne(Long memberId) {
+	public Member findOne(Long memberId) {
 		return em.find(Member.class, memberId);
 	}
 

@@ -1,11 +1,11 @@
-package kr.binarybard.hireo.service;
+package kr.binarybard.hireo.member.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.binarybard.hireo.domain.Member;
 import kr.binarybard.hireo.domain.MemberDto;
-import kr.binarybard.hireo.repository.MemberRepository;
+import kr.binarybard.hireo.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

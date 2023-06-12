@@ -11,14 +11,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kr.binarybard.hireo.domain.Member;
 import kr.binarybard.hireo.domain.MemberDto;
-import kr.binarybard.hireo.service.LoginService;
-import kr.binarybard.hireo.service.MemberService;
+import kr.binarybard.hireo.member.service.LoginService;
+import kr.binarybard.hireo.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/members")
 @RequiredArgsConstructor
-public class MemberController {
+public class AuthenticationController {
 	private final MemberService memberService;
 	private final LoginService loginService;
 
