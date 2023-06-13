@@ -9,10 +9,6 @@ import kr.binarybard.hireo.member.dto.MemberMapper;
 
 @Configuration
 public class CommonConfig {
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-	}
 
 	@Bean
 	public MemberMapper memberMapper() {

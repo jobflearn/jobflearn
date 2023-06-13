@@ -1,5 +1,6 @@
 package kr.binarybard.hireo.auth.service;
 
+import kr.binarybard.hireo.exception.MemberNotFoundException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,24 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LoginService implements UserDetailsService {
 	private final MemberRepository memberRepository;
-	private final PasswordEncoder passwordEncoder;
-	private final MemberMapper memberMapper;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		var member = memberRepository.findByEmailOrThrow(username);
+		var member = memberRepository.findByEmail(username)
+			.orElseThrow(MemberNotFoundException::new);
 		return User.builder()
 			.username(member.getEmail())
 			.password(member.getPassword())
 			.build();
-	}
-
-	public boolean isAuthenticated(SignUpRequest memberDto) {
-		Member found = memberRepository.findByEmailOrThrow(memberDto.getEmail());
-		if (passwordEncoder.matches(memberDto.getPassword(), found.getPassword())) {
-			return true;
-		} else {
-			throw new IllegalStateException("비밀번호가 틀립니다!");
-		}
 	}
 }

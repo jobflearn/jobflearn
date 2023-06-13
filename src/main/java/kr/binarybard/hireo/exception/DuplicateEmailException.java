@@ -1,24 +1,14 @@
 package kr.binarybard.hireo.exception;
 
 public class DuplicateEmailException extends RuntimeException {
+
+	private static final String DEFAULT_MESSAGE = "이미 존재하는 이메일입니다.";
+
 	public DuplicateEmailException() {
-		super();
+		super(DEFAULT_MESSAGE);
 	}
 
-	public DuplicateEmailException(String message) {
-		super(message);
-	}
-
-	public DuplicateEmailException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public DuplicateEmailException(Throwable cause) {
-		super(cause);
-	}
-
-	protected DuplicateEmailException(String message, Throwable cause, boolean enableSuppression,
-		boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
+	public DuplicateEmailException(String email) {
+		super(email + "은(는) 이미 존재하는 이메일입니다.");
 	}
 }
