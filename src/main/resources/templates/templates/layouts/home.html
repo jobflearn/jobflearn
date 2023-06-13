@@ -10,8 +10,8 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/colors/blue.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/colors/blue.css}">
 
 </head>
 <body>
@@ -32,7 +32,7 @@
 
                     <!-- Logo -->
                     <div id="logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""></a>
+                        <a href="index.html"><img th:src="@{/images/logo.png}" alt=""></a>
                     </div>
 
                     <!-- Main Navigation -->
@@ -80,6 +80,7 @@
     <!-- Header Container / End -->
 
     <!-- Layout Content -->
+    <!-- content 에 전달된 값으로 대체됨-->
     <th:block th:replace="${content}">
         <p>레이아웃 콘텐츠</p>
     </th:block>
@@ -371,19 +372,19 @@
 
 <!-- Scripts
 ================================================== -->
-<script src="js/jquery-3.6.0.min.js"></script>
-<script src="js/jquery-migrate-3.3.2.min.js"></script>
-<script src="js/mmenu.min.js"></script>
-<script src="js/tippy.all.min.js"></script>
-<script src="js/simplebar.min.js"></script>
-<script src="js/bootstrap-slider.min.js"></script>
-<script src="js/bootstrap-select.min.js"></script>
-<script src="js/snackbar.js"></script>
-<script src="js/clipboard.min.js"></script>
-<script src="js/counterup.min.js"></script>
-<script src="js/magnific-popup.min.js"></script>
-<script src="js/slick.min.js"></script>
-<script src="js/custom.js"></script>
+<script th:src="@{js/jquery-3.6.0.min.js}"></script>
+<script th:src="@{js/jquery-migrate-3.3.2.min.js}"></script>
+<script th:src="@{js/mmenu.min.js}"></script>
+<script th:src="@{js/tippy.all.min.js}"></script>
+<script th:src="@{js/simplebar.min.js}"></script>
+<script th:src="@{js/bootstrap-slider.min.js}"></script>
+<script th:src="@{js/bootstrap-select.min.js}"></script>
+<script th:src="@{js/snackbar.js}"></script>
+<script th:src="@{js/clipboard.min.js}"></script>
+<script th:src="@{js/counterup.min.js}"></script>
+<script th:src="@{js/magnific-popup.min.js}"></script>
+<script th:src="@{js/slick.min.js}"></script>
+<script th:src="@{js/custom.js}"></script>
 
 <!-- Snackbar // documentation: https://www.polonel.com/snackbar/ -->
 <script>

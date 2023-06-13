@@ -1,14 +1,14 @@
 package kr.binarybard.hireo.member.service;
 
-import java.util.List;
-
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import kr.binarybard.hireo.member.domain.Member;
-import kr.binarybard.hireo.member.dto.MemberDto;
-import kr.binarybard.hireo.member.dto.MemberMapper;
+import kr.binarybard.hireo.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.exception.DuplicateEmailException;
+import kr.binarybard.hireo.exception.MemberNotFoundException;
+import kr.binarybard.hireo.member.domain.Member;
+import kr.binarybard.hireo.member.dto.MemberMapper;
 import kr.binarybard.hireo.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,16 +19,26 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberService {
 
 	private final MemberRepository memberRepository;
+	private final MemberMapper memberMapper;
+	private final PasswordEncoder passwordEncoder;
+
+	public Long save(SignUpRequest memberDto) {
+		try {
+			Member member = memberMapper.memberDtoToMember(memberDto);
+			member.getEncodedPassword(passwordEncoder);
+			memberRepository.save(member);
+			return member.getId();
+		} catch (DataIntegrityViolationException e) {
+			throw new DuplicateEmailException();
+		}
+	}
 
 	public Member findMember(Long id) {
-		return memberRepository.findOne(id);
+		return memberRepository.findById(id)
+			.orElseThrow(MemberNotFoundException::new);
 	}
 
 	public Member findMemberByEmail(String email) {
-		Member member = memberRepository.findOneByEmail(email);
-		if (member == null) {
-			throw new IllegalStateException("존재하지 않는 회원 입니다.");
-		}
-		return member;
+		return memberRepository.findByEmailOrThrow(email);
 	}
 }
