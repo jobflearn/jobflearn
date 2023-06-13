@@ -1,14 +1,14 @@
-package kr.binarybard.hireo;
+package kr.binarybard.hireo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import kr.binarybard.hireo.domain.MemberMapper;
+import kr.binarybard.hireo.member.dto.MemberMapper;
 
 @Configuration
-public class CommonConfigure {
+public class CommonConfig {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();

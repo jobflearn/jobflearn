@@ -1,4 +1,4 @@
-package kr.binarybard.hireo.domain;
+package kr.binarybard.hireo.member.dto;
 
 import lombok.Data;
 

@@ -2,21 +2,23 @@ package kr.binarybard.hireo.service;
 
 import static org.assertj.core.api.Assertions.*;
 
+import kr.binarybard.hireo.auth.service.LoginService;
+import kr.binarybard.hireo.member.service.MemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.binarybard.hireo.domain.MemberDto;
+import kr.binarybard.hireo.member.dto.MemberDto;
 
 @SpringBootTest
 @Transactional
 class LoginServiceTest {
 	@Autowired
-	LoginService loginService;
+    LoginService loginService;
 	@Autowired
-	MemberService memberService;
+    MemberService memberService;
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
@@ -26,7 +28,7 @@ class LoginServiceTest {
 		String email = "123@naver.com";
 		String password = "abc1234";
 		MemberDto memberDto = getMemberDto(email, password, "gangmin", "FREELANCER");
-		memberService.join(memberDto);
+		loginService.join(memberDto);
 		//when
 		MemberDto loginDto = new MemberDto();
 		loginDto.setEmail(email);
