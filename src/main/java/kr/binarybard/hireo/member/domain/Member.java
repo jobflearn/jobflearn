@@ -1,4 +1,4 @@
-package kr.binarybard.hireo.domain;
+package kr.binarybard.hireo.member.domain;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 

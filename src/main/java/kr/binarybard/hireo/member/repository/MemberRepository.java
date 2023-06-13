@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import jakarta.persistence.EntityManager;
-import kr.binarybard.hireo.domain.Member;
+import kr.binarybard.hireo.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 
 @Repository

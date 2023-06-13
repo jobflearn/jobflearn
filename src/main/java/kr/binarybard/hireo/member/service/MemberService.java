@@ -1,4 +1,4 @@
-package kr.binarybard.hireo.auth.service;
+package kr.binarybard.hireo.member.service;
 
 import java.util.List;
 

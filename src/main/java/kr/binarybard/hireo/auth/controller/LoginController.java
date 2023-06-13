@@ -1,4 +1,4 @@
-package kr.binarybard.hireo.controller;
+package kr.binarybard.hireo.auth.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import kr.binarybard.hireo.domain.Member;
-import kr.binarybard.hireo.domain.MemberDto;
-import kr.binarybard.hireo.member.service.LoginService;
+import kr.binarybard.hireo.member.domain.Member;
+import kr.binarybard.hireo.member.dto.MemberDto;
+import kr.binarybard.hireo.auth.service.LoginService;
 import kr.binarybard.hireo.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/members")
 @RequiredArgsConstructor
-public class AuthenticationController {
+public class LoginController {
 	private final MemberService memberService;
 	private final LoginService loginService;
 
@@ -29,7 +29,7 @@ public class AuthenticationController {
 
 	@PostMapping("/register")
 	public String registerMember(@ModelAttribute MemberDto memberDto) {
-		memberService.join(memberDto);
+		loginService.join(memberDto);
 		return "redirect:/home";
 	}
 

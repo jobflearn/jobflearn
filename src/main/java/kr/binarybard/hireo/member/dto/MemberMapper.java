@@ -1,5 +1,6 @@
-package kr.binarybard.hireo.domain;
+package kr.binarybard.hireo.member.dto;
 
+import kr.binarybard.hireo.member.domain.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
