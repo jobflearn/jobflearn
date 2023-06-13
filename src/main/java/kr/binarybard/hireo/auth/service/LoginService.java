@@ -20,6 +20,15 @@ public class LoginService {
 	private final PasswordEncoder passwordEncoder;
 	private final MemberMapper memberMapper;
 
+	public Boolean isAuthenticated(MemberDto memberDto) {
+		Member found = memberRepository.findOneByEmail(memberDto.getEmail());
+		if (passwordEncoder.matches(memberDto.getPassword(), found.getPassword())) {
+			return true;
+		} else {
+			throw new IllegalStateException("비밀번호가 틀립니다!");
+		}
+	}
+
 	public Long join(MemberDto memberDto) {
 		validateDuplicateEmail(memberDto.getEmail());
 		//MemberDto to Member
