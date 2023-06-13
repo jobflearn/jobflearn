@@ -35,13 +35,4 @@ public class LoginService {
 			throw new DuplicateEmailException("중복된 이메일 입니다.");
 		}
 	}
-
-	public Boolean isAuthenticated(MemberDto memberDto) {
-		Member found = memberRepository.findOneByEmail(memberDto.getEmail());
-		if (passwordEncoder.matches(memberDto.getPassword(), found.getPassword())) {
-			return true;
-		} else {
-			throw new IllegalStateException("비밀번호가 틀립니다!");
-		}
-	}
 }
