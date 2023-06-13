@@ -2,7 +2,6 @@ package kr.binarybard.hireo.repository;
 
 import static org.assertj.core.api.Assertions.*;
 
-import kr.binarybard.hireo.member.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,12 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.binarybard.hireo.member.domain.Member;
 import kr.binarybard.hireo.member.domain.Role;
+import kr.binarybard.hireo.member.repository.MemberRepository;
 
 @SpringBootTest
 class MemberRepositoryTest {
 
 	@Autowired
-    MemberRepository memberRepository;
+	MemberRepository memberRepository;
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
@@ -49,7 +49,7 @@ class MemberRepositoryTest {
 		memberRepository.save(memberD);
 		//when
 		String memberCEmail = memberC.getEmail();
-		Member findMember = memberRepository.findOneByEmail(memberCEmail);
+		Member findMember = memberRepository.findByEmail(memberCEmail);
 		Long findMemberId = findMember.getId();
 		//then
 		assertThat(findMemberId).isEqualTo(memberC.getId());

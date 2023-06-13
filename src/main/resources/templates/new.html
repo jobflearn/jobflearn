@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko" th:replace="~{templates/layouts/home::layout(content=~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Titlebar
+================================================== -->
+<div id="titlebar" class="gradient">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <h2 th:text="#{new}">회원가입</h2>
+
+                <!-- Breadcrumbs -->
+                <nav id="breadcrumbs" class="dark">
+                    <ul>
+                        <li><a href="#" th:text="#{home}">홈</a></li>
+                        <li th:text="#{new}">회원가입</li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Page Content
+================================================== -->
+<div class="container">
+    <div class="row">
+        <div class="col-xl-5 offset-xl-3">
+
+            <div class="login-register-page">
+                <!-- Welcome Text -->
+                <div class="welcome-text">
+                    <h3 style="font-size: 26px;" th:text="#{welcome.sign-up}">계정을 만들어봅시다!</h3>
+                    <span><th:block th:text="#{already-have-account}">계정이 있으신가요?</th:block> <a href="pages-login.html"
+                                                                                               th:text="|#{login}!|">로그인!</a></span>
+                </div>
+
+                <!-- Account Type -->
+                <div class="account-type">
+                    <div>
+                        <input type="radio" name="account-type-radio" id="freelancer-radio"
+                               class="account-type-radio" checked/>
+                        <label for="freelancer-radio" class="ripple-effect-dark"><i
+                                class="icon-material-outline-account-circle"></i> <th:block th:text="#{freelancer}">프리랜서<th:block></th:block></label>
+                    </div>
+
+                    <div>
+                        <input type="radio" name="account-type-radio" id="employer-radio"
+                               class="account-type-radio"/>
+                        <label for="employer-radio" class="ripple-effect-dark"><i
+                                class="icon-material-outline-business-center"></i> <th:block th:text="#{employer}">고용주</th:block></label>
+                    </div>
+                </div>
+
+
+                <!-- Form -->
+                <form th:action="@{/auth/new}" th:object="${member}"  method="post" id="register-account-form">
+                    <!-- Error -->
+                    <div th:if="${#fields.hasErrors()}" class="notification error closeable">
+                        <p th:text="${#fields.errors()[0]}">에러 메시지</p>
+                        <a class="close"></a>
+                    </div>
+
+                    <div class="input-with-icon-left">
+                        <i class="icon-material-baseline-mail-outline"></i>
+                        <input type="text" class="input-text with-border" th:field="*{email}"
+                               th:placeholder="#{email}" required/>
+                    </div>
+
+                    <div class="input-with-icon-left">
+                        <i class="icon-material-outline-account-circle"></i>
+                        <input type="text" class="input-text with-border" th:field="*{name}"
+                               th:placeholder="#{name}" required/>
+                    </div>
+
+                    <div class="input-with-icon-left" title="Should be at least 8 characters long"
+                         data-tippy-placement="bottom">
+                        <i class="icon-material-outline-lock"></i>
+                        <input type="password" class="input-text with-border" th:field="*{password}"
+                               th:placeholder="#{password}" required/>
+                    </div>
+
+                    <div class="input-with-icon-left">
+                        <i class="icon-material-outline-lock"></i>
+                        <input type="password" class="input-text with-border" th:field="*{passwordConfirm}"
+                               th:placeholder="#{repeat-password}" required/>
+                    </div>
+                </form>
+
+                <!-- Button -->
+                <button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit"
+                        form="register-account-form">Register <i class="icon-material-outline-arrow-right-alt"></i>
+                </button>
+
+                <!-- Social Login -->
+                <div class="social-login-separator"><span>or</span></div>
+                <div class="social-login-buttons">
+                    <button class="facebook-login ripple-effect"><i class="icon-brand-facebook-f"></i> Register via
+                        Facebook
+                    </button>
+                    <button class="google-login ripple-effect"><i class="icon-brand-google-plus-g"></i> Register via
+                        Google+
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Spacer -->
+<div class="margin-top-70"></div>
+<!-- Spacer / End-->
+
+</body>
+</html>

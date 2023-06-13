@@ -2,58 +2,63 @@ package kr.binarybard.hireo.auth.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import kr.binarybard.hireo.member.domain.Member;
-import kr.binarybard.hireo.member.dto.MemberDto;
+import jakarta.validation.Valid;
+import kr.binarybard.hireo.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.auth.service.LoginService;
+import kr.binarybard.hireo.exception.DuplicateEmailException;
 import kr.binarybard.hireo.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
-@RequestMapping("/members")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class LoginController {
 	private final MemberService memberService;
 	private final LoginService loginService;
 
-	@GetMapping("/new-form")
-	public String registerForm() {
-		return "new-form";
+	@GetMapping("/new")
+	public String registerForm(Model model) {
+		var member = SignUpRequest.builder()
+			.build();
+		model.addAttribute("member", member);
+		return "new";
 	}
 
-	@PostMapping("/register")
-	public String registerMember(@ModelAttribute MemberDto memberDto) {
-		loginService.join(memberDto);
-		return "redirect:/home";
-	}
-
-	@GetMapping("login-form")
-	public String loginForm() {
-		return "login-form";
-	}
-
-	@PostMapping("/login")
-	public String login(@ModelAttribute MemberDto memberDto, HttpServletRequest request, Model model) {
-		if (!loginService.isAuthenticated(memberDto)) {
-			return "redirect:/login-form";
-		} else {
-			HttpSession session = request.getSession();
-			session.setAttribute("email", memberDto.getEmail());
-			Member loginnedMember = memberService.findMemberByEmail(memberDto.getEmail());
-			model.addAttribute("member", loginnedMember);
-			return "/home";
+	@PostMapping("/new")
+	public String registerMember(@Valid @ModelAttribute("member") SignUpRequest memberDto,
+		BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			log.info("bindingResult has errors: {}", bindingResult);
+			return "new";
 		}
+
+		try {
+			memberService.save(memberDto);
+		} catch (DuplicateEmailException e) {
+			log.error("Failed to create account", e);
+			bindingResult.reject("exists.email");
+			return "new";
+		}
+		return "redirect:/auth/login";
+	}
+
+	@GetMapping("/login")
+	public String loginForm() {
+		return "login";
 	}
 
 	@PostMapping("/logout")
 	public String logout(HttpSession httpSession) {
 		httpSession.invalidate();
-		return "/login-form";
+		return "login";
 	}
 }
