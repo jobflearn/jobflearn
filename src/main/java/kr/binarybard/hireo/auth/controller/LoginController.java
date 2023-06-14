@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class LoginController {
 	private final MemberService memberService;
-	private final LoginService loginService;
 
 	@GetMapping("/new")
 	public String registerForm(Model model) {
@@ -53,12 +52,6 @@ public class LoginController {
 
 	@GetMapping("/login")
 	public String loginForm() {
-		return "login";
-	}
-
-	@PostMapping("/logout")
-	public String logout(HttpSession httpSession) {
-		httpSession.invalidate();
 		return "login";
 	}
 }

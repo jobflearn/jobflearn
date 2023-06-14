@@ -22,11 +22,9 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
 
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
-		// 자바 빈에 대한 기본적인 작업을 지원함
 		final BeanWrapper wrapper = PropertyAccessorFactory.forBeanPropertyAccess(value);
 
 		try {
-			// getPropertyValue()를 사용해서 두 필드의 값을 가져옴
 			final Object firstValue = wrapper.getPropertyValue(firstFieldName);
 			final Object secondValue = wrapper.getPropertyValue(secondFieldName);
 

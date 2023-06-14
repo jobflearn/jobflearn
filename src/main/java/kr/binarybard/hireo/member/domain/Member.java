@@ -1,5 +1,6 @@
 package kr.binarybard.hireo.member.domain;
 
+import lombok.Builder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.persistence.Entity;
@@ -30,6 +31,7 @@ public class Member extends BaseTimeEntity {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
+	@Builder
 	public Member(String email, String password, String name, Role role) {
 		this.email = email;
 		this.password = password;
@@ -43,14 +45,14 @@ public class Member extends BaseTimeEntity {
 
 	public void changePassword(PasswordEncoder passwordEncoder, String newPassword) {
 		this.password = newPassword;
-		getEncodedPassword(passwordEncoder);
+		encodePassword(passwordEncoder);
 	}
 
 	public void changeName(String newName) {
 		this.name = newName;
 	}
 
-	public void getEncodedPassword(PasswordEncoder passwordEncoder) {
+	public void encodePassword(PasswordEncoder passwordEncoder) {
 		this.password = passwordEncoder.encode(this.password);
 	}
 }

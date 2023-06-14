@@ -1,5 +1,6 @@
 package kr.binarybard.hireo.auth.dto;
 
+import kr.binarybard.hireo.member.domain.Role;
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.validation.constraints.Email;
@@ -26,5 +27,5 @@ public class SignUpRequest {
 
 	private String name;
 
-	// private String role;
+	private Role role;
 }

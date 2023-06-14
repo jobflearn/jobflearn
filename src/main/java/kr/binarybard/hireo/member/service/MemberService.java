@@ -24,21 +24,21 @@ public class MemberService {
 
 	public Long save(SignUpRequest memberDto) {
 		try {
-			Member member = memberMapper.memberDtoToMember(memberDto);
-			member.getEncodedPassword(passwordEncoder);
-			memberRepository.save(member);
-			return member.getId();
+			var member = memberMapper.toEntity(memberDto);
+			member.encodePassword(passwordEncoder);
+			return memberRepository.save(member).getId();
 		} catch (DataIntegrityViolationException e) {
 			throw new DuplicateEmailException();
 		}
 	}
 
-	public Member findMember(Long id) {
+	public Member findById(Long id) {
 		return memberRepository.findById(id)
 			.orElseThrow(MemberNotFoundException::new);
 	}
 
-	public Member findMemberByEmail(String email) {
-		return memberRepository.findByEmailOrThrow(email);
+	public Member findByEmail(String email) {
+		return memberRepository.findByEmail(email)
+			.orElseThrow(MemberNotFoundException::new);
 	}
 }

@@ -10,5 +10,5 @@ import kr.binarybard.hireo.member.domain.Member;
 public interface MemberMapper {
 	MemberMapper INSTANCE = Mappers.getMapper(MemberMapper.class);
 
-	Member memberDtoToMember(SignUpRequest memberDto);
+	Member toEntity(SignUpRequest memberDto);
 }

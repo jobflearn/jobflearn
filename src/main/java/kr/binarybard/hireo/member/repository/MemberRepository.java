@@ -12,9 +12,4 @@ import kr.binarybard.hireo.member.domain.Member;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
 	Optional<Member> findByEmail(String email);
-
-	default Member findByEmailOrThrow(String email) {
-		return findByEmail(email)
-			.orElseThrow(MemberNotFoundException::new);
-	}
 }
