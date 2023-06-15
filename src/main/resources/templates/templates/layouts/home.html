@@ -1,5 +1,7 @@
 <!doctype html>
-<html th:fragment="layout(content)" lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html th:fragment="layout(content)" lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
 
     <!-- Basic Page Needs
@@ -32,7 +34,7 @@
 
                     <!-- Logo -->
                     <div id="logo">
-                        <a href="index.html"><img th:src="@{/images/logo.png}" alt=""></a>
+                        <a th:href="@{/}" href="index.html"><img th:src="@{/images/logo.png}" alt=""></a>
                     </div>
 
                     <!-- Main Navigation -->
@@ -54,9 +56,60 @@
                 <div class="right-side">
 
                     <div class="header-widget">
-                        <a href="#sign-in-dialog" class="popup-with-zoom-anim log-in-button"><i
-                                class="icon-feather-log-in"></i> <span
-                                th:text="|#{login} / #{new}|">로그인 / 회원가입</span></a>
+                        <!-- Non-Authorized User -->
+                        <th:block sec:authorize="!isAuthenticated()">
+                            <a href="#sign-in-dialog" class="popup-with-zoom-anim log-in-button"><i
+                                    class="icon-feather-log-in"></i> <span
+                                    th:text="|#{login} / #{new}|">로그인 / 회원가입</span></a>
+                        </th:block>
+                        <!-- Authorized User -->
+                        <th:block sec:authorize="isAuthenticated()">
+                            <!-- Messages -->
+                            <div class="header-notifications user-menu">
+                                <div class="header-notifications-trigger">
+                                    <a href="#">
+                                        <div class="user-avatar status-online"><img
+                                                th:src="@{/images/user-avatar-small-01.jpg}" alt=""></div>
+                                    </a>
+                                </div>
+
+                                <!-- Dropdown -->
+                                <div class="header-notifications-dropdown">
+
+                                    <!-- User Status -->
+                                    <div class="user-status">
+
+                                        <!-- User Name / Avatar -->
+                                        <div class="user-details">
+                                            <div class="user-avatar status-online"><img
+                                                    th:src="@{/images/user-avatar-small-01.jpg}" alt=""></div>
+                                            <div class="user-name">
+                                                김철수 <span th:text="#{freelancer}">프리랜서</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <ul class="user-menu-small-nav">
+                                        <li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i>
+                                            <th:block th:text="#{dashboard}">대시보드</th:block>
+                                        </a></li>
+                                        <li><a th:href="@{/members/manage}"><i
+                                                class="icon-material-outline-settings"></i>
+                                            <th:block th:text="#{settings}">설정</th:block>
+                                        </a></li>
+                                        <li>
+                                            <form id="logout-form" th:action="@{/auth/logout}" method="post">
+                                                <button id="logout"><i
+                                                        class="icon-material-outline-power-settings-new"></i>
+                                                    <th:block th:text="#{logout}">로그아웃</th:block>
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </th:block>
                     </div>
 
                     <!-- Mobile Navigation Button -->
@@ -261,10 +314,10 @@
                 </div>
 
                 <!-- Form -->
-                <form method="post" id="login-form">
+                <form method="post" id="login-form" th:action="@{/auth/login}">
                     <div class="input-with-icon-left">
                         <i class="icon-material-baseline-mail-outline"></i>
-                        <input type="text" class="input-text with-border" name="emailaddress" id="emailaddress"
+                        <input type="text" class="input-text with-border" name="email" id="email"
                                th:placeholder="#{email}" required/>
                     </div>
 
@@ -303,43 +356,52 @@
                 </div>
 
                 <!-- Account Type -->
-                <div class="account-type">
-                    <div>
-                        <input type="radio" name="account-type-radio" id="freelancer-radio" class="account-type-radio"
-                               checked/>
-                        <label for="freelancer-radio" class="ripple-effect-dark"><i
-                                class="icon-material-outline-account-circle"></i>
-                            <th:block th:text="#{freelancer}">프리랜서</th:block>
-                        </label>
+                <form th:action="@{/auth/new}"
+                      method="post" id="register-account-form">
+                    <div class="account-type">
+                        <div>
+                            <input type="radio" name="role" id="role-freelancer" value="FREELANCER"
+                                   class="account-type-radio"
+                                   checked/>
+                            <label for="role-freelancer" class="ripple-effect-dark"><i
+                                    class="icon-material-outline-account-circle"></i>
+                                <th:block th:text="#{freelancer}">프리랜서</th:block>
+                            </label>
+                        </div>
+
+                        <div>
+                            <input type="radio" name="role" id="role-employer"
+                                   class="account-type-radio" value="EMPLOYER"/>
+                            <label for="role-employer" class="ripple-effect-dark"><i
+                                    class="icon-material-outline-business-center"></i>
+                                <th:block th:text="#{employer}">고용주</th:block>
+                            </label>
+                        </div>
                     </div>
 
-                    <div>
-                        <input type="radio" name="account-type-radio" id="employer-radio" class="account-type-radio"/>
-                        <label for="employer-radio" class="ripple-effect-dark"><i
-                                class="icon-material-outline-business-center"></i>
-                            <th:block th:text="#{employer}">고용주</th:block>
-                        </label>
-                    </div>
-                </div>
+                    <!-- Form -->
 
-                <!-- Form -->
-                <form method="post" id="register-account-form">
                     <div class="input-with-icon-left">
                         <i class="icon-material-baseline-mail-outline"></i>
-                        <input type="text" class="input-text with-border" name="emailaddress-register"
-                               id="emailaddress-register" th:placeholder="#{email}" required/>
+                        <input type="text" class="input-text with-border" name="email"
+                               id="email-address" th:placeholder="#{email}" required/>
+                    </div>
+                    <div class="input-with-icon-left">
+                        <i class="icon-material-baseline-mail-outline"></i>
+                        <input type="text" class="input-text with-border" name="name" id="name"
+                               th:placeholder="#{name}" required/>
                     </div>
 
                     <div class="input-with-icon-left" th:title="#{tooltip.length.password}"
                          data-tippy-placement="bottom">
                         <i class="icon-material-outline-lock"></i>
-                        <input type="password" class="input-text with-border" name="password-register"
+                        <input type="password" class="input-text with-border" name="password"
                                id="password-register" th:placeholder="#{password}" required/>
                     </div>
 
                     <div class="input-with-icon-left">
                         <i class="icon-material-outline-lock"></i>
-                        <input type="password" class="input-text with-border" name="password-repeat-register"
+                        <input type="password" class="input-text with-border" name="passwordConfirm"
                                id="password-repeat-register" th:placeholder="#{repeat-password}" required/>
                     </div>
                 </form>
