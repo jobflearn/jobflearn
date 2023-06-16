@@ -4,6 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.0'
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
     id 'jacoco'
+    id "org.sonarqube" version "3.5.0.2730"
 }
 
 group = 'kr.binarybard'
@@ -106,5 +107,11 @@ jacocoTestCoverageVerification {
             fileTree(dir: it,
                     exclude: ['**/*Application.class'])
         }))
+    }
+}
+
+sonar {
+    properties {
+        property "sonar.projectKey", "jobflearn"
     }
 }
