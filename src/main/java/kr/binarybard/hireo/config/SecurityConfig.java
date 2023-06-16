@@ -2,6 +2,8 @@ package kr.binarybard.hireo.config;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.*;
 
+import kr.binarybard.hireo.config.oauth.CustomOAuth2UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +18,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+	private final CustomOAuth2UserService customOAuth2UserService;
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -29,6 +33,7 @@ public class SecurityConfig {
 			.requestMatchers("/css/**", "/js/**", "/images/**", "/sass/**", "/fonts/**", "/error/**");
 	}
 
+	// TODO: 카카오 로그인, 구글 로그인
 	@Bean
 	public SecurityFilterChain formFilterChain(final HttpSecurity http) throws Exception {
 		return http
@@ -45,9 +50,17 @@ public class SecurityConfig {
 			.headers(headers -> headers
 				.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 			.logout(logout -> logout
+				.logoutUrl("/auth/logout")
 				.logoutSuccessUrl("/"))
 			.sessionManagement(session -> session
 				.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+			.oauth2Login(oauth -> oauth
+				.userInfoEndpoint(userInfo -> userInfo
+					.userService(customOAuth2UserService))
+				.authorizationEndpoint(authorization -> authorization
+					.baseUri("/auth/login/oauth2/authorize"))
+				.redirectionEndpoint(redirection -> redirection
+					.baseUri("/auth/login/oauth2/code/{code}")))
 			.build();
 	}
 }

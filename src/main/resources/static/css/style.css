@@ -12053,6 +12053,17 @@ img.mfp-img {
     color: #fff;
 }
 
+.social-login-buttons .kakao-login {
+    background-color: #fee400;
+    border-color: #fee500;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.social-login-buttons .kakao-login:hover {
+    background-color: rgb(255, 220, 0);
+    color: rgba(0, 0, 0, 0.85);
+}
+
 @media (max-width: 768px) {
     .social-login-separator {
         margin-bottom: 25px;
