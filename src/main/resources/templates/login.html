@@ -35,8 +35,8 @@
             <div class="login-register-page">
                 <!-- Welcome Text -->
                 <div class="welcome-text">
-                    <h3>We're glad to see you again!</h3>
-                    <span>Don't have an account? <a th:href="@{register}">Sign Up!</a></span>
+                    <h3 th:text="#{welcome.login}">다시 만나서 반가워요!</h3>
+                    <span><th:block th:text="#{dont-have-account}">계정이 없으신가요?</th:block> <a th:href="@{/auth/new}" th:text="|#{new}!|">회원가입!</a></span>
                 </div>
 
                 <!-- Form -->
@@ -45,33 +45,33 @@
                         <p th:text="#{invalid.login}">에러 메시지</p>
                         <a class="close"></a>
                     </div>
-                    //아 이메일 값이 없는 경우 로그인 누르면 뜨는 메시지를 수정하려했는데
+
                     <div class="input-with-icon-left">
                         <i class="icon-material-baseline-mail-outline"></i>
                         <input type="text" class="input-text with-border" name="email" id="email"
-                               placeholder="Email Address" required/>
+                               th:placeholder="#{email}" required/>
                     </div>
 
                     <div class="input-with-icon-left">
                         <i class="icon-material-outline-lock"></i>
                         <input type="password" class="input-text with-border" name="password" id="password"
-                               placeholder="Password" required/>
+                               th:placeholder="#{password}" required/>
                     </div>
-                    <a href="#" class="forgot-password">Forgot Password?</a>
+                    <a href="#" class="forgot-password" th:text="#{forgot-password}">비밀번호를 잊으셨나요?</a>
                 </form>
 
                 <!-- Button -->
                 <button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit"
-                        form="login-form">Log In <i class="icon-material-outline-arrow-right-alt"></i></button>
+                        form="login-form"><th:block th:text="#{login}">로그인</th:block> <i class="icon-material-outline-arrow-right-alt"></i></button>
 
                 <!-- Social Login -->
                 <div class="social-login-separator"><span>or</span></div>
                 <div class="social-login-buttons">
-                    <button class="facebook-login ripple-effect"><i class="icon-brand-facebook-f"></i> Log In via
-                        Facebook
+                    <button class="kakao-login ripple-effect"><i class="icon-brand-kakao"></i>
+                        <th:block th:text="#{login-with-kakao}">카카오 로그인</th:block>
                     </button>
-                    <button class="google-login ripple-effect"><i class="icon-brand-google-plus-g"></i> Log In via
-                        Google+
+                    <button class="google-login ripple-effect"><i class="icon-brand-google-plus-g"></i>
+                        <th:block th:text="#{login-with-google}">구글로 로그인</th:block>
                     </button>
                 </div>
             </div>
