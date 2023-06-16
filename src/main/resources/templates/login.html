@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <h2>Log In</h2>
+                <h2 th:text="#{login}">로그인</h2>
 
                 <!-- Breadcrumbs -->
                 <nav id="breadcrumbs" class="dark">
@@ -65,7 +65,7 @@
                         form="login-form"><th:block th:text="#{login}">로그인</th:block> <i class="icon-material-outline-arrow-right-alt"></i></button>
 
                 <!-- Social Login -->
-                <div class="social-login-separator"><span>or</span></div>
+                <div class="social-login-separator"><span th:text="#{or}">혹은</span></div>
                 <div class="social-login-buttons">
                     <button class="kakao-login ripple-effect"><i class="icon-brand-kakao"></i>
                         <th:block th:text="#{login-with-kakao}">카카오 로그인</th:block>

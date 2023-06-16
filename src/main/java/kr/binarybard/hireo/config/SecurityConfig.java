@@ -50,6 +50,7 @@ public class SecurityConfig {
 			.headers(headers -> headers
 				.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 			.logout(logout -> logout
+				.logoutUrl("/auth/logout")
 				.logoutSuccessUrl("/"))
 			.sessionManagement(session -> session
 				.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
