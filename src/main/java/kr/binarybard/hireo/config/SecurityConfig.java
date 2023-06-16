@@ -29,6 +29,7 @@ public class SecurityConfig {
 			.requestMatchers("/css/**", "/js/**", "/images/**", "/sass/**", "/fonts/**", "/error/**");
 	}
 
+	// TODO: 카카오 로그인, 구글 로그인
 	@Bean
 	public SecurityFilterChain formFilterChain(final HttpSecurity http) throws Exception {
 		return http
