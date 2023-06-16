@@ -14,8 +14,8 @@
                 <!-- Breadcrumbs -->
                 <nav id="breadcrumbs" class="dark">
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li>Log In</li>
+                        <li><a href="#" th:href="@{/}" th:text="#{home}">홈</a></li>
+                        <li th:text="#{login}">로그인</li>
                     </ul>
                 </nav>
 
@@ -41,6 +41,11 @@
 
                 <!-- Form -->
                 <form method="post" id="login-form">
+                    <div th:if="${param.error}" class="notification error closeable">
+                        <p th:text="#{invalid.login}">에러 메시지</p>
+                        <a class="close"></a>
+                    </div>
+                    //아 이메일 값이 없는 경우 로그인 누르면 뜨는 메시지를 수정하려했는데
                     <div class="input-with-icon-left">
                         <i class="icon-material-baseline-mail-outline"></i>
                         <input type="text" class="input-text with-border" name="email" id="email"

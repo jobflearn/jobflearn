@@ -17,6 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -40,7 +41,7 @@ public class SecurityConfig {
 			.formLogin(login -> login
 				.loginPage("/auth/login")
 				.usernameParameter("email")
-				.defaultSuccessUrl("/", true))
+				.defaultSuccessUrl("/"))
 			.headers(headers -> headers
 				.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 			.logout(logout -> logout
