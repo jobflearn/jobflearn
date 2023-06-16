@@ -645,6 +645,21 @@ $(document).ready(function(){
 	  accordion.init({ speed: 300, oneOpen: true });
 	});
 
+	/*--------------------------------------------------*/
+	/*  Login
+	/*--------------------------------------------------*/
+	$('.kakao-login').click(function(e) {
+		e.preventDefault();
+		// redirect
+		window.location.href = "http://localhost:8080/auth/login/oauth2/authorize/kakao";
+	});
+
+	$('.google-login').click(function(e) {
+		e.preventDefault();
+		// redirect
+		window.location.href = "http://localhost:8080/auth/login/oauth2/authorize/google";
+	});
+
 
 	/*--------------------------------------------------*/
 	/*  Tabs
