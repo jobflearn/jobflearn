@@ -39,4 +39,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           JASYPT_DEFAULT_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
-        run: ./gradlew compileJava sonar --info
+        run: ./gradlew compileJava jacocoTestReport sonar --info
