@@ -1,9 +1,9 @@
-package kr.binarybard.hireo.auth.controller;
+package kr.binarybard.hireo.web.auth.controller;
 
 import jakarta.validation.Valid;
-import kr.binarybard.hireo.auth.dto.SignUpRequest;
+import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.exception.DuplicateEmailException;
-import kr.binarybard.hireo.member.service.MemberService;
+import kr.binarybard.hireo.web.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

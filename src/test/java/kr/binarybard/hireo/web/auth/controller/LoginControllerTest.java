@@ -1,4 +1,4 @@
-package kr.binarybard.hireo.auth.controller;
+package kr.binarybard.hireo.web.auth.controller;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;

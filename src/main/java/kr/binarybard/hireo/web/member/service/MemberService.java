@@ -1,15 +1,15 @@
-package kr.binarybard.hireo.member.service;
+package kr.binarybard.hireo.web.member.service;
 
+import kr.binarybard.hireo.web.member.domain.Member;
+import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import kr.binarybard.hireo.auth.dto.SignUpRequest;
+import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.exception.DuplicateEmailException;
 import kr.binarybard.hireo.exception.MemberNotFoundException;
-import kr.binarybard.hireo.member.domain.Member;
-import kr.binarybard.hireo.member.dto.MemberMapper;
-import kr.binarybard.hireo.member.repository.MemberRepository;
+import kr.binarybard.hireo.web.member.dto.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

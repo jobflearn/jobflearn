@@ -2,10 +2,8 @@ package kr.binarybard.hireo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import kr.binarybard.hireo.member.dto.MemberMapper;
+import kr.binarybard.hireo.web.member.dto.MemberMapper;
 
 @Configuration
 public class CommonConfig {
