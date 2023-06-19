@@ -1,10 +1,12 @@
-package kr.binarybard.hireo.company.service;
+package kr.binarybard.hireo.web.company.service;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,7 +22,6 @@ import kr.binarybard.hireo.web.company.dto.CompanyMapper;
 import kr.binarybard.hireo.web.company.dto.CompanyRegister;
 import kr.binarybard.hireo.web.company.dto.CompanyResponse;
 import kr.binarybard.hireo.web.company.repository.CompanyRepository;
-import kr.binarybard.hireo.web.company.service.CompanyService;
 
 @ExtendWith(MockitoExtension.class)
 class CompanyServiceTest {
@@ -34,6 +35,7 @@ class CompanyServiceTest {
 	CompanyService companyService;
 
 	@Test
+	@DisplayName("회사 등록 정상 동작 확인")
 	void 회사등록() throws Exception {
 		//given
 		CompanyRegister companyRegister = CompanyRegisterFixture.TEST_COMPANY_REGISTER;
@@ -47,27 +49,27 @@ class CompanyServiceTest {
 	}
 
 	@Test
+	@DisplayName("회사 id로 조회")
 	void 회사조회() throws Exception {
 		//given
 		Company company = CompanyFixture.TEST_COMPANY;
 		CompanyResponse companyReponse = CompanyReponseFixture.TEST_COMPANY_REPONSE;
-		//when
 		when(companyRepository.findById(anyLong())).thenReturn(Optional.of(company));
-		when(companyMapper.toDto(any(Company.class))).thenReturn(companyReponse);
+		//when
+		Company foundCompany = companyService.findById(1L);
 		//then
-		companyService.findById(1L);
 		verify(companyRepository, times(1)).findById(1L);
+		assertThat(company.getId()).isEqualTo(foundCompany.getId());
 	}
 
 	@Test
+	@DisplayName("id로 회사 조회후 null 반환시, 예외 발생 확")
 	void 회사조회실패검증() throws Exception {
-		//given
 		//given
 		Company company = CompanyFixture.TEST_COMPANY;
 		CompanyResponse companyReponse = CompanyReponseFixture.TEST_COMPANY_REPONSE;
 		//when
 		when(companyRepository.findById(4L)).thenReturn(Optional.empty());
-
 		//then
 		Assertions.assertThrows(CompanyNotFoundException.class, () -> companyService.findById(4L));
 	}

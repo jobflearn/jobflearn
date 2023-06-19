@@ -1,8 +1,10 @@
 package kr.binarybard.hireo.config.oauth;
 
-import java.util.Optional;
-import java.util.UUID;
-
+import kr.binarybard.hireo.config.oauth.userinfo.CustomOAuth2UserInfo;
+import kr.binarybard.hireo.web.member.domain.Member;
+import kr.binarybard.hireo.web.member.domain.Role;
+import kr.binarybard.hireo.web.member.repository.MemberRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -11,11 +13,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import kr.binarybard.hireo.config.oauth.userinfo.CustomOAuth2UserInfo;
-import kr.binarybard.hireo.web.member.domain.Member;
-import kr.binarybard.hireo.web.member.domain.Role;
-import kr.binarybard.hireo.web.member.repository.MemberRepository;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service

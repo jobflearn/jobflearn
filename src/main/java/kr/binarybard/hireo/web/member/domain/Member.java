@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import kr.binarybard.hireo.common.BaseTimeEntity;
 import kr.binarybard.hireo.web.company.domain.Company;
 import lombok.AccessLevel;
 import lombok.Builder;

@@ -25,10 +25,11 @@ import lombok.NoArgsConstructor;
 public class Company {
 	@Id
 	@GeneratedValue
+	@Column(name = "company_id")
 	private Long id;
 	@Column(nullable = false)
 	private String name;
-	private Boolean isVerified;
+	private Boolean isVerified = false;
 	@Lob
 	private String description;
 
@@ -45,7 +46,7 @@ public class Company {
 		this.description = description;
 	}
 
-	public void chanageName(String name) {
+	public void changeName(String name) {
 		this.name = name;
 	}
 

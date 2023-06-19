@@ -1,4 +1,4 @@
-package kr.binarybard.hireo.fixture;
+package kr.binarybard.hireo.web.fixture;
 
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.web.member.domain.Role;
