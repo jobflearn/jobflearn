@@ -1,10 +1,9 @@
 package kr.binarybard.hireo.config.oauth;
 
 import kr.binarybard.hireo.config.oauth.userinfo.CustomOAuth2UserInfo;
-import kr.binarybard.hireo.member.domain.Member;
-import kr.binarybard.hireo.member.domain.Role;
-import kr.binarybard.hireo.member.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
+import kr.binarybard.hireo.web.member.domain.Member;
+import kr.binarybard.hireo.web.member.domain.Role;
+import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;

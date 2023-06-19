@@ -1,7 +1,7 @@
-package kr.binarybard.hireo.fixture;
+package kr.binarybard.hireo.web.fixture;
 
-import kr.binarybard.hireo.auth.dto.SignUpRequest;
-import kr.binarybard.hireo.member.domain.Role;
+import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
+import kr.binarybard.hireo.web.member.domain.Role;
 
 public class LoginFixture {
 	public static final SignUpRequest TEST_SIGNUP_REQUEST = SignUpRequest.builder()

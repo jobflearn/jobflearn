@@ -1,7 +1,7 @@
 package kr.binarybard.hireo.config.oauth;
 
 import kr.binarybard.hireo.config.oauth.userinfo.CustomOAuth2UserInfo;
-import kr.binarybard.hireo.member.domain.Member;
+import kr.binarybard.hireo.web.member.domain.Member;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;

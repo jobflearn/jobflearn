@@ -1,5 +1,6 @@
-package kr.binarybard.hireo.member.domain;
+package kr.binarybard.hireo.web.member.domain;
 
+import kr.binarybard.hireo.common.BaseTimeEntity;
 import lombok.Builder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

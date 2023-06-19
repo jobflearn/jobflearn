@@ -1,4 +1,4 @@
-package kr.binarybard.hireo.member.domain;
+package kr.binarybard.hireo.common;
 
 import java.time.LocalDateTime;
 

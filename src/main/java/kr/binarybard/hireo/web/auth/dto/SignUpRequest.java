@@ -1,9 +1,9 @@
-package kr.binarybard.hireo.auth.dto;
+package kr.binarybard.hireo.web.auth.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import kr.binarybard.hireo.common.validation.constraints.FieldMatch;
-import kr.binarybard.hireo.member.domain.Role;
+import kr.binarybard.hireo.web.member.domain.Role;
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

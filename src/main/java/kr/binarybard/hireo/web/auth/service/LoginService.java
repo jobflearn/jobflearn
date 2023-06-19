@@ -1,7 +1,7 @@
-package kr.binarybard.hireo.auth.service;
+package kr.binarybard.hireo.web.auth.service;
 
 import kr.binarybard.hireo.exception.MemberNotFoundException;
-import kr.binarybard.hireo.member.repository.MemberRepository;
+import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,12 +1,11 @@
-package kr.binarybard.hireo.member.repository;
+package kr.binarybard.hireo.web.member.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import kr.binarybard.hireo.exception.MemberNotFoundException;
-import kr.binarybard.hireo.member.domain.Member;
+import kr.binarybard.hireo.web.member.domain.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {

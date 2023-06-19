@@ -1,4 +1,4 @@
-package kr.binarybard.hireo.member.controller;
+package kr.binarybard.hireo.web.member.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

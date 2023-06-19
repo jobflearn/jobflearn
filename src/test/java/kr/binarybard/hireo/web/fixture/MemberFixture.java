@@ -1,7 +1,7 @@
-package kr.binarybard.hireo.fixture;
+package kr.binarybard.hireo.web.fixture;
 
-import kr.binarybard.hireo.member.domain.Member;
-import kr.binarybard.hireo.member.domain.Role;
+import kr.binarybard.hireo.web.member.domain.Member;
+import kr.binarybard.hireo.web.member.domain.Role;
 
 public class MemberFixture {
 	public static final Member TEST_MEMBER = Member.builder()
