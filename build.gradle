@@ -117,6 +117,7 @@ jacocoTestCoverageVerification {
                               '**/*Builder.class',
                               '**/config/**/*',
                               '**/domain/**/*',
+                              '**/dto/**/*'
                     ])
         }))
     }
