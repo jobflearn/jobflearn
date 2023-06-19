@@ -125,5 +125,6 @@ jacocoTestCoverageVerification {
 sonar {
     properties {
         property "sonar.projectKey", "jobflearn"
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
