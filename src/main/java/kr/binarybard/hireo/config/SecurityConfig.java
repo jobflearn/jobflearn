@@ -1,7 +1,5 @@
 package kr.binarybard.hireo.config;
 
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.*;
-
 import kr.binarybard.hireo.config.jwt.JwtAccessDeniedHandler;
 import kr.binarybard.hireo.config.jwt.JwtAuthTokenFilter;
 import kr.binarybard.hireo.config.jwt.JwtAuthenticationEntryPoint;
@@ -13,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,6 +18,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @Configuration
 @EnableWebSecurity
@@ -34,12 +33,6 @@ public class SecurityConfig {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-	}
-
-	@Bean
-	public WebSecurityCustomizer webSecurityCustomizer() {
-		return web -> web.ignoring()
-			.requestMatchers("/css/**", "/js/**", "/images/**", "/sass/**", "/fonts/**", "/error/**");
 	}
 
 	@Bean
@@ -66,6 +59,7 @@ public class SecurityConfig {
 		return http
 			.csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(auth -> auth
+				.requestMatchers("/css/**", "/js/**", "/images/**", "/sass/**", "/fonts/**", "/error/**").permitAll()
 				.requestMatchers(toH2Console()).permitAll()
 				.requestMatchers("/", "/auth/**").permitAll()
 				.anyRequest().authenticated()
