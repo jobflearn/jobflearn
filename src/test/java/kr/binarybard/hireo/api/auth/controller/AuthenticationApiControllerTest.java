@@ -2,12 +2,14 @@ package kr.binarybard.hireo.api.auth.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
+import jakarta.servlet.ServletException;
 import kr.binarybard.hireo.api.auth.dto.RefreshTokenRequest;
 import kr.binarybard.hireo.api.auth.dto.SignInRequest;
 import kr.binarybard.hireo.api.auth.repository.RefreshTokenRepository;
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import kr.binarybard.hireo.web.member.service.MemberService;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -83,6 +86,33 @@ class AuthenticationApiControllerTest {
 		mockMvc.perform(post("/api/auth/login")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(request)))
+			.andExpect(status().isForbidden());
+	}
+
+	@DisplayName("리프레시 토큰이 유효하지 않을 경우 에러를 반환한다.")
+	@Test
+	void testReissueWithInvalidToken() throws Exception {
+		RefreshTokenRequest refreshTokenRequest = RefreshTokenRequest.builder()
+			.refreshToken("invalid-token")
+			.build();
+
+		assertThatThrownBy(() -> mockMvc.perform(post("/api/auth/reissue")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(refreshTokenRequest))))
+			.isInstanceOf(ServletException.class);
+	}
+
+	@DisplayName("존재하지 않는 사용자로 로그인을 시도하면 실패한다.")
+	@Test
+	void testAuthorizeWithNonExistingUser() throws Exception {
+		SignInRequest signInRequest = SignInRequest.builder()
+			.email("non-existing@test.com")
+			.password(password)
+			.build();
+
+		mockMvc.perform(post("/api/auth/login")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(signInRequest)))
 			.andExpect(status().isForbidden());
 	}
 
