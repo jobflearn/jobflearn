@@ -58,7 +58,7 @@ class AuthenticationApiControllerTest {
 
 	@DisplayName("로그인을 성공적으로 수행한다.")
 	@Test
-	public void testAuthorize() throws Exception {
+	void testAuthorize() throws Exception {
 		SignInRequest signInRequest = SignInRequest.builder()
 			.email(username)
 			.password(password)
@@ -74,7 +74,7 @@ class AuthenticationApiControllerTest {
 
 	@Test
 	@DisplayName("잘못된 비밀번호로 로그인을 시도하면 실패한다.")
-	public void loginFailDueToWrongPassword() throws Exception {
+	void loginFailDueToWrongPassword() throws Exception {
 		SignInRequest request = SignInRequest.builder()
 			.email(username)
 			.password(password + "wrong")
@@ -88,7 +88,7 @@ class AuthenticationApiControllerTest {
 
 	@DisplayName("리프레시 토큰으로 새로운 토큰을 성공적으로 발급한다.")
 	@Test
-	public void testReissue() throws Exception {
+	void testReissue() throws Exception {
 		SignInRequest signInRequest = SignInRequest.builder()
 			.email(username)
 			.password(password)

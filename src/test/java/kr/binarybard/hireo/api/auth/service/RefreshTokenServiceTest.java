@@ -55,7 +55,7 @@ class RefreshTokenServiceTest {
 
 	@Test
 	@DisplayName("토큰이 유효하고 DB에 존재할 경우, validateToken은 true를 반환한다.")
-	public void testValidateToken_success() {
+	void testValidateToken_success() {
 		// given
 		given(jwtTokenProvider.validateToken(validToken)).willReturn(true);
 		given(jwtTokenProvider.getUsernameFromToken(validToken)).willReturn(username);
@@ -72,7 +72,7 @@ class RefreshTokenServiceTest {
 
 	@Test
 	@DisplayName("토큰이 유효하지 않을 경우, validateToken은 false를 반환한다.")
-	public void testValidateToken_withInvalidToken() {
+	void testValidateToken_withInvalidToken() {
 		// given
 		String invalidToken = "invalid_token";
 		given(jwtTokenProvider.validateToken(invalidToken)).willReturn(false);
@@ -86,7 +86,7 @@ class RefreshTokenServiceTest {
 
 	@Test
 	@DisplayName("토큰이 DB에서 찾을 수 없을 경우, validateToken은 false를 반환한다.")
-	public void testValidateToken_tokenNotFoundInDB() {
+	void testValidateToken_tokenNotFoundInDB() {
 		// given
 		given(jwtTokenProvider.validateToken(validToken)).willReturn(true);
 		given(jwtTokenProvider.getUsernameFromToken(validToken)).willReturn(username);
@@ -103,7 +103,7 @@ class RefreshTokenServiceTest {
 
 	@Test
 	@DisplayName("토큰이 만료되었을 경우, validateToken은 false를 반환한다.")
-	public void testValidateToken_tokenExpired() {
+	void testValidateToken_tokenExpired() {
 		// given
 		RefreshToken expiredToken = RefreshToken.builder()
 			.expiryDate(Instant.now().minusMillis(10000))

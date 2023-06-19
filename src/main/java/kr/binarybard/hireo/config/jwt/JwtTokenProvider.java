@@ -94,7 +94,7 @@ public class JwtTokenProvider {
 				.map(String::trim)
 				.filter(auth -> !auth.isEmpty())
 				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toList());
+				.toList();
 		User principal = new User(claims.getSubject(), "", authorities);
 		return new UsernamePasswordAuthenticationToken(principal, token, authorities);
 	}
