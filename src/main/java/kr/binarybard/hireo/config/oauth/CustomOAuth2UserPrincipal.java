@@ -1,13 +1,14 @@
 package kr.binarybard.hireo.config.oauth;
 
-import kr.binarybard.hireo.config.oauth.userinfo.CustomOAuth2UserInfo;
-import kr.binarybard.hireo.member.domain.Member;
+import java.util.Collections;
+import java.util.Map;
+
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.util.Collections;
-import java.util.Map;
+import kr.binarybard.hireo.config.oauth.userinfo.CustomOAuth2UserInfo;
+import kr.binarybard.hireo.web.member.domain.Member;
 
 public class CustomOAuth2UserPrincipal extends User implements OAuth2User {
 	private transient CustomOAuth2UserInfo userInfo;

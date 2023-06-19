@@ -1,6 +1,6 @@
 package kr.binarybard.hireo.exception;
 
-import kr.binarybard.hireo.member.domain.Member;
+import kr.binarybard.hireo.web.member.domain.Member;
 
 public class CompanyNotFoundException extends RuntimeException {
 	private static final String DEFAULT_MESSAGE = "회사가 존재하지 않습니다.";

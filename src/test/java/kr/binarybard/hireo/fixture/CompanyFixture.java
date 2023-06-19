@@ -1,6 +1,6 @@
 package kr.binarybard.hireo.fixture;
 
-import kr.binarybard.hireo.company.domain.Company;
+import kr.binarybard.hireo.web.company.domain.Company;
 
 public class CompanyFixture {
 	public static final Company TEST_COMPANY = Company.builder()

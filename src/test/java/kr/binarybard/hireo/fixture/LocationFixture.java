@@ -1,7 +1,7 @@
 package kr.binarybard.hireo.fixture;
 
-import kr.binarybard.hireo.location.domain.Address;
-import kr.binarybard.hireo.location.domain.Location;
+import kr.binarybard.hireo.web.location.domain.Address;
+import kr.binarybard.hireo.web.location.domain.Location;
 
 public class LocationFixture {
 	public static final Location TEST_LOCATION = Location.builder()

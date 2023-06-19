@@ -1,7 +1,7 @@
 package kr.binarybard.hireo.fixture;
 
-import kr.binarybard.hireo.location.domain.Address;
-import kr.binarybard.hireo.location.dto.LocationDto;
+import kr.binarybard.hireo.web.location.domain.Address;
+import kr.binarybard.hireo.web.location.dto.LocationDto;
 
 public class LocationDtoFixture {
 	public static final LocationDto TEST_LOCATION_DTO = LocationDto.builder()

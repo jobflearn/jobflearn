@@ -1,6 +1,6 @@
 package kr.binarybard.hireo.fixture;
 
-import kr.binarybard.hireo.company.dto.CompanyRegister;
+import kr.binarybard.hireo.web.company.dto.CompanyRegister;
 
 public class CompanyRegisterFixture {
 	public static final CompanyRegister TEST_COMPANY_REGISTER = CompanyRegister.builder()

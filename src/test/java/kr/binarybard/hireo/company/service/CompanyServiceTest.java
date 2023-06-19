@@ -11,15 +11,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import kr.binarybard.hireo.company.domain.Company;
-import kr.binarybard.hireo.company.dto.CompanyMapper;
-import kr.binarybard.hireo.company.dto.CompanyRegister;
-import kr.binarybard.hireo.company.dto.CompanyResponse;
-import kr.binarybard.hireo.company.repository.CompanyRepository;
 import kr.binarybard.hireo.exception.CompanyNotFoundException;
 import kr.binarybard.hireo.fixture.CompanyFixture;
 import kr.binarybard.hireo.fixture.CompanyRegisterFixture;
 import kr.binarybard.hireo.fixture.CompanyReponseFixture;
+import kr.binarybard.hireo.web.company.domain.Company;
+import kr.binarybard.hireo.web.company.dto.CompanyMapper;
+import kr.binarybard.hireo.web.company.dto.CompanyRegister;
+import kr.binarybard.hireo.web.company.dto.CompanyResponse;
+import kr.binarybard.hireo.web.company.repository.CompanyRepository;
+import kr.binarybard.hireo.web.company.service.CompanyService;
 
 @ExtendWith(MockitoExtension.class)
 class CompanyServiceTest {

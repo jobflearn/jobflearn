@@ -1,6 +1,6 @@
 package kr.binarybard.hireo.fixture;
 
-import kr.binarybard.hireo.company.dto.CompanyResponse;
+import kr.binarybard.hireo.web.company.dto.CompanyResponse;
 
 public class CompanyReponseFixture {
 	public static final CompanyResponse TEST_COMPANY_REPONSE = CompanyResponse.builder()

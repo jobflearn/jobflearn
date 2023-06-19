@@ -3,9 +3,9 @@ package kr.binarybard.hireo.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import kr.binarybard.hireo.company.dto.CompanyMapper;
-import kr.binarybard.hireo.location.dto.LocationMapper;
-import kr.binarybard.hireo.member.dto.MemberMapper;
+import kr.binarybard.hireo.web.company.dto.CompanyMapper;
+import kr.binarybard.hireo.web.location.dto.LocationMapper;
+import kr.binarybard.hireo.web.member.dto.MemberMapper;
 
 @Configuration
 public class CommonConfig {
