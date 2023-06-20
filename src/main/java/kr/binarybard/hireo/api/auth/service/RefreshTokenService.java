@@ -3,6 +3,8 @@ package kr.binarybard.hireo.api.auth.service;
 import jakarta.transaction.Transactional;
 import kr.binarybard.hireo.api.auth.domain.RefreshToken;
 import kr.binarybard.hireo.api.auth.repository.RefreshTokenRepository;
+import kr.binarybard.hireo.api.common.exceptions.ErrorCode;
+import kr.binarybard.hireo.api.common.exceptions.InvalidValueException;
 import kr.binarybard.hireo.config.jwt.JwtTokenProvider;
 import kr.binarybard.hireo.web.member.domain.Member;
 import kr.binarybard.hireo.web.member.service.MemberService;
@@ -43,7 +45,7 @@ public class RefreshTokenService {
 			byte[] hash = md.digest(token.getBytes(StandardCharsets.UTF_8));
 			return Base64.getEncoder().encodeToString(hash);
 		} catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException("SHA-256 is not a valid algorithm", e);
+			throw new InvalidValueException(ErrorCode.TOKEN_HASHING_ERROR);
 		}
 	}
 

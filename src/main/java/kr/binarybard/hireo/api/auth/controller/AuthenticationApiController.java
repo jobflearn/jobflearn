@@ -5,6 +5,8 @@ import jakarta.validation.Valid;
 import kr.binarybard.hireo.api.auth.dto.RefreshTokenRequest;
 import kr.binarybard.hireo.api.auth.dto.SignInRequest;
 import kr.binarybard.hireo.api.auth.service.RefreshTokenService;
+import kr.binarybard.hireo.api.common.exceptions.AuthException;
+import kr.binarybard.hireo.api.common.exceptions.ErrorCode;
 import kr.binarybard.hireo.config.jwt.JwtTokenProvider;
 import kr.binarybard.hireo.web.auth.service.LoginService;
 import kr.binarybard.hireo.web.member.service.MemberService;
@@ -75,7 +77,7 @@ public class AuthenticationApiController {
 
 	private void validateRefreshToken(String token) {
 		if (!refreshTokenService.validateToken(token)) {
-			throw new RuntimeException("Refresh token is invalid");
+			throw new AuthException(ErrorCode.INVALID_TOKEN);
 		}
 	}
 
