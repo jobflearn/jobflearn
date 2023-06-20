@@ -9,7 +9,6 @@ import kr.binarybard.hireo.api.auth.repository.RefreshTokenRepository;
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import kr.binarybard.hireo.web.member.service.MemberService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -86,12 +85,12 @@ class AuthenticationApiControllerTest {
 		mockMvc.perform(post("/api/auth/login")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(request)))
-			.andExpect(status().isForbidden());
+			.andExpect(status().isUnauthorized());
 	}
 
 	@DisplayName("리프레시 토큰이 유효하지 않을 경우 에러를 반환한다.")
 	@Test
-	void testReissueWithInvalidToken() throws Exception {
+	void testReissueWithInvalidToken() {
 		RefreshTokenRequest refreshTokenRequest = RefreshTokenRequest.builder()
 			.refreshToken("invalid-token")
 			.build();
@@ -113,7 +112,7 @@ class AuthenticationApiControllerTest {
 		mockMvc.perform(post("/api/auth/login")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(signInRequest)))
-			.andExpect(status().isForbidden());
+			.andExpect(status().isUnauthorized());
 	}
 
 	@DisplayName("리프레시 토큰으로 새로운 토큰을 성공적으로 발급한다.")
