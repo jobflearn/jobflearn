@@ -3,6 +3,7 @@ package kr.binarybard.hireo.common.advice;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.binarybard.hireo.common.exceptions.BusinessException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.ModelAndView;
 
+@Slf4j
 @ControllerAdvice(annotations = Controller.class, basePackages = "kr.binarybard.hireo.web")
 public class WebExceptionHandler {
 
@@ -35,6 +37,7 @@ public class WebExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public ModelAndView defaultErrorHandler(HttpServletRequest req, HttpServletResponse resp, Exception e) {
+		log.error("An unexpected error occurred: ", e);
 		return createModelAndView(req, resp, HttpStatus.INTERNAL_SERVER_ERROR, e, "error/default");
 	}
 }
