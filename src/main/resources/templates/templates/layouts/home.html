@@ -450,20 +450,13 @@
 
 <!-- Snackbar // documentation: https://www.polonel.com/snackbar/ -->
 <script>
-    // Snackbar for user status switcher
-    $('#snackbar-user-status label').click(function () {
+    // Snackbar for copy to clipboard button
+    $('.copy-url-button').click(function() {
         Snackbar.show({
-            text: 'Your status has been changed!',
-            pos: 'bottom-center',
-            showAction: false,
-            actionText: "Dismiss",
-            duration: 3000,
-            textColor: '#fff',
-            backgroundColor: '#383838'
+            text: '클립보드로 복사되었습니다!',
         });
     });
 </script>
-
 
 <!-- Google Autocomplete -->
 <script>
@@ -483,12 +476,14 @@
             $(".pac-container").prependTo(".intro-search-field.with-autocomplete");
         }, 300);
     }
-
 </script>
 
 <!-- Google API & Maps -->
 <!-- Geting an API Key: https://developers.google.com/maps/documentation/javascript/get-api-key -->
 <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
+<script th:src="@{/js/infobox.min.js}"></script>
+<script th:src="@{/js/markerclusterer.js}"></script>
+<script th:src="@{/js/maps.js}"></script>
 
 </body>
 </html>
