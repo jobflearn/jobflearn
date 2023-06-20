@@ -10,7 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import kr.binarybard.hireo.exception.DuplicateEmailException;
+import kr.binarybard.hireo.common.exceptions.AuthException;
+import kr.binarybard.hireo.common.exceptions.ErrorCode;
 import kr.binarybard.hireo.web.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -59,7 +60,7 @@ class LoginControllerTest {
 	@Test
 	@DisplayName("회원가입 요청 - 이메일 중복")
 	void registerMemberWithDuplicateEmailTest() throws Exception {
-		when(memberService.save(any())).thenThrow(new DuplicateEmailException("Duplicate email"));
+		when(memberService.save(any())).thenThrow(new AuthException(ErrorCode.DUPLICATED_EMAIL));
 
 		mockMvc.perform(post("/auth/new")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)

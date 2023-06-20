@@ -1,16 +1,7 @@
 package kr.binarybard.hireo.web.member.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.Optional;
+import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
-import kr.binarybard.hireo.exception.MemberNotFoundException;
 import kr.binarybard.hireo.web.fixture.LoginFixture;
 import kr.binarybard.hireo.web.fixture.MemberFixture;
 import kr.binarybard.hireo.web.member.domain.Member;
@@ -23,6 +14,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
@@ -41,7 +40,7 @@ class MemberServiceTest {
 
 	@Test
 	@DisplayName("회원 정보 저장")
-	public void testSave() {
+	void testSave() {
 		//given
 		SignUpRequest request = LoginFixture.TEST_SIGNUP_REQUEST;
 		Member member = MemberFixture.TEST_MEMBER;
@@ -59,7 +58,7 @@ class MemberServiceTest {
 
 	@Test
 	@DisplayName("회원 ID로 찾기")
-	public void testFindById() {
+	void testFindById() {
 		// given
 		Member member = MemberFixture.TEST_MEMBER;
 		when(memberRepository.findById(any(Long.class))).thenReturn(Optional.of(member));
@@ -73,7 +72,7 @@ class MemberServiceTest {
 
 	@Test
 	@DisplayName("회원 이메일로 찾기")
-	public void testFindByEmail() {
+	void testFindByEmail() {
 		// given
 		Member member = MemberFixture.TEST_MEMBER;
 		when(memberRepository.findByEmail(any(String.class))).thenReturn(Optional.of(member));
@@ -87,12 +86,12 @@ class MemberServiceTest {
 
 	@Test
 	@DisplayName("존재하지 않는 이메일로 찾기")
-	public void testFindByEmailThrowsException() {
+	void testFindByEmailThrowsException() {
 		// given
 		when(memberRepository.findByEmail(anyString())).thenReturn(Optional.empty());
 
 		// expected
 		assertThatThrownBy(() -> memberService.findByEmail("test@test.com"))
-			.isInstanceOf(MemberNotFoundException.class);
+			.isInstanceOf(EntityNotFoundException.class);
 	}
 }
