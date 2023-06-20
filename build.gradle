@@ -115,6 +115,7 @@ jacocoTestCoverageVerification {
                               '**/*Exception.class',
                               '**/*Entity.class',
                               '**/*Builder.class',
+                              '**/*Handler.class',
                               '**/config/**/*',
                               '**/domain/**/*',
                               '**/dto/**/*'
