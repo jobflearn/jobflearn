@@ -1,18 +1,19 @@
-package kr.binarybard.hireo.api.common.advice;
+package kr.binarybard.hireo.common.advice;
 
-import kr.binarybard.hireo.api.common.dto.ErrorResponse;
-import kr.binarybard.hireo.api.common.exceptions.BusinessException;
-import kr.binarybard.hireo.api.common.exceptions.ErrorCode;
+import kr.binarybard.hireo.common.dto.ErrorResponse;
+import kr.binarybard.hireo.common.exceptions.BusinessException;
+import kr.binarybard.hireo.common.exceptions.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
-@RestControllerAdvice(basePackages = "kr.binarybard.hireo.api")
-public class GlobalExceptionHandler {
+@RestControllerAdvice(annotations = RestController.class)
+public class RestApiExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 		var response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, e.getBindingResult());

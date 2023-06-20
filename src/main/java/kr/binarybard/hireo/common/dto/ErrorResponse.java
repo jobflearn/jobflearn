@@ -1,7 +1,7 @@
-package kr.binarybard.hireo.api.common.dto;
+package kr.binarybard.hireo.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import kr.binarybard.hireo.api.common.exceptions.ErrorCode;
+import kr.binarybard.hireo.common.exceptions.ErrorCode;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
