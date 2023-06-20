@@ -88,17 +88,17 @@ class AuthenticationApiControllerTest {
 			.andExpect(status().isUnauthorized());
 	}
 
-	@DisplayName("리프레시 토큰이 유효하지 않을 경우 에러를 반환한다.")
 	@Test
-	void testReissueWithInvalidToken() {
-		RefreshTokenRequest refreshTokenRequest = RefreshTokenRequest.builder()
-			.refreshToken("invalid-token")
+	@DisplayName("유효하지 않은 리프레시 토큰으로 새로운 토큰을 발급받을 수 없다.")
+	void reissueFailDueToInvalidRefreshToken() throws Exception {
+		RefreshTokenRequest request = RefreshTokenRequest.builder()
+			.refreshToken("invalid_refresh_token")
 			.build();
 
-		assertThatThrownBy(() -> mockMvc.perform(post("/api/auth/reissue")
+		mockMvc.perform(post("/api/auth/reissue")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(refreshTokenRequest))))
-			.isInstanceOf(ServletException.class);
+				.content(objectMapper.writeValueAsString(request)))
+			.andExpect(status().isUnauthorized());
 	}
 
 	@DisplayName("존재하지 않는 사용자로 로그인을 시도하면 실패한다.")
