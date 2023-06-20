@@ -37,3 +37,10 @@ jasypt:
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
     password: ${JASYPT_DEFAULT_PASSWORD}
+
+security:
+  jwt:
+    access-expiration-time: 86400000
+    refresh-expiration-time: 604800000
+    base64-secret: ENC(pMCfBtvxA+VV4S6cDjAokWd0z0Qr883sMgCOEB6fjeJbL84smdB9NnUj+NO2SiTqBUoM4LPjbw15Yxv+3tg0uBHHmH7X0E9JGtUmIhHoXEwQxc/Izw30z99On6j/DalJ5XSfSTdERxs=)
+
