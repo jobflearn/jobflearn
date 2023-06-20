@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.ModelAndView;
 
-@ControllerAdvice(annotations = Controller.class)
+@ControllerAdvice(annotations = Controller.class, basePackages = "kr.binarybard.hireo.web")
 public class WebExceptionHandler {
 
 	private ModelAndView createModelAndView(HttpServletRequest req, HttpServletResponse resp, HttpStatus status, Exception e, String viewName) {
