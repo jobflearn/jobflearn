@@ -14,7 +14,7 @@
                 <!-- Breadcrumbs -->
                 <nav id="breadcrumbs" class="dark">
                     <ul>
-                        <li><a href="#">Home</a></li>
+                        <li><a href="#" th:text="#{home}">홈</a></li>
                         <li>404 Not Found</li>
                     </ul>
                 </nav>
@@ -34,7 +34,7 @@
 
             <section id="not-found" class="center margin-top-50 margin-bottom-25">
                 <h2>404 <i class="icon-line-awesome-question-circle"></i></h2>
-                <p>We're sorry, but the page you were looking for doesn't exist</p>
+                <p th:text="#{error.pageNotFound.message}">죄송합니다, 찾으시는 페이지가 존재하지 않습니다.</p>
             </section>
 
             <div class="row">
@@ -47,7 +47,7 @@
 
                         <!-- Button -->
                         <div class="intro-search-button">
-                            <button class="button ripple-effect">Search</button>
+                            <button class="button ripple-effect" th:text="#{search}">검색</button>
                         </div>
                     </div>
                 </div>

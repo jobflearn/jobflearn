@@ -9,5 +9,6 @@ import lombok.Data;
 public class CompanyResponse {
 	private String name;
 	private String description;
+	private String countryName;
 	private LocationDto locationDto;
 }

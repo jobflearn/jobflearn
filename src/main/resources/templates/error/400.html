@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko" th:replace="~{templates/layouts/home::layout(content=~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Titlebar
+================================================== -->
+<div id="titlebar" class="gradient">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+
+        <h2>400 Bad Request</h2>
+
+        <!-- Breadcrumbs -->
+        <nav id="breadcrumbs" class="dark">
+          <ul>
+            <li><a href="#" th:text="#{home}">홈</a></li>
+            <li>400 Bad Request</li>
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page Content
+================================================== -->
+<!-- Container -->
+<div class="container">
+
+  <div class="row">
+    <div class="col-xl-12">
+
+      <section id="not-found" class="center margin-top-50 margin-bottom-25">
+        <h2>400 <i class="icon-line-awesome-question-circle"></i></h2>
+        <p th:text="#{error.badRequest.message}">잘못된 요청입니다. 입력한 정보를 확인해 주세요.</p>
+      </section>
+
+    </div>
+  </div>
+
+</div>
+<!-- Container / End -->
+
+<!-- Spacer -->
+<div class="margin-top-70"></div>
+<!-- Spacer / End-->
+</body>
+</html>
