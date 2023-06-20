@@ -32,6 +32,13 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    defer-datasource-initialization: true
+
 jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES

@@ -1,4 +1,4 @@
-package kr.binarybard.hireo.fixture;
+package kr.binarybard.hireo.web.fixture;
 
 import kr.binarybard.hireo.web.location.domain.Address;
 import kr.binarybard.hireo.web.location.dto.LocationDto;

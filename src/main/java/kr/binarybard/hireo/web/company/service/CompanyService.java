@@ -1,5 +1,8 @@
 package kr.binarybard.hireo.web.company.service;
 
+import kr.binarybard.hireo.web.company.dto.CompanyResponse;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import kr.binarybard.hireo.exception.CompanyNotFoundException;
@@ -9,19 +12,17 @@ import kr.binarybard.hireo.web.company.dto.CompanyRegister;
 import kr.binarybard.hireo.web.company.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Locale;
+
 @Service
 @RequiredArgsConstructor
 public class CompanyService {
 
 	private final CompanyRepository companyRepository;
-	/*결국 연관관계의 주인은 Company, 사실 위치만! 변경하거나 하는 일은 없을듯
-	 * 그렇다면, Location저장을 CompanyService와 MemberService가 LocationRepository를 의존하는 방식
-	 * 으로 해보면 어떨까 생각했습니다.*/
 	private final CompanyMapper companyMapper;
+	private final MessageSource messageSource;
 
 	public Long registerCompany(CompanyRegister companyRegister) {
-		/*DTO 범위에서 Validation할거기 때문에 입력사항에 예외는 처리할 필요
-		 * 없어보임*/
 		Company company = companyMapper.toEntity(companyRegister);
 		return companyRepository.save(company).getId();
 	}
@@ -29,5 +30,16 @@ public class CompanyService {
 	public Company findById(Long id) {
 		return companyRepository.findById(id)
 			.orElseThrow(CompanyNotFoundException::new);
+	}
+
+	public CompanyResponse findOne(Long id) {
+		var company = companyMapper.toDto(findById(id));
+		company.setCountryName(getCountryName(company.getLocationDto().getCountryCode()));
+		return company;
+	}
+
+	private String getCountryName(String countryCode) {
+		Locale locale = LocaleContextHolder.getLocale();
+		return messageSource.getMessage("country." + countryCode, null, locale);
 	}
 }
