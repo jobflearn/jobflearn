@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko" th:replace="~{templates/layouts/home::layout(content=~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Titlebar
+================================================== -->
+<div id="titlebar" class="gradient">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+
+        <h2>401 Unauthorized</h2>
+
+        <!-- Breadcrumbs -->
+        <nav id="breadcrumbs" class="dark">
+          <ul>
+            <li><a href="#" th:text="#{home}">홈</a></li>
+            <li>401 Unauthorized</li>
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page Content
+================================================== -->
+<!-- Container -->
+<div class="container">
+
+  <div class="row">
+    <div class="col-xl-12">
+
+      <section id="not-found" class="center margin-top-50 margin-bottom-25">
+        <h2>401 <i class="icon-line-awesome-question-circle"></i></h2>
+        <p th:text="#{error.unauthorized.message}">인증이 필요한 페이지입니다. 로그인을 해주세요.</p>
+      </section>
+
+      <div class="row">
+        <div class="col-xl-8 offset-xl-2">
+          <div class="intro-banner-search-form not-found-search margin-bottom-50">
+            <!-- Search Field -->
+            <div class="intro-search-field ">
+              <input id="intro-keywords" type="text" placeholder="What Are You Looking For?">
+            </div>
+
+            <!-- Button -->
+            <div class="intro-search-button">
+              <button class="button ripple-effect" th:text="#{search}">검색</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<!-- Container / End -->
+
+<!-- Spacer -->
+<div class="margin-top-70"></div>
+<!-- Spacer / End-->
+</body>
+</html>
