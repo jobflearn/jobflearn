@@ -1,6 +1,5 @@
 package kr.binarybard.hireo.web.company.controller;
 
-import kr.binarybard.hireo.exception.CompanyNotFoundException;
 import kr.binarybard.hireo.web.company.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,12 +19,8 @@ public class CompanyController {
 		@PathVariable("id") Long id,
 		Model model
 	) {
-		try {
-			var foundCompany = companyService.findOne(id);
-			model.addAttribute("company", foundCompany);
-			return "company/profile";
-		} catch (CompanyNotFoundException ex) {
-			return "redirect:/error/404";
-		}
+		var foundCompany = companyService.findOne(id);
+		model.addAttribute("company", foundCompany);
+		return "company/profile";
 	}
 }

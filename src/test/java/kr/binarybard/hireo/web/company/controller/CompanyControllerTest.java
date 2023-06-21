@@ -1,6 +1,7 @@
 package kr.binarybard.hireo.web.company.controller;
 
-import kr.binarybard.hireo.exception.CompanyNotFoundException;
+import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
+import kr.binarybard.hireo.common.exceptions.ErrorCode;
 import kr.binarybard.hireo.web.company.service.CompanyService;
 import kr.binarybard.hireo.web.fixture.CompanyResponseFixture;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +36,7 @@ class CompanyControllerTest {
 	void setup() {
 		var companyResponse = CompanyResponseFixture.TEST_COMPANY_RESPONSE;
 		when(companyService.findOne(EXISTING_COMPANY_ID)).thenReturn(companyResponse);
-		when(companyService.findOne(NON_EXISTING_COMPANY_ID)).thenThrow(CompanyNotFoundException.class);
+		when(companyService.findOne(NON_EXISTING_COMPANY_ID)).thenThrow(new EntityNotFoundException(ErrorCode.COMPANY_NOT_FOUND));
 	}
 
 	@Test
@@ -53,7 +54,6 @@ class CompanyControllerTest {
 	void nonExistingCompanyProfileTest() throws Exception {
 		mockMvc.perform(get("/companies/" + NON_EXISTING_COMPANY_ID))
 			.andDo(print())
-			.andExpect(status().is3xxRedirection())
-			.andExpect(redirectedUrl("/error/404"));
+			.andExpect(status().isNotFound());
 	}
 }

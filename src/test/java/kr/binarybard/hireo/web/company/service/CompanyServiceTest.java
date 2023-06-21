@@ -1,6 +1,6 @@
 package kr.binarybard.hireo.web.company.service;
 
-import kr.binarybard.hireo.exception.CompanyNotFoundException;
+import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
 import kr.binarybard.hireo.web.company.domain.Company;
 import kr.binarybard.hireo.web.company.dto.CompanyMapper;
 import kr.binarybard.hireo.web.company.dto.CompanyResponse;
@@ -74,7 +74,7 @@ class CompanyServiceTest {
 
 		// expected
 		assertThatThrownBy(() -> companyService.findById(NON_EXISTING_COMPANY_ID))
-			.isInstanceOf(CompanyNotFoundException.class);
+			.isInstanceOf(EntityNotFoundException.class);
 	}
 
 	@Test

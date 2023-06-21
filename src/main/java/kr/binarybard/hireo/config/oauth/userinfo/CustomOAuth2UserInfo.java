@@ -1,6 +1,7 @@
 package kr.binarybard.hireo.config.oauth.userinfo;
 
-import kr.binarybard.hireo.exception.UnsupportedOAuth2ProviderException;
+import kr.binarybard.hireo.common.exceptions.ErrorCode;
+import kr.binarybard.hireo.common.exceptions.InvalidValueException;
 
 import java.util.Map;
 
@@ -54,7 +55,7 @@ public abstract class CustomOAuth2UserInfo {
 		} else if (CustomOAuth2Provider.GOOGLE.equalsWith(registrationId)) {
 			return new GoogleOAuth2UserInfo(attributes);
 		} else {
-			throw new UnsupportedOAuth2ProviderException(registrationId);
+			throw new InvalidValueException(ErrorCode.UNSUPPORTED_OAUTH2_PROVIDER);
 		}
 	}
 }

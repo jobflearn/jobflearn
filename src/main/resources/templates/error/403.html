@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko" th:replace="~{templates/layouts/home::layout(content=~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Titlebar
+================================================== -->
+<div id="titlebar" class="gradient">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+
+        <h2>403 Forbidden</h2>
+
+        <!-- Breadcrumbs -->
+        <nav id="breadcrumbs" class="dark">
+          <ul>
+            <li><a href="#" th:text="#{home}">홈</a></li>
+            <li>403 Forbidden</li>
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page Content
+================================================== -->
+<!-- Container -->
+<div class="container">
+
+  <div class="row">
+    <div class="col-xl-12">
+
+      <section id="not-found" class="center margin-top-50 margin-bottom-25">
+        <h2>403 <i class="icon-line-awesome-lock"></i></h2>
+        <p th:text="#{error.forbidden.message}">접근이 금지되었습니다. 필요한 권한이 있는지 확인해 주세요.</p>
+      </section>
+
+    </div>
+  </div>
+
+</div>
+<!-- Container / End -->
+
+<!-- Spacer -->
+<div class="margin-top-70"></div>
+<!-- Spacer / End-->
+</body>
+</html>
