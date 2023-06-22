@@ -1,28 +1,22 @@
 package kr.binarybard.hireo.web.company.controller;
 
+import kr.binarybard.hireo.common.AcceptanceTest;
 import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
 import kr.binarybard.hireo.common.exceptions.ErrorCode;
+import kr.binarybard.hireo.common.fixture.CompanyFixture;
+import kr.binarybard.hireo.common.fixture.MemberFixture;
 import kr.binarybard.hireo.web.company.dto.CompanyRegister;
+import kr.binarybard.hireo.web.company.dto.CompanyResponse;
 import kr.binarybard.hireo.web.company.service.CompanyService;
 import kr.binarybard.hireo.web.member.service.MemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
-import static kr.binarybard.hireo.web.fixture.CompanyFixture.EXISTING_COMPANY_ID;
-import static kr.binarybard.hireo.web.fixture.CompanyFixture.NON_EXISTING_COMPANY_ID;
-import static kr.binarybard.hireo.web.fixture.CompanyResponseFixture.TEST_COMPANY_RESPONSE;
-import static kr.binarybard.hireo.web.fixture.MemberFixture.MEMBER_RESPONSE;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -30,12 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WithMockUser
-@SpringBootTest
-@AutoConfigureMockMvc
-class CompanyControllerTest {
-
-	@Autowired
-	private MockMvc mockMvc;
+class CompanyControllerTest extends AcceptanceTest {
 
 	@MockBean
 	private CompanyService companyService;
@@ -43,12 +32,16 @@ class CompanyControllerTest {
 	@MockBean
 	private MemberService memberService;
 
+	private static final Long NON_EXISTING_COMPANY_ID = Long.MAX_VALUE;
+
 	@BeforeEach
 	void setup() {
-		when(companyService.findOne(EXISTING_COMPANY_ID)).thenReturn(TEST_COMPANY_RESPONSE);
+		CompanyResponse testCompanyResponse = CompanyFixture.createTestCompanyAResponse();
+
+		when(companyService.findOne(CompanyFixture.createTestCompanyA().getId())).thenReturn(testCompanyResponse);
 		when(companyService.findOne(NON_EXISTING_COMPANY_ID)).thenThrow(new EntityNotFoundException(
 			ErrorCode.COMPANY_NOT_FOUND));
-		when(memberService.findByEmail(anyString())).thenReturn(MEMBER_RESPONSE);
+		when(memberService.findByEmail(anyString())).thenReturn(MemberFixture.MEMBER_RESPONSE);
 	}
 
 	@Test
@@ -63,22 +56,21 @@ class CompanyControllerTest {
 	@Test
 	@DisplayName("회사 등록 요청")
 	void registerCompanyTest() throws Exception {
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("name", "gangmin");
-		params.add("description", "hahahah");
-		params.add("isVerified", "true");
-		params.add("industry", "IT");
-		params.add("latitude", "13.2323");
-		params.add("longitude", "123.2323");
-		params.add("countryCode", "KR");
-		params.add("province", "kyeongi");
-		params.add("city", "anyang");
-		params.add("street", "wondol");
-		params.add("district", "gogildong");
-		params.add("premise", "www");
+		CompanyRegister companyRegister = CompanyFixture.createTestCompanyARegister();
 		mockMvc.perform(post("/companies/new")
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.params(params))
+				.param("name", companyRegister.getName())
+				.param("description", companyRegister.getDescription())
+				.param("isVerified", companyRegister.getIsVerified().toString())
+				.param("industry", companyRegister.getIndustry().toString())
+				.param("latitude", companyRegister.getLocationDto().getLatitude().toString())
+				.param("longitude", companyRegister.getLocationDto().getLongitude().toString())
+				.param("countryCode", companyRegister.getLocationDto().getCountryCode())
+				.param("province", companyRegister.getLocationDto().getAddress().getProvince())
+				.param("city", companyRegister.getLocationDto().getAddress().getCity())
+				.param("street", companyRegister.getLocationDto().getAddress().getStreet())
+				.param("district", companyRegister.getLocationDto().getAddress().getDistrict())
+				.param("premise", companyRegister.getLocationDto().getAddress().getPremise()))
 			.andDo(print())
 			.andExpect(status().is3xxRedirection())
 			.andExpect(redirectedUrl("/"));
@@ -89,7 +81,7 @@ class CompanyControllerTest {
 	@Test
 	@DisplayName("존재하는 회사 프로필 요청")
 	void existingCompanyProfileTest() throws Exception {
-		mockMvc.perform(get("/companies/" + EXISTING_COMPANY_ID))
+		mockMvc.perform(get("/companies/" + CompanyFixture.createTestCompanyA().getId()))
 			.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(view().name("company/profile"))
