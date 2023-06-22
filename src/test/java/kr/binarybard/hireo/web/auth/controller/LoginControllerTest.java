@@ -5,56 +5,56 @@ import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import kr.binarybard.hireo.common.AcceptanceTest;
 import kr.binarybard.hireo.common.exceptions.AuthException;
 import kr.binarybard.hireo.common.exceptions.ErrorCode;
+import kr.binarybard.hireo.common.fixture.LoginFixture;
+import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
+import kr.binarybard.hireo.web.member.domain.Role;
 import kr.binarybard.hireo.web.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-class LoginControllerTest {
-
-	@Autowired
-	private MockMvc mockMvc;
+class LoginControllerTest extends AcceptanceTest {
 
 	@MockBean
 	private MemberService memberService;
 
-	@Test
-	@DisplayName("회원가입 폼 요청")
-	void registerFormTest() throws Exception {
-		mockMvc.perform(get("/auth/new"))
-			.andDo(print())
-			.andExpect(status().isOk())
-			.andExpect(view().name("new"))
-			.andExpect(model().attributeExists("member"));
+	private ResultActions performSignUpRequest(SignUpRequest signUpRequest) throws Exception {
+		return mockMvc.perform(post("/auth/new")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.param("email", signUpRequest.getEmail())
+				.param("password", signUpRequest.getPassword())
+				.param("passwordConfirm", signUpRequest.getPasswordConfirm())
+				.param("name", signUpRequest.getName())
+				.param("role", signUpRequest.getRole().toString()))
+			.andDo(print());
 	}
 
 	@Test
 	@DisplayName("회원가입 요청")
 	void registerMemberTest() throws Exception {
-		mockMvc.perform(post("/auth/new")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.param("email", "test@test.com")
-				.param("password", "password123")
-				.param("passwordConfirm", "password123")
-				.param("name", "testUser")
-				.param("role", "FREELANCER"))
-			.andDo(print())
+		SignUpRequest signUpRequest = LoginFixture.TEST_SIGNUP_REQUEST_FREELANCER;
+
+		when(memberService.save(signUpRequest)).thenReturn(1L);
+
+		performSignUpRequest(signUpRequest)
 			.andExpect(status().is3xxRedirection())
 			.andExpect(redirectedUrl("/auth/login"));
+	}
+
+	@Test
+	@DisplayName("회원가입 폼 요청")
+	void registerFormTest() throws Exception {
+		mockMvc.perform(get("/auth/new"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("new"))
+			.andExpect(model().attributeExists("member"));
 	}
 
 	@Test
@@ -62,13 +62,7 @@ class LoginControllerTest {
 	void registerMemberWithDuplicateEmailTest() throws Exception {
 		when(memberService.save(any())).thenThrow(new AuthException(ErrorCode.DUPLICATED_EMAIL));
 
-		mockMvc.perform(post("/auth/new")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.param("email", "test@test.com")
-				.param("password", "password123")
-				.param("passwordConfirm", "password123")
-				.param("name", "testUser")
-				.param("role", "FREELANCER"))
+		performSignUpRequest(LoginFixture.TEST_SIGNUP_REQUEST_FREELANCER)
 			.andExpect(status().isOk())
 			.andExpect(view().name("new"));
 	}
@@ -76,13 +70,15 @@ class LoginControllerTest {
 	@Test
 	@DisplayName("회원가입 요청 - BindingResult 에러")
 	void registerMemberWithBindingResultError() throws Exception {
-		mockMvc.perform(post("/auth/new")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.param("email", "test@test.com")
-				.param("password", "")
-				.param("passwordConfirm", "")
-				.param("name", "testUser")
-				.param("role", "FREELANCER"))
+		SignUpRequest invalidRequest = SignUpRequest.builder()
+			.email("freelancer@test.com")
+			.password("password123")
+			.passwordConfirm("password456")
+			.name("freelancerUser")
+			.role(Role.FREELANCER)
+			.build();
+
+		performSignUpRequest(invalidRequest)
 			.andExpect(status().isOk())
 			.andExpect(view().name("new"));
 	}
