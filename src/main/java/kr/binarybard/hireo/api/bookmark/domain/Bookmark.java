@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Table(name = "bookmarks")
+@Table(name = "bookmarks", uniqueConstraints = {
+		@UniqueConstraint(columnNames = {"member_id", "company_id"})})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Bookmark extends BaseTimeEntity {
 	@Id
