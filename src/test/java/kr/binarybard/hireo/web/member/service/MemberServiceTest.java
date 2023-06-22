@@ -2,8 +2,8 @@ package kr.binarybard.hireo.web.member.service;
 
 import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
-import kr.binarybard.hireo.web.fixture.LoginFixture;
-import kr.binarybard.hireo.web.fixture.MemberFixture;
+import kr.binarybard.hireo.common.fixture.LoginFixture;
+import kr.binarybard.hireo.common.fixture.MemberFixture;
 import kr.binarybard.hireo.web.member.domain.Member;
 import kr.binarybard.hireo.web.member.dto.MemberMapper;
 import kr.binarybard.hireo.web.member.dto.MemberResponse;
@@ -43,7 +43,7 @@ class MemberServiceTest {
 	@DisplayName("회원 정보 저장")
 	void testSave() {
 		//given
-		SignUpRequest request = LoginFixture.TEST_SIGNUP_REQUEST;
+		SignUpRequest request = LoginFixture.TEST_SIGNUP_REQUEST_FREELANCER;
 		Member member = MemberFixture.createMember();
 
 		when(memberMapper.toEntity(any(SignUpRequest.class))).thenReturn(member);

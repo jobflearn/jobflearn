@@ -1,5 +1,6 @@
 package kr.binarybard.hireo.api.bookmark.controller;
 
+import kr.binarybard.hireo.common.fixture.CompanyFixture;
 import kr.binarybard.hireo.web.company.service.CompanyService;
 import kr.binarybard.hireo.web.member.service.MemberService;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +14,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import static kr.binarybard.hireo.web.fixture.CompanyRegisterFixture.TEST_COMPANY_REGISTER;
-import static kr.binarybard.hireo.web.fixture.MemberFixture.*;
+import static kr.binarybard.hireo.common.fixture.MemberFixture.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -38,7 +38,7 @@ class BookmarkApiControllerTest {
 	@BeforeEach
 	void setup() {
 		memberService.save(SIGNUP_REQUEST_MEMBER);
-		companyService.registerCompany(TEST_COMPANY_REGISTER, USER);
+		companyService.registerCompany(CompanyFixture.createTestCompanyARegister(), USER);
 	}
 
 	@Test
