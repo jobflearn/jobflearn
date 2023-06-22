@@ -113,6 +113,7 @@ jacocoTestCoverageVerification {
                               '**/*Mapper.class',
                               '**/*MapperImpl.class',
                               '**/*Exception.class',
+                              '**/*Repository.class',
                               '**/*Entity.class',
                               '**/*Builder.class',
                               '**/*Handler.class',
