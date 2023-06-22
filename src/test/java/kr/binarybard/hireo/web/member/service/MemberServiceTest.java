@@ -6,6 +6,7 @@ import kr.binarybard.hireo.web.fixture.LoginFixture;
 import kr.binarybard.hireo.web.fixture.MemberFixture;
 import kr.binarybard.hireo.web.member.domain.Member;
 import kr.binarybard.hireo.web.member.dto.MemberMapper;
+import kr.binarybard.hireo.web.member.dto.MemberResponse;
 import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -75,20 +76,21 @@ class MemberServiceTest {
 	void testFindByEmail() {
 		// given
 		Member member = MemberFixture.TEST_MEMBER;
-		when(memberRepository.findByEmail(any(String.class))).thenReturn(Optional.of(member));
+		when(memberMapper.toDto(any(Member.class))).thenReturn(MemberFixture.TEST_MEMBER_RESPONSE);
+		when(memberRepository.findByEmailOrThrow(any(String.class))).thenReturn(member);
 
 		// when
-		Member foundMember = memberService.findByEmail(member.getEmail());
+		MemberResponse foundMember = memberService.findByEmail(member.getEmail());
 
 		// then
-		assertThat(member).isEqualTo(foundMember);
+		assertThat(member.getEmail()).isEqualTo(foundMember.getEmail());
 	}
 
 	@Test
 	@DisplayName("존재하지 않는 이메일로 찾기")
 	void testFindByEmailThrowsException() {
 		// given
-		when(memberRepository.findByEmail(anyString())).thenReturn(Optional.empty());
+		when(memberRepository.findByEmailOrThrow(anyString())).thenThrow(EntityNotFoundException.class);
 
 		// expected
 		assertThatThrownBy(() -> memberService.findByEmail("test@test.com"))

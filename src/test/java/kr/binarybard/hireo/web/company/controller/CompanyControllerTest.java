@@ -1,12 +1,10 @@
 package kr.binarybard.hireo.web.company.controller;
 
-import static kr.binarybard.hireo.web.fixture.CompanyFixture.*;
-import static kr.binarybard.hireo.web.fixture.CompanyResponseFixture.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
+import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
+import kr.binarybard.hireo.common.exceptions.ErrorCode;
+import kr.binarybard.hireo.web.company.dto.CompanyRegister;
+import kr.binarybard.hireo.web.company.service.CompanyService;
+import kr.binarybard.hireo.web.member.service.MemberService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,10 +19,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
-import kr.binarybard.hireo.common.exceptions.ErrorCode;
-import kr.binarybard.hireo.web.company.dto.CompanyRegister;
-import kr.binarybard.hireo.web.company.service.CompanyService;
+import static kr.binarybard.hireo.web.fixture.CompanyFixture.EXISTING_COMPANY_ID;
+import static kr.binarybard.hireo.web.fixture.CompanyFixture.NON_EXISTING_COMPANY_ID;
+import static kr.binarybard.hireo.web.fixture.CompanyResponseFixture.TEST_COMPANY_RESPONSE;
+import static kr.binarybard.hireo.web.fixture.MemberFixture.TEST_MEMBER_RESPONSE;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WithMockUser
 @SpringBootTest
@@ -37,11 +40,15 @@ class CompanyControllerTest {
 	@MockBean
 	private CompanyService companyService;
 
+	@MockBean
+	private MemberService memberService;
+
 	@BeforeEach
 	void setup() {
 		when(companyService.findOne(EXISTING_COMPANY_ID)).thenReturn(TEST_COMPANY_RESPONSE);
 		when(companyService.findOne(NON_EXISTING_COMPANY_ID)).thenThrow(new EntityNotFoundException(
 			ErrorCode.COMPANY_NOT_FOUND));
+		when(memberService.findByEmail(anyString())).thenReturn(TEST_MEMBER_RESPONSE);
 	}
 
 	@Test
