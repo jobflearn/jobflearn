@@ -15,5 +15,6 @@ public interface CompanyMapper {
 	Company toEntity(CompanyRegister companyDto);
 
 	@Mapping(target = "locationDto", source = "location")
+	@Mapping(target = "countryName", ignore = true)
 	CompanyResponse toDto(Company company);
 }

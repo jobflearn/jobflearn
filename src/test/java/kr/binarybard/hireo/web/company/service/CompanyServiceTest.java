@@ -1,12 +1,14 @@
 package kr.binarybard.hireo.web.company.service;
 
-import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
-import kr.binarybard.hireo.web.company.domain.Company;
-import kr.binarybard.hireo.web.company.dto.CompanyMapper;
-import kr.binarybard.hireo.web.company.dto.CompanyResponse;
-import kr.binarybard.hireo.web.company.repository.CompanyRepository;
-import kr.binarybard.hireo.web.fixture.CompanyFixture;
-import kr.binarybard.hireo.web.fixture.CompanyResponseFixture;
+import static kr.binarybard.hireo.web.fixture.CompanyFixture.*;
+import static kr.binarybard.hireo.web.fixture.CompanyRegisterFixture.*;
+import static kr.binarybard.hireo.web.fixture.CompanyResponseFixture.*;
+import static kr.binarybard.hireo.web.fixture.MemberFixture.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,19 +17,22 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.MessageSource;
 
-import java.util.Optional;
-
-import static kr.binarybard.hireo.web.fixture.CompanyFixture.*;
-import static kr.binarybard.hireo.web.fixture.CompanyRegisterFixture.TEST_COMPANY_REGISTER;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.BDDMockito.*;
+import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
+import kr.binarybard.hireo.web.company.domain.Company;
+import kr.binarybard.hireo.web.company.dto.CompanyMapper;
+import kr.binarybard.hireo.web.company.dto.CompanyResponse;
+import kr.binarybard.hireo.web.company.repository.CompanyRepository;
+import kr.binarybard.hireo.web.fixture.CompanyFixture;
+import kr.binarybard.hireo.web.member.repository.MemberRepository;
 
 @ExtendWith(MockitoExtension.class)
 class CompanyServiceTest {
 
 	@Mock
 	CompanyRepository companyRepository;
+
+	@Mock
+	MemberRepository memberRepository;
 
 	@Mock
 	CompanyMapper companyMapper;
@@ -38,15 +43,19 @@ class CompanyServiceTest {
 	@InjectMocks
 	CompanyService companyService;
 
+	final Long REQUEST_MEMBER_ID = 1L;
+
 	@Test
 	@DisplayName("회사 등록 정상 동작 확인")
 	void registerCompanyTest() {
 		// given
 		when(companyRepository.save(TEST_COMPANY)).thenReturn(TEST_COMPANY);
 		when(companyMapper.toEntity(TEST_COMPANY_REGISTER)).thenReturn(TEST_COMPANY);
+		when(companyMapper.toDto(TEST_COMPANY)).thenReturn(TEST_COMPANY_RESPONSE);
+		when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(TEST_MEMBER));
 
 		// when
-		companyService.registerCompany(TEST_COMPANY_REGISTER);
+		companyService.registerCompany(TEST_COMPANY_REGISTER, TEST_USER);
 
 		// then
 		verify(companyRepository, times(1)).save(TEST_COMPANY);
@@ -83,13 +92,13 @@ class CompanyServiceTest {
 		// given
 		when(companyRepository.findById(any(Long.class))).thenReturn(Optional.of(CompanyFixture.TEST_COMPANY));
 		when(messageSource.getMessage(any(String.class), any(), any())).thenReturn("CountryName");
-		when(companyMapper.toDto(CompanyFixture.TEST_COMPANY)).thenReturn(CompanyResponseFixture.TEST_COMPANY_RESPONSE);
+		when(companyMapper.toDto(CompanyFixture.TEST_COMPANY)).thenReturn(TEST_COMPANY_RESPONSE);
 
 		// when
 		CompanyResponse foundCompanyResponse = companyService.findOne(1L);
 
 		// then
-		assertThat(foundCompanyResponse).isEqualTo(CompanyResponseFixture.TEST_COMPANY_RESPONSE);
+		assertThat(foundCompanyResponse).isEqualTo(TEST_COMPANY_RESPONSE);
 		assertThat(foundCompanyResponse.getCountryName()).isEqualTo("CountryName");
 	}
 }
