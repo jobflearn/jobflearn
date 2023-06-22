@@ -6,6 +6,7 @@ import kr.binarybard.hireo.common.fixture.BookmarkFixture;
 import kr.binarybard.hireo.common.fixture.CompanyFixture;
 import kr.binarybard.hireo.common.fixture.MemberFixture;
 import kr.binarybard.hireo.web.company.domain.Company;
+
 import kr.binarybard.hireo.web.company.repository.CompanyRepository;
 import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
