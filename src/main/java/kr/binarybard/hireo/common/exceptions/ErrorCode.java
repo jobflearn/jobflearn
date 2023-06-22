@@ -16,6 +16,9 @@ public enum ErrorCode {
 
 	LOCATION_NOT_FOUND(HttpStatus.NOT_FOUND, "L_001", "주소가 존재하지 않습니다."),
 
+	COMPANY_BOOKMARK_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "B_001", "이미 북마크한 회사입니다."),
+	COMPANY_BOOKMARK_NOT_FOUND(HttpStatus.NOT_FOUND, "B_002", "북마크한 회사를 찾을 수 없습니다."),
+
 	INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "A_001", "유효하지 않은 토큰입니다."),
 	UNSUPPORTED_OAUTH2_PROVIDER(HttpStatus.BAD_REQUEST, "A_002", "지원하지 않는 OAuth2 프로바이더입니다."),
 
