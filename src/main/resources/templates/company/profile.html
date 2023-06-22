@@ -113,7 +113,7 @@
           <h3 th:text="|#{bookmark} #{or} #{share-it}|">북마크 혹은 공유하기</h3>
 
           <!-- Bookmark Button -->
-          <button class="bookmark-button margin-bottom-25">
+          <button class="bookmark-button margin-bottom-25" th:classappend="${member?.isCompanyBookmarked(company.id)} ? 'bookmarked' : ''" th:data-id="${company.id}">
             <span class="bookmark-icon"></span>
             <span class="bookmark-text" th:text="#{bookmark}">북마크</span>
             <span class="bookmarked-text" th:text="#{bookmarked}">북마크됨</span>
