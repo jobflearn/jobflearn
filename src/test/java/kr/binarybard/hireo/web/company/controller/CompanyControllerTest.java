@@ -22,6 +22,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import static kr.binarybard.hireo.web.fixture.CompanyFixture.EXISTING_COMPANY_ID;
+import static kr.binarybard.hireo.web.fixture.CompanyFixture.NON_EXISTING_COMPANY_ID;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import kr.binarybard.hireo.exception.CompanyNotFoundException;
 import kr.binarybard.hireo.web.company.dto.CompanyRegister;
 import kr.binarybard.hireo.web.company.service.CompanyService;
