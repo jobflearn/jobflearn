@@ -1,11 +1,74 @@
 INSERT INTO locations (latitude, longitude, province, city, street, country_code)
-VALUES (37.5665, 126.9780, 'Seoul', 'Jung-gu', '110 Sejong-daero', 'KR'),
-       (37.7749, -122.4194, 'California', 'San Francisco', 'Mountain View', 'US'),
-       (51.5074, -0.1278, 'England', 'London', 'Canary Wharf', 'GB'),
-       (35.6895, 139.6917, 'Tokyo', 'Chiyoda', 'Marunouchi', 'JP');
+VALUES (37.5665, 126.9780, '서울특별시', '중구', '세종대로 110', 'KR'),
+       (37.7749, -122.4194, '캘리포니아', '샌프란시스코', '마운틴뷰', 'US'),
+       (51.5074, -0.1278, '잉글랜드', '런던', '카나리 워프', 'GB'),
+       (35.6895, 139.6917, '도쿄도', '치요다구', '마루노우치', 'JP'),
+       (34.0522, -118.2437, '캘리포니아', '로스앤젤레스', '할리우드', 'US'),
+       (40.7128, -74.0060, '뉴욕', '뉴욕', '월 스트리트', 'US'),
+       (48.8566, 2.3522, '프랑스', '파리', '샹젤리제', 'FR'),
+       (41.9028, 12.4964, '이탈리아', '로마', '콜로세움', 'IT'),
+       (55.7558, 37.6176, '러시아', '모스크바', '크렘린', 'RU'),
+       (39.9042, 116.4074, '중국', '베이징', '왕징', 'CN'),
+       (28.6139, 77.2090, '인도', '뉴델리', '코나우트 플레이스', 'IN'),
+       (31.5546, 74.3572, '파키스탄', '라호르', '몰 로드', 'PK'),
+       (40.4168, -3.7038, '스페인', '마드리드', '그란 비아', 'ES'),
+       (52.5200, 13.4050, '독일', '베를린', '프란츠프서퍼 플라츠', 'DE'),
+       (59.3293, 18.0686, '스웨덴', '스톡홀름', '가메라 스탄', 'SE'),
+       (46.2044, 6.1432, '스위스', '제네바', '세인트 피에르 대성당', 'CH'),
+       (-33.8688, 151.2093, '호주', '시드니', '시드니 하버 브릿지', 'AU'),
+       (1.3521, 103.8198, '싱가포르', '싱가포르', '마리나 베이 샌즈', 'SG'),
+       (-22.9068, -43.1729, '브라질', '리우데자네이로', '코파카바나', 'BR'),
+       (30.0444, 31.2357, '이집트', '카이로', '피라미드', 'EG'),
+       (43.6532, -79.3832, '캐나다', '토론토', '이튼 센터', 'CA'),
+       (-1.286389, 36.817223, '케냐', '나이로비', '킴아티 스트리트', 'KE'),
+       (-34.6037, -58.3816, '아르헨티나', '부에노스아이레스', '플로리다 스트리트', 'AR'),
+       (24.8615, 67.0099, '파키스탄', '카라치', '자마 스트리트', 'PK'),
+       (33.6844, 73.0479, '파키스탄', '이슬라마바드', '페사와르 모랄 로드', 'PK'),
+       (25.2048, 55.2708, '아랍에미리트', '두바이', '부르즈 할리파', 'AE'),
+       (-33.9249, 18.4241, '남아프리카공화국', '케이프타운', '쇼핑 센터', 'ZA'),
+       (-6.2088, 106.8456, '인도네시아', '자카르타', '부나란 히라타우워', 'ID'),
+       (9.0820, 8.6753, '나이지리아', '아부자', '국회 건물', 'NG'),
+       (13.6934, -89.2182, '엘살바도르', '산살바도르', '리베르타드 애비뉴', 'SV');
 
 INSERT INTO companies (name, is_verified, description, location_id)
-VALUES ('OpenAI', true, 'OpenAI is an artificial intelligence research lab.', 1),
-       ('Google', true, 'Google LLC is an American multinational technology company.', 2),
-       ('HSBC', false, 'HSBC Holdings plc is a British multinational investment bank and financial services holding company.', 3),
-       ('Sony', true, 'Sony Group Corporation is a Japanese multinational conglomerate corporation.', 4);
+VALUES ('OpenAI', true, 'OpenAI는 인공 지능 연구소입니다.', 1),
+       ('Google', true, 'Google LLC는 미국의 다국적 기술 회사입니다.', 2),
+       ('HSBC', false, 'HSBC Holdings plc는 영국의 다국적 투자 은행 및 금융 서비스 홀딩 회사입니다.', 3),
+       ('Sony', true, 'Sony Group Corporation는 일본의 다국적 종합기업입니다.', 4),
+       ('Microsoft', true, 'Microsoft Corporation은 미국의 다국적 기술 회사입니다.', 5),
+       ('Apple', true, 'Apple Inc.는 미국의 다국적 기술 회사입니다.', 6),
+       ('Louis Vuitton', true, 'Louis Vuitton은 프랑스의 다국적 패션 회사입니다.', 7),
+       ('Ferrari', true, 'Ferrari는 이탈리아의 자동차 제조 회사입니다.', 8),
+       ('Gazprom', true, 'Gazprom은 러시아의 천연가스 회사입니다.', 9),
+       ('Alibaba', true, 'Alibaba Group은 중국의 다국적 합동 기업입니다.', 10),
+       ('Tata Group', true, 'Tata Group은 인도의 다국적 합동 기업입니다.', 11),
+       ('Unilever', true, 'Unilever는 영국과 네덜란드의 다국적 합동 기업입니다.', 12),
+       ('Santander', true, 'Banco Santander는 스페인의 다국적 은행입니다.', 13),
+       ('Siemens', true, 'Siemens AG는 독일의 다국적 합동 기업입니다.', 14),
+       ('IKEA', true, 'IKEA는 스웨덴의 가구 및 가정용품 소매 회사입니다.', 15),
+       ('Nestlé', true, 'Nestlé S.A.는 스위스의 다국적 식품 및 음료 회사입니다.', 16),
+       ('BHP', true, 'BHP Group는 호주의 다국적 광업, 금속 회사입니다.', 17),
+       ('DBS Bank', true, 'DBS Bank는 싱가포르의 다국적 은행입니다.', 18),
+       ('Petrobras', true, 'Petrobras는 브라질의 다국적 석유 회사입니다.', 19),
+       ('Orascom Construction', true, 'Orascom Construction PLC는 이집트의 건설 및 엔지니어링 회사입니다.', 20),
+       ('Shopify', true, 'Shopify Inc.는 캐나다의 다국적 이커머스 회사입니다.', 21),
+       ('Safaricom', true, 'Safaricom PLC는 케냐의 통신 회사입니다.', 22),
+       ('MercadoLibre', true, 'MercadoLibre, Inc.는 아르헨티나의 이커머스 회사입니다.', 23),
+       ('Pak Suzuki Motors', true, 'Pak Suzuki Motor Company는 파키스탄의 다국적 자동차 제조 회사입니다.', 24),
+       ('Hashoo Group', true, 'Hashoo Group는 파키스탄의 다국적 기업 그룹입니다.', 25),
+       ('Emirates Group', true, 'Emirates Group는 아랍에미리트의 항공 및 여행 회사입니다.', 26),
+       ('Naspers', true, 'Naspers는 남아프리카공화국의 다국적 인터넷 및 미디어 그룹입니다.', 27),
+       ('Indofood', true, 'PT Indofood Sukses Makmur Tbk는 인도네시아의 식품 제조 회사입니다.', 28),
+       ('Dangote Group', true, 'Dangote Group는 나이지리아의 다국적 산업 회사입니다.', 29),
+       ('Super Selectos', false, 'Super Selectos는 엘살바도르의 슈퍼마켓 체인입니다.', 30);
+
+-- 비밀번호 죄다 1임
+INSERT INTO member (email, password, name, role)
+VALUES ('free@test.com', '{bcrypt}$2a$10$HlVJohlGeJPOmW.pi231Ke/dTztPmv8s7GS7DZS8fcWHVIP4Dez7m', 'Test User 1',
+        'FREELANCER');
+INSERT INTO member (email, password, name, role)
+VALUES ('emp@test.com', '{bcrypt}$2a$10$HlVJohlGeJPOmW.pi231Ke/dTztPmv8s7GS7DZS8fcWHVIP4Dez7m', 'Test User 2',
+        'EMPLOYER');
+INSERT INTO member (email, password, name, role)
+VALUES ('admin@test.com', '{bcrypt}$2a$10$HlVJohlGeJPOmW.pi231Ke/dTztPmv8s7GS7DZS8fcWHVIP4Dez7m', 'Test User 3',
+        'ADMINISTRATOR');
