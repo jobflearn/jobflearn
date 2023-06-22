@@ -1,21 +1,23 @@
 package kr.binarybard.hireo.web.member.domain;
 
 import jakarta.persistence.*;
+import kr.binarybard.hireo.api.bookmark.domain.Bookmark;
+import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import kr.binarybard.hireo.common.BaseTimeEntity;
 import kr.binarybard.hireo.web.company.domain.Company;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "members")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseTimeEntity {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id")
 	private Long id;
 
@@ -31,6 +33,10 @@ public class Member extends BaseTimeEntity {
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
+
+	@ToString.Exclude
+	@OneToMany(mappedBy = "member")
+	private List<Bookmark> bookmarks = new ArrayList<>();
 
 	@Builder
 	public Member(String email, String password, String name, Role role) {
