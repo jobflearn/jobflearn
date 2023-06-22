@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,14 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import static kr.binarybard.hireo.web.fixture.CompanyFixture.EXISTING_COMPANY_ID;
-import static kr.binarybard.hireo.web.fixture.CompanyFixture.NON_EXISTING_COMPANY_ID;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import kr.binarybard.hireo.exception.CompanyNotFoundException;
+import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
+import kr.binarybard.hireo.common.exceptions.ErrorCode;
 import kr.binarybard.hireo.web.company.dto.CompanyRegister;
 import kr.binarybard.hireo.web.company.service.CompanyService;
 
@@ -47,7 +40,8 @@ class CompanyControllerTest {
 	@BeforeEach
 	void setup() {
 		when(companyService.findOne(EXISTING_COMPANY_ID)).thenReturn(TEST_COMPANY_RESPONSE);
-		when(companyService.findOne(NON_EXISTING_COMPANY_ID)).thenThrow(CompanyNotFoundException.class);
+		when(companyService.findOne(NON_EXISTING_COMPANY_ID)).thenThrow(new EntityNotFoundException(
+			ErrorCode.COMPANY_NOT_FOUND));
 	}
 
 	@Test
@@ -100,7 +94,6 @@ class CompanyControllerTest {
 	void nonExistingCompanyProfileTest() throws Exception {
 		mockMvc.perform(get("/companies/" + NON_EXISTING_COMPANY_ID))
 			.andDo(print())
-			.andExpect(status().is3xxRedirection())
-			.andExpect(redirectedUrl("/error/404"));
+			.andExpect(status().isNotFound());
 	}
 }

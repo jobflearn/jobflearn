@@ -2,7 +2,8 @@ package kr.binarybard.hireo.web.location.service;
 
 import org.springframework.stereotype.Service;
 
-import kr.binarybard.hireo.exception.LocationNotFoundException;
+import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
+import kr.binarybard.hireo.common.exceptions.ErrorCode;
 import kr.binarybard.hireo.web.location.domain.Location;
 import kr.binarybard.hireo.web.location.dto.LocationDto;
 import kr.binarybard.hireo.web.location.dto.LocationMapper;
@@ -23,6 +24,7 @@ public class LocationService {
 	}
 
 	public Location findById(Long id) {
-		return locationRepository.findById(id).orElseThrow(LocationNotFoundException::new);
+		return locationRepository.findById(id)
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.LOCATION_NOT_FOUND));
 	}
 }

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kr.binarybard.hireo.api.common.exceptions.EntityNotFoundException;
 import kr.binarybard.hireo.common.CurrentUser;
 import kr.binarybard.hireo.web.company.dto.CompanyRegister;
 import kr.binarybard.hireo.web.company.dto.CompanyResponse;
@@ -29,13 +28,9 @@ public class CompanyController {
 		@PathVariable("id") Long id,
 		Model model
 	) {
-		try {
-			var foundCompany = companyService.findOne(id);
-			model.addAttribute("company", foundCompany);
-			return "company/profile";
-		} catch (EntityNotFoundException ex) {
-			return "redirect:/error/404";
-		}
+		var foundCompany = companyService.findOne(id);
+		model.addAttribute("company", foundCompany);
+		return "company/profile";
 	}
 
 	@GetMapping("/new")

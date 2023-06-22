@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.binarybard.hireo.exception.CompanyNotFoundException;
-import kr.binarybard.hireo.exception.MemberNotFoundException;
+import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
+import kr.binarybard.hireo.common.exceptions.ErrorCode;
 import kr.binarybard.hireo.web.company.domain.Company;
 import kr.binarybard.hireo.web.company.dto.CompanyMapper;
 import kr.binarybard.hireo.web.company.dto.CompanyRegister;
@@ -36,17 +36,14 @@ public class CompanyService {
 	public CompanyResponse registerCompany(CompanyRegister companyRegister, User user) {
 		Company company = companyMapper.toEntity(companyRegister);
 		Member member = memberRepository.findByEmail(user.getUsername())
-			.orElseThrow(MemberNotFoundException::new);
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 		member.changeCompany(company);
-		CompanyResponse dto = companyMapper.toDto(companyRepository.save(company));
-		log.info(dto.getLocationDto().getCountryCode());
-		log.info(dto.getLocationDto().getAddress().getDistrict());
-		return dto;
+		return companyMapper.toDto(companyRepository.save(company));
 	}
 
 	public Company findById(Long id) {
 		return companyRepository.findById(id)
-			.orElseThrow(CompanyNotFoundException::new);
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.COMPANY_NOT_FOUND, id.toString()));
 	}
 
 	public CompanyResponse findOne(Long id) {
