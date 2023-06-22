@@ -1,14 +1,12 @@
 package kr.binarybard.hireo.web.company.service;
 
-import static kr.binarybard.hireo.web.fixture.CompanyFixture.*;
-import static kr.binarybard.hireo.web.fixture.CompanyRegisterFixture.*;
-import static kr.binarybard.hireo.web.fixture.CompanyResponseFixture.*;
-import static kr.binarybard.hireo.web.fixture.MemberFixture.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.BDDMockito.*;
-
-import java.util.Optional;
-
+import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
+import kr.binarybard.hireo.web.company.domain.Company;
+import kr.binarybard.hireo.web.company.dto.CompanyMapper;
+import kr.binarybard.hireo.web.company.dto.CompanyResponse;
+import kr.binarybard.hireo.web.company.repository.CompanyRepository;
+import kr.binarybard.hireo.web.fixture.CompanyFixture;
+import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,13 +15,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.MessageSource;
 
-import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
-import kr.binarybard.hireo.web.company.domain.Company;
-import kr.binarybard.hireo.web.company.dto.CompanyMapper;
-import kr.binarybard.hireo.web.company.dto.CompanyResponse;
-import kr.binarybard.hireo.web.company.repository.CompanyRepository;
-import kr.binarybard.hireo.web.fixture.CompanyFixture;
-import kr.binarybard.hireo.web.member.repository.MemberRepository;
+import java.util.Optional;
+
+import static kr.binarybard.hireo.web.fixture.CompanyFixture.*;
+import static kr.binarybard.hireo.web.fixture.CompanyRegisterFixture.TEST_COMPANY_REGISTER;
+import static kr.binarybard.hireo.web.fixture.CompanyResponseFixture.TEST_COMPANY_RESPONSE;
+import static kr.binarybard.hireo.web.fixture.MemberFixture.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CompanyServiceTest {
@@ -43,8 +43,6 @@ class CompanyServiceTest {
 	@InjectMocks
 	CompanyService companyService;
 
-	final Long REQUEST_MEMBER_ID = 1L;
-
 	@Test
 	@DisplayName("회사 등록 정상 동작 확인")
 	void registerCompanyTest() {
@@ -52,10 +50,10 @@ class CompanyServiceTest {
 		when(companyRepository.save(TEST_COMPANY)).thenReturn(TEST_COMPANY);
 		when(companyMapper.toEntity(TEST_COMPANY_REGISTER)).thenReturn(TEST_COMPANY);
 		when(companyMapper.toDto(TEST_COMPANY)).thenReturn(TEST_COMPANY_RESPONSE);
-		when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(TEST_MEMBER));
+		when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(createMember()));
 
 		// when
-		companyService.registerCompany(TEST_COMPANY_REGISTER, TEST_USER);
+		companyService.registerCompany(TEST_COMPANY_REGISTER, USER);
 
 		// then
 		verify(companyRepository, times(1)).save(TEST_COMPANY);

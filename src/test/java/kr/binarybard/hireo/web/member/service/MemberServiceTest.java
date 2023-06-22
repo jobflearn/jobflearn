@@ -44,7 +44,7 @@ class MemberServiceTest {
 	void testSave() {
 		//given
 		SignUpRequest request = LoginFixture.TEST_SIGNUP_REQUEST;
-		Member member = MemberFixture.TEST_MEMBER;
+		Member member = MemberFixture.createMember();
 
 		when(memberMapper.toEntity(any(SignUpRequest.class))).thenReturn(member);
 		when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
@@ -61,7 +61,7 @@ class MemberServiceTest {
 	@DisplayName("회원 ID로 찾기")
 	void testFindById() {
 		// given
-		Member member = MemberFixture.TEST_MEMBER;
+		Member member = MemberFixture.createMember();
 		when(memberRepository.findById(any(Long.class))).thenReturn(Optional.of(member));
 
 		// when
@@ -75,8 +75,8 @@ class MemberServiceTest {
 	@DisplayName("회원 이메일로 찾기")
 	void testFindByEmail() {
 		// given
-		Member member = MemberFixture.TEST_MEMBER;
-		when(memberMapper.toDto(any(Member.class))).thenReturn(MemberFixture.TEST_MEMBER_RESPONSE);
+		Member member = MemberFixture.createMember();
+		when(memberMapper.toDto(any(Member.class))).thenReturn(MemberFixture.MEMBER_RESPONSE);
 		when(memberRepository.findByEmailOrThrow(any(String.class))).thenReturn(member);
 
 		// when

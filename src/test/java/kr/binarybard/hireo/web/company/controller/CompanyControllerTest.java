@@ -22,7 +22,7 @@ import org.springframework.util.MultiValueMap;
 import static kr.binarybard.hireo.web.fixture.CompanyFixture.EXISTING_COMPANY_ID;
 import static kr.binarybard.hireo.web.fixture.CompanyFixture.NON_EXISTING_COMPANY_ID;
 import static kr.binarybard.hireo.web.fixture.CompanyResponseFixture.TEST_COMPANY_RESPONSE;
-import static kr.binarybard.hireo.web.fixture.MemberFixture.TEST_MEMBER_RESPONSE;
+import static kr.binarybard.hireo.web.fixture.MemberFixture.MEMBER_RESPONSE;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -48,7 +48,7 @@ class CompanyControllerTest {
 		when(companyService.findOne(EXISTING_COMPANY_ID)).thenReturn(TEST_COMPANY_RESPONSE);
 		when(companyService.findOne(NON_EXISTING_COMPANY_ID)).thenThrow(new EntityNotFoundException(
 			ErrorCode.COMPANY_NOT_FOUND));
-		when(memberService.findByEmail(anyString())).thenReturn(TEST_MEMBER_RESPONSE);
+		when(memberService.findByEmail(anyString())).thenReturn(MEMBER_RESPONSE);
 	}
 
 	@Test
