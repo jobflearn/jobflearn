@@ -55,7 +55,7 @@ class CompanyServiceTest {
 		when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(TEST_MEMBER));
 
 		// when
-		companyService.registerCompany(TEST_COMPANY_REGISTER);
+		companyService.registerCompany(TEST_COMPANY_REGISTER, TEST_USER);
 
 		// then
 		verify(companyRepository, times(1)).save(TEST_COMPANY);

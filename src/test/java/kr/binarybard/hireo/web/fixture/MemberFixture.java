@@ -1,5 +1,10 @@
 package kr.binarybard.hireo.web.fixture;
 
+import java.util.List;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+
 import kr.binarybard.hireo.web.member.domain.Member;
 import kr.binarybard.hireo.web.member.domain.Role;
 
@@ -11,4 +16,10 @@ public class MemberFixture {
 		.name("testUser")
 		.role(Role.FREELANCER)
 		.build();
+
+	public static final User TEST_USER = new User(
+		TEST_MEMBER.getEmail(),
+		TEST_MEMBER.getPassword(),
+		List.of(new SimpleGrantedAuthority("USER"))
+	);
 }
