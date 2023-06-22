@@ -1,5 +1,6 @@
 package kr.binarybard.hireo.web.company.controller;
 
+import kr.binarybard.hireo.web.member.service.MemberService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,14 +23,16 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class CompanyController {
 	private final CompanyService companyService;
+	private final MemberService memberService;
 
 	@GetMapping("/{id:\\d+}")
 	public String profile(
+		@CurrentUser User user,
 		@PathVariable("id") Long id,
 		Model model
 	) {
-		var foundCompany = companyService.findOne(id);
-		model.addAttribute("company", foundCompany);
+		model.addAttribute("company", companyService.findOne(id));
+		model.addAttribute("member", memberService.findByEmail(user.getUsername()));
 		return "company/profile";
 	}
 

@@ -1,11 +1,13 @@
 package kr.binarybard.hireo.web.member.service;
 
+import jakarta.transaction.Transactional;
 import kr.binarybard.hireo.common.exceptions.AuthException;
 import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
 import kr.binarybard.hireo.common.exceptions.ErrorCode;
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.web.member.domain.Member;
 import kr.binarybard.hireo.web.member.dto.MemberMapper;
+import kr.binarybard.hireo.web.member.dto.MemberResponse;
 import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +39,9 @@ public class MemberService {
 			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_FOUND, id.toString()));
 	}
 
-	public Member findByEmail(String email) {
-		return memberRepository.findByEmail(email)
-			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_FOUND, email));
+	@Transactional
+	public MemberResponse findByEmail(String email) {
+		Member foundMember = memberRepository.findByEmailOrThrow(email);
+		return memberMapper.toDto(foundMember);
 	}
 }

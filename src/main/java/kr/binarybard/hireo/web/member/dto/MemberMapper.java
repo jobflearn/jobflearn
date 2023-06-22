@@ -1,14 +1,15 @@
 package kr.binarybard.hireo.web.member.dto;
 
+import kr.binarybard.hireo.api.bookmark.dto.BookmarkMapper;
+import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.web.member.domain.Member;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
 
-import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
-
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {BookmarkMapper.class})
 public interface MemberMapper {
-	MemberMapper INSTANCE = Mappers.getMapper(MemberMapper.class);
-
 	Member toEntity(SignUpRequest memberDto);
+
+	@Mapping(source = "bookmarks", target = "bookmarks")
+	MemberResponse toDto(Member member);
 }
