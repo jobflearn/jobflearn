@@ -1,8 +1,20 @@
 package kr.binarybard.hireo.web.company.domain;
 
-import jakarta.persistence.*;
 import org.springframework.util.Assert;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import kr.binarybard.hireo.web.location.domain.Location;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -31,6 +43,9 @@ public class Company {
 	@JoinColumn(name = "location_id")
 	private Location location;
 
+	@Enumerated(value = EnumType.STRING)
+	private Industry industry;
+
 	public void changeLocation(Location location) {
 		this.location = location;
 	}
@@ -44,12 +59,13 @@ public class Company {
 	}
 
 	@Builder
-	public Company(String name, Boolean isVerified, String description, Location location) {
+	public Company(String name, Boolean isVerified, String description, Location location, Industry industry) {
 		Assert.notNull(name, "Company name cannot be null!");
 
 		this.name = name;
 		this.isVerified = isVerified;
 		this.description = description;
 		this.location = location;
+		this.industry = industry;
 	}
 }
