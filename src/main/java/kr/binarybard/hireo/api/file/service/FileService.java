@@ -46,12 +46,23 @@ public class FileService {
 		try {
 			validateFileSize(file.getSize());
 			byte[] fileBytes = file.getBytes();
+
+			String originalFileName = file.getOriginalFilename();
+			validateFileName(originalFileName);
+			String fileExtension = getFileExtension(originalFileName);
 			String hashedName = hashFile(fileBytes);
+			hashedName += fileExtension;
+
 			Path filePath = saveFile(file, hashedName);
 			return buildFileResponse(filePath, file.getSize(), file.getContentType());
 		} catch (IOException ex) {
 			throw new FileProcessingException(ErrorCode.FILE_STORAGE_FAILED, "파일명: " + file.getOriginalFilename());
 		}
+	}
+
+	private String getFileExtension(String fileName) {
+		int dotIndex = fileName.lastIndexOf(".");
+		return dotIndex < 0 ? "" : fileName.substring(dotIndex);
 	}
 
 	private FileResponse buildFileResponse(Path filePath, long fileSize, String contentType) {

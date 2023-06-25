@@ -25,7 +25,7 @@ public class FileApiController {
 		return ResponseEntity.ok().body(fileService.storeAsHash(file));
 	}
 
-	@GetMapping({"/api/files/load/{fileName}", "/files/load/{fileName}"})
+	@GetMapping({"/api/files/load/{fileName}", "/attachments/{fileName}"})
 	public ResponseEntity<Resource> loadFile(@PathVariable String fileName) {
 		var resource = fileService.load(fileName);
 		return ResponseEntity.ok()

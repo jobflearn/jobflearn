@@ -20,6 +20,7 @@ import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -61,6 +62,38 @@ class FileServiceTest {
 	}
 
 	@Test
+	@DisplayName("파일 저장 도중 IOException이 발생하는 경우 예외가 발생해야 한다.")
+	void testStoreFileWithIOException() throws IOException {
+		// given
+		String originalFilename = "testFile.txt";
+
+		when(file.getOriginalFilename()).thenReturn(originalFilename);
+		when(file.getSize()).thenReturn(20L);
+		when(file.getInputStream()).thenThrow(new IOException());
+
+		// expected
+		assertThatThrownBy(() -> fileService.store(file))
+			.isInstanceOf(FileProcessingException.class)
+			.hasMessageContaining("파일명: " + originalFilename);
+	}
+
+	@Test
+	@DisplayName("해시 파일 저장 도중 IOException이 발생하는 경우 예외가 발생해야 한다.")
+	void testStoreFileAsHashWithIOException() throws IOException {
+		// given
+		String originalFilename = "testFile.txt";
+
+		when(file.getOriginalFilename()).thenReturn(originalFilename);
+		when(file.getSize()).thenReturn(20L);
+		when(file.getBytes()).thenThrow(new IOException());
+
+		// expected
+		assertThatThrownBy(() -> fileService.storeAsHash(file))
+			.isInstanceOf(FileProcessingException.class)
+			.hasMessageContaining("파일명: " + originalFilename);
+	}
+
+	@Test
 	@DisplayName("파일 해시명으로 업로드는 정상적으로 처리되어야 한다.")
 	void testStoreFileAsHash() throws IOException {
 		// given
@@ -68,6 +101,7 @@ class FileServiceTest {
 		String contentType = "text/plain";
 		long fileSize = 20L;
 
+		when(file.getOriginalFilename()).thenReturn(originalFilename);
 		when(file.getContentType()).thenReturn(contentType);
 		when(file.getSize()).thenReturn(fileSize);
 		when(file.getBytes()).thenReturn("test content".getBytes());
@@ -81,6 +115,30 @@ class FileServiceTest {
 		assertThat(response.getFileSize()).isEqualTo(fileSize);
 		assertThat(response.getContentType()).isEqualTo(contentType);
 	}
+
+	@Test
+	@DisplayName("파일 확장자가 없는 경우 파일 이름이 해시 값으로만 구성되어야 한다.")
+	void testStoreFileAsHashWithoutExtension() throws IOException {
+		// given
+		String originalFilename = "testFile";
+		String contentType = "text/plain";
+		long fileSize = 20L;
+
+		when(file.getOriginalFilename()).thenReturn(originalFilename);
+		when(file.getContentType()).thenReturn(contentType);
+		when(file.getSize()).thenReturn(fileSize);
+		when(file.getBytes()).thenReturn("test content".getBytes());
+		when(file.getInputStream()).thenReturn(new ByteArrayInputStream("test content".getBytes()));
+
+		// when
+		FileResponse response = fileService.storeAsHash(file);
+
+		// then
+		assertThat(response.getFileName()).doesNotContain(".");
+		assertThat(response.getFileSize()).isEqualTo(fileSize);
+		assertThat(response.getContentType()).isEqualTo(contentType);
+	}
+
 
 	@Test
 	@DisplayName("파일 로드는 정상적으로 처리되어야 한다.")
@@ -129,6 +187,18 @@ class FileServiceTest {
 
 		// expected
 		assertThatThrownBy(() -> fileService.store(file))
+			.isInstanceOf(FileProcessingException.class);
+	}
+
+	@Test
+	@DisplayName("파일 저장 실패 시 FileProcessingException이 발생해야 한다.")
+	void testStoreFileFailure() throws IOException {
+		MultipartFile mockFile = mock(MultipartFile.class);
+		when(mockFile.getOriginalFilename()).thenReturn("test.txt");
+		when(mockFile.getSize()).thenReturn(1024L);
+		when(mockFile.getInputStream()).thenThrow(new IOException());
+
+		assertThatThrownBy(() -> fileService.store(mockFile))
 			.isInstanceOf(FileProcessingException.class);
 	}
 }
