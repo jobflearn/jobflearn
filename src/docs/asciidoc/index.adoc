@@ -1,0 +1,105 @@
+= API 가이드
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+== 인증 API
+
+=== 로그인
+
+사용자는 이메일과 비밀번호를 통해 POST 요청을 `/api/auth/login` 엔드포인트로 보내어 로그인할 수 있습니다.
+
+[source,http]
+----
+POST /api/auth/login
+----
+
+include::{snippets}/login/curl-request.adoc[]
+==== HTTP 요청
+
+include::{snippets}/login/http-request.adoc[]
+
+include::{snippets}/login/request-fields.adoc[]
+
+==== HTTP 응답
+
+include::{snippets}/login/http-response.adoc[]
+
+=== 토큰 재발급
+
+사용자는 POST 요청을 `/api/auth/reissue` 엔드포인트로 보내어 refresh token을 이용하여 새로운 access token을 받을 수 있습니다.
+
+[source,http]
+----
+POST /api/auth/reissue
+----
+
+include::{snippets}/reissue-token/curl-request.adoc[]
+==== HTTP 요청
+
+include::{snippets}/reissue-token/http-request.adoc[]
+
+include::{snippets}/reissue-token/request-fields.adoc[]
+
+==== HTTP 응답
+
+include::{snippets}/reissue-token/http-response.adoc[]
+
+== 파일 API
+
+=== 파일 업로드
+
+사용자는 POST 요청을 `/api/files/upload` 또는 `/files/upload` 엔드포인트로 보내어 파일을 업로드할 수 있습니다.
+
+[source,http]
+----
+POST /api/files/upload
+----
+
+include::{snippets}/upload-file/curl-request.adoc[]
+==== HTTP 요청
+
+include::{snippets}/upload-file/http-request.adoc[]
+
+==== HTTP 응답
+
+include::{snippets}/upload-file/http-response.adoc[]
+
+=== 해시로 파일 업로드
+
+사용자는 POST 요청을 `/api/files/upload/hash` 또는 `/files/upload/hash` 엔드포인트로 보내어 해시를 이용하여 파일을 업로드할 수 있습니다.
+
+[source,http]
+----
+POST /api/files/upload/hash
+----
+
+include::{snippets}/upload-file-hash/curl-request.adoc[]
+==== HTTP 요청
+
+include::{snippets}/upload-file-hash/http-request.adoc[]
+
+==== HTTP 응답
+
+include::{snippets}/upload-file-hash/http-response.adoc[]
+
+=== 파일 로드
+
+사용자는 GET 요청을 `/api/files/load/{fileName}` 또는 `/files/load/{fileName}` 엔드포인트로 보내어 특정 파일을 로드할 수 있습니다.
+
+[source,http]
+----
+GET /api/files/load/{fileName}
+----
+
+include::{snippets}/load-file/curl-request.adoc[]
+==== HTTP 요청
+
+include::{snippets}/load-file/http-request.adoc[]
+
+==== HTTP 응답
+
+include::{snippets}/load-file/http-response.adoc[]
