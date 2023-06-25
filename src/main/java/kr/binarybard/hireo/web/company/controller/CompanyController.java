@@ -13,6 +13,7 @@ import kr.binarybard.hireo.common.CurrentUser;
 import kr.binarybard.hireo.web.company.dto.CompanyRegister;
 import kr.binarybard.hireo.web.company.dto.CompanyResponse;
 import kr.binarybard.hireo.web.company.service.CompanyService;
+import kr.binarybard.hireo.web.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,14 +23,16 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class CompanyController {
 	private final CompanyService companyService;
+	private final MemberService memberService;
 
 	@GetMapping("/{id:\\d+}")
 	public String profile(
+		@CurrentUser User user,
 		@PathVariable("id") Long id,
 		Model model
 	) {
-		var foundCompany = companyService.findOne(id);
-		model.addAttribute("company", foundCompany);
+		model.addAttribute("company", companyService.findOne(id));
+		model.addAttribute("member", memberService.findByEmail(user.getUsername()));
 		return "company/profile";
 	}
 

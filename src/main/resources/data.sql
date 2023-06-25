@@ -63,12 +63,12 @@ VALUES ('OpenAI', true, 'OpenAI는 인공 지능 연구소입니다.', 1),
        ('Super Selectos', false, 'Super Selectos는 엘살바도르의 슈퍼마켓 체인입니다.', 30);
 
 -- 비밀번호 죄다 1임
-INSERT INTO member (email, password, name, role)
+INSERT INTO members (email, password, name, role)
 VALUES ('free@test.com', '{bcrypt}$2a$10$HlVJohlGeJPOmW.pi231Ke/dTztPmv8s7GS7DZS8fcWHVIP4Dez7m', 'Test User 1',
         'FREELANCER');
-INSERT INTO member (email, password, name, role)
+INSERT INTO members (email, password, name, role)
 VALUES ('emp@test.com', '{bcrypt}$2a$10$HlVJohlGeJPOmW.pi231Ke/dTztPmv8s7GS7DZS8fcWHVIP4Dez7m', 'Test User 2',
         'EMPLOYER');
-INSERT INTO member (email, password, name, role)
+INSERT INTO members (email, password, name, role)
 VALUES ('admin@test.com', '{bcrypt}$2a$10$HlVJohlGeJPOmW.pi231Ke/dTztPmv8s7GS7DZS8fcWHVIP4Dez7m', 'Test User 3',
         'ADMINISTRATOR');

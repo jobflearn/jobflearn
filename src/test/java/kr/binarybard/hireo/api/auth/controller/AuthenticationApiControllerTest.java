@@ -2,10 +2,10 @@ package kr.binarybard.hireo.api.auth.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-import jakarta.servlet.ServletException;
 import kr.binarybard.hireo.api.auth.dto.RefreshTokenRequest;
 import kr.binarybard.hireo.api.auth.dto.SignInRequest;
 import kr.binarybard.hireo.api.auth.repository.RefreshTokenRepository;
+import kr.binarybard.hireo.common.AcceptanceTest;
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import kr.binarybard.hireo.web.member.service.MemberService;
@@ -13,23 +13,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-class AuthenticationApiControllerTest {
-
-	@Autowired
-	private MockMvc mockMvc;
+class AuthenticationApiControllerTest extends AcceptanceTest {
 
 	@Autowired
 	private ObjectMapper objectMapper;

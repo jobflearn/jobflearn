@@ -7,7 +7,7 @@ import kr.binarybard.hireo.common.exceptions.ErrorCode;
 import kr.binarybard.hireo.common.exceptions.InvalidValueException;
 import kr.binarybard.hireo.config.jwt.JwtTokenProvider;
 import kr.binarybard.hireo.web.member.domain.Member;
-import kr.binarybard.hireo.web.member.service.MemberService;
+import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +22,17 @@ import java.util.Base64;
 public class RefreshTokenService {
 	private final RefreshTokenRepository refreshTokenRepository;
 	private final JwtTokenProvider tokenProvider;
-	private final MemberService memberService;
+	private final MemberRepository memberRepository;
 
 	@Transactional
 	public void deleteTokenByEmail(String email) {
-		refreshTokenRepository.deleteByMember(memberService.findByEmail(email));
+		refreshTokenRepository.deleteByMember(memberRepository.findByEmailOrThrow(email));
 	}
 
 	@Transactional
 	public Long save(String email, String token) {
 		var refreshToken = RefreshToken.builder()
-			.member(memberService.findByEmail(email))
+			.member(memberRepository.findByEmailOrThrow(email))
 			.token(hashToken(token))
 			.expiryDate(Instant.now().plusMillis(tokenProvider.REFRESH_TOKEN_EXPIRE_TIME))
 			.build();
@@ -59,14 +59,14 @@ public class RefreshTokenService {
 
 	private boolean isTokenStored(String token) {
 		String username = tokenProvider.getUsernameFromToken(token);
-		Member member = memberService.findByEmail(username);
+		Member member = memberRepository.findByEmailOrThrow(username);
 		var refreshToken = refreshTokenRepository.findByMemberAndToken(member, hashToken(token));
 		return refreshToken.isPresent();
 	}
 
 	private boolean isTokenNotExpired(String token) {
 		String username = tokenProvider.getUsernameFromToken(token);
-		Member member = memberService.findByEmail(username);
+		Member member = memberRepository.findByEmailOrThrow(username);
 		var refreshToken = refreshTokenRepository.findByMemberAndToken(member, hashToken(token));
 		return refreshToken
 			.filter(value -> !value.getExpiryDate().isBefore(Instant.now()))

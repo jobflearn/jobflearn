@@ -179,7 +179,6 @@ $(document).ready(function(){
 		});
 	});
 
-
 	/*--------------------------------------------------*/
 	/*  Sliding Button Icon
 	/*--------------------------------------------------*/
@@ -188,9 +187,25 @@ $(document).ready(function(){
 		$(this).toggleClass('bookmarked');
 	});
 
-    $('.bookmark-button').on('click', function(e){
-    	e.preventDefault();
-		$(this).toggleClass('bookmarked');
+	$('.bookmark-button').on('click', function(e){
+		e.preventDefault();
+
+		// Post bookmark when button is clicked
+		const targetId = $(this).data('id');
+		let method = 'POST';
+
+		if ($(this).hasClass("bookmarked"))
+			method = 'DELETE';
+
+		$.ajax({
+			url: '/companies/' + targetId + '/bookmarks',
+			context: this,
+			type: method,
+			success: function() {
+				$(this).toggleClass('bookmarked');
+			}
+		});
+
 	});
 
 

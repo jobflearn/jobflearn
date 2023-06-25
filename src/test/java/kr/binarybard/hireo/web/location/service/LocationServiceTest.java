@@ -1,7 +1,6 @@
 package kr.binarybard.hireo.web.location.service;
 
-import static kr.binarybard.hireo.web.fixture.LocationDtoFixture.*;
-import static kr.binarybard.hireo.web.fixture.LocationFixture.*;
+import static kr.binarybard.hireo.common.fixture.LocationFixture.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -39,8 +38,8 @@ class LocationServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		location = TEST_LOCATION;
-		locationDto = TEST_LOCATION_DTO;
+		location = TEST_LOCATION_1;
+		locationDto = TEST_LOCATION_DTO_1;
 	}
 
 	@Test

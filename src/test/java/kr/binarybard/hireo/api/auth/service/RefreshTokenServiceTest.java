@@ -4,7 +4,7 @@ import kr.binarybard.hireo.api.auth.domain.RefreshToken;
 import kr.binarybard.hireo.api.auth.repository.RefreshTokenRepository;
 import kr.binarybard.hireo.config.jwt.JwtTokenProvider;
 import kr.binarybard.hireo.web.member.domain.Member;
-import kr.binarybard.hireo.web.member.service.MemberService;
+import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ class RefreshTokenServiceTest {
 	private JwtTokenProvider jwtTokenProvider;
 
 	@Mock
-	private MemberService memberService;
+	private MemberRepository memberRepository;
 
 	@InjectMocks
 	private RefreshTokenService refreshTokenService;
@@ -59,7 +59,7 @@ class RefreshTokenServiceTest {
 		// given
 		given(jwtTokenProvider.validateToken(validToken)).willReturn(true);
 		given(jwtTokenProvider.getUsernameFromToken(validToken)).willReturn(username);
-		given(memberService.findByEmail(username)).willReturn(member);
+		given(memberRepository.findByEmailOrThrow(username)).willReturn(member);
 		given(refreshTokenRepository.findByMemberAndToken(any(Member.class), anyString()))
 			.willReturn(Optional.of(refreshToken));
 
@@ -90,7 +90,7 @@ class RefreshTokenServiceTest {
 		// given
 		given(jwtTokenProvider.validateToken(validToken)).willReturn(true);
 		given(jwtTokenProvider.getUsernameFromToken(validToken)).willReturn(username);
-		given(memberService.findByEmail(username)).willReturn(member);
+		given(memberRepository.findByEmailOrThrow(username)).willReturn(member);
 		given(refreshTokenRepository.findByMemberAndToken(any(Member.class), anyString()))
 			.willReturn(Optional.empty());
 
@@ -110,7 +110,7 @@ class RefreshTokenServiceTest {
 			.build();
 		given(jwtTokenProvider.validateToken(validToken)).willReturn(true);
 		given(jwtTokenProvider.getUsernameFromToken(validToken)).willReturn(username);
-		given(memberService.findByEmail(username)).willReturn(member);
+		given(memberRepository.findByEmailOrThrow(username)).willReturn(member);
 		given(refreshTokenRepository.findByMemberAndToken(any(Member.class), anyString()))
 			.willReturn(Optional.of(expiredToken));
 
