@@ -51,7 +51,7 @@ public class FileService {
 			validateFileName(originalFileName);
 			String fileExtension = getFileExtension(originalFileName);
 			String hashedName = hashFile(fileBytes);
-			hashedName += "." + fileExtension;
+			hashedName += fileExtension;
 
 			Path filePath = saveFile(file, hashedName);
 			return buildFileResponse(filePath, file.getSize(), file.getContentType());
@@ -62,7 +62,7 @@ public class FileService {
 
 	private String getFileExtension(String fileName) {
 		int dotIndex = fileName.lastIndexOf(".");
-		return dotIndex < 0 ? "" : fileName.substring(dotIndex + 1);
+		return dotIndex < 0 ? "" : fileName.substring(dotIndex);
 	}
 
 	private FileResponse buildFileResponse(Path filePath, long fileSize, String contentType) {
