@@ -68,6 +68,7 @@ class FileServiceTest {
 		String contentType = "text/plain";
 		long fileSize = 20L;
 
+		when(file.getOriginalFilename()).thenReturn(originalFilename);
 		when(file.getContentType()).thenReturn(contentType);
 		when(file.getSize()).thenReturn(fileSize);
 		when(file.getBytes()).thenReturn("test content".getBytes());
