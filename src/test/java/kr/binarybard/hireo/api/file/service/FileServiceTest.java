@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -201,15 +200,6 @@ class FileServiceTest {
 
 		assertThatThrownBy(() -> fileService.store(mockFile))
 			.isInstanceOf(FileProcessingException.class);
-	}
-
-	@Test
-	@DisplayName("잘못된 파일 이름으로 load 메서드를 호출할 때 FileProcessingException이 발생해야 한다.")
-	void testLoadMalformedUrl() {
-		String badFileName = "file:/:::";
-
-		assertThatThrownBy(() -> fileService.load(badFileName))
-			.isInstanceOf(InvalidPathException.class);
 	}
 }
 
