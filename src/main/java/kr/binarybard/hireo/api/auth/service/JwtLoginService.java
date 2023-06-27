@@ -5,7 +5,6 @@ import kr.binarybard.hireo.api.auth.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,7 +17,6 @@ public class JwtLoginService {
 		var authenticationToken = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
 		var authentication = authenticationManagerBuilder.getObject()
 			.authenticate(authenticationToken);
-		SecurityContextHolder.getContext().setAuthentication(authentication);
 		return tokenService.generateJwtTokens(request.getEmail(), authentication);
 	}
 }
