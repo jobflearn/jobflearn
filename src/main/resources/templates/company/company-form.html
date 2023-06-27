@@ -111,7 +111,7 @@
                             </div>
 
                             <form th:action="@{/companies/new}" method="post" id="company-register-form"
-                                  th:object="${company}">
+                                  enctype="multipart/form-data" th:object="${company}">
                                 <div class="content with-padding padding-bottom-10">
                                     <div class="row">
 
@@ -227,7 +227,7 @@
                                                 <div class="uploadButton margin-top-30">
                                                     <input class="uploadButton-input" type="file"
                                                            accept="image/*, application/pdf"
-                                                           id="upload" multiple/>
+                                                           id="upload" th:field="*{companyLogo}" multiple/>
                                                     <label class="uploadButton-button ripple-effect" for="upload">Upload
                                                         Files</label>
                                                     <span class="uploadButton-file-name">Images or documents that might be helpful in describing your company</span>
