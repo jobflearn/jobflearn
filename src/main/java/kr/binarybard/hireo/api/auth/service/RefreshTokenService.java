@@ -16,6 +16,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.Base64;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -50,26 +51,21 @@ public class RefreshTokenService {
 	}
 
 	public boolean validateToken(String token) {
-		return isTokenValid(token) && isTokenStored(token) && isTokenNotExpired(token);
+		if (!tokenProvider.validateToken(token)) {
+			return false;
+		}
+
+		Optional<RefreshToken> storedRefreshToken = getStoredRefreshToken(token);
+		return storedRefreshToken.isPresent() && isTokenNotExpired(storedRefreshToken.get());
 	}
 
-	private boolean isTokenValid(String token) {
-		return tokenProvider.validateToken(token);
-	}
-
-	private boolean isTokenStored(String token) {
+	private Optional<RefreshToken> getStoredRefreshToken(String token) {
 		String username = tokenProvider.getUsernameFromToken(token);
 		Member member = memberRepository.findByEmailOrThrow(username);
-		var refreshToken = refreshTokenRepository.findByMemberAndToken(member, hashToken(token));
-		return refreshToken.isPresent();
+		return refreshTokenRepository.findByMemberAndToken(member, hashToken(token));
 	}
 
-	private boolean isTokenNotExpired(String token) {
-		String username = tokenProvider.getUsernameFromToken(token);
-		Member member = memberRepository.findByEmailOrThrow(username);
-		var refreshToken = refreshTokenRepository.findByMemberAndToken(member, hashToken(token));
-		return refreshToken
-			.filter(value -> !value.getExpiryDate().isBefore(Instant.now()))
-			.isPresent();
+	private boolean isTokenNotExpired(RefreshToken token) {
+		return !token.getExpiryDate().isBefore(Instant.now());
 	}
 }
