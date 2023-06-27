@@ -1,10 +1,12 @@
 package kr.binarybard.hireo.web.location.service;
 
-import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
-import kr.binarybard.hireo.web.location.domain.Location;
-import kr.binarybard.hireo.web.location.dto.LocationDto;
-import kr.binarybard.hireo.web.location.dto.LocationMapper;
-import kr.binarybard.hireo.web.location.repository.LocationRepository;
+import static kr.binarybard.hireo.common.fixture.LocationFixture.*;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,14 +15,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
-import static kr.binarybard.hireo.common.fixture.LocationFixture.TEST_LOCATION_1;
-import static kr.binarybard.hireo.common.fixture.LocationFixture.TEST_LOCATION_DTO_1;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
+import kr.binarybard.hireo.web.location.domain.Location;
+import kr.binarybard.hireo.web.location.dto.LocationDto;
+import kr.binarybard.hireo.web.location.dto.LocationMapper;
+import kr.binarybard.hireo.web.location.repository.LocationRepository;
 
 @ExtendWith(MockitoExtension.class)
 class LocationServiceTest {

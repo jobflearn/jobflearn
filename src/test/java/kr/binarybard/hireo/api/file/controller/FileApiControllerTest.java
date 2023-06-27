@@ -1,9 +1,14 @@
 package kr.binarybard.hireo.api.file.controller;
 
-import kr.binarybard.hireo.api.file.dto.FileResponse;
-import kr.binarybard.hireo.api.file.service.FileService;
-import kr.binarybard.hireo.common.AcceptanceTest;
-import kr.binarybard.hireo.web.fixture.MemberFixture;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +20,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
-
-import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import kr.binarybard.hireo.api.file.dto.FileResponse;
+import kr.binarybard.hireo.api.file.service.FileService;
+import kr.binarybard.hireo.common.AcceptanceTest;
+import kr.binarybard.hireo.common.fixture.MemberFixture;
 
 @WithMockUser(username = MemberFixture.TEST_EMAIL)
 class FileApiControllerTest extends AcceptanceTest {

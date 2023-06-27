@@ -1,6 +1,5 @@
 package kr.binarybard.hireo.web.company.controller;
 
-import kr.binarybard.hireo.web.member.service.MemberService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +13,7 @@ import kr.binarybard.hireo.common.CurrentUser;
 import kr.binarybard.hireo.web.company.dto.CompanyRegister;
 import kr.binarybard.hireo.web.company.dto.CompanyResponse;
 import kr.binarybard.hireo.web.company.service.CompanyService;
+import kr.binarybard.hireo.web.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

@@ -46,8 +46,14 @@ public class Company {
 	@Enumerated(value = EnumType.STRING)
 	private Industry industry;
 
+	private String logoHash;
+
 	public void changeLocation(Location location) {
 		this.location = location;
+	}
+
+	public void changeLogo(String logoHash) {
+		this.logoHash = logoHash;
 	}
 
 	public void changeDescription(String description) {
@@ -59,12 +65,14 @@ public class Company {
 	}
 
 	@Builder
-	public Company(String name, Boolean isVerified, String description, Location location, Industry industry) {
+	public Company(String name, Boolean isVerified, String description, String logoHash,
+		Location location, Industry industry) {
 		Assert.notNull(name, "Company name cannot be null!");
 
 		this.name = name;
 		this.isVerified = isVerified;
 		this.description = description;
+		this.logoHash = logoHash;
 		this.location = location;
 		this.industry = industry;
 	}

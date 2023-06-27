@@ -16,5 +16,7 @@ public interface CompanyMapper {
 
 	@Mapping(target = "locationDto", source = "location")
 	@Mapping(target = "countryName", ignore = true)
+	@Mapping(target = "logoHash", ignore = true)
 	CompanyResponse toDto(Company company);
+
 }

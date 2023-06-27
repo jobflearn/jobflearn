@@ -1,9 +1,16 @@
 package kr.binarybard.hireo.api.docs;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.binarybard.hireo.api.file.dto.FileResponse;
-import kr.binarybard.hireo.api.file.service.FileService;
-import kr.binarybard.hireo.web.fixture.MemberFixture;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,25 +19,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import kr.binarybard.hireo.api.file.dto.FileResponse;
+import kr.binarybard.hireo.api.file.service.FileService;
+import kr.binarybard.hireo.common.fixture.MemberFixture;
 
 @WithMockUser(username = MemberFixture.TEST_EMAIL)
 class FileApiControllerTest extends RestDocsConfiguration {
@@ -53,7 +50,8 @@ class FileApiControllerTest extends RestDocsConfiguration {
 		Resource mockResource = mock(Resource.class);
 
 		when(fileService.store(any())).thenReturn(new FileResponse("testFile.jpg", 12345, "image/jpeg", now));
-		when(fileService.storeAsHash(any())).thenReturn(new FileResponse("hashedTestFile.jpg", 12345, "image/jpeg", now));
+		when(fileService.storeAsHash(any())).thenReturn(
+			new FileResponse("hashedTestFile.jpg", 12345, "image/jpeg", now));
 		when(fileService.load(anyString())).thenReturn(mockResource);
 		when(mockResource.getFilename()).thenReturn("testFile.jpg");
 	}
