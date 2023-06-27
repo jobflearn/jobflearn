@@ -337,8 +337,8 @@
                 <!-- Social Login -->
                 <div class="social-login-separator"><span th:text="#{or}">혹은</span></div>
                 <div class="social-login-buttons">
-                    <button class="facebook-login ripple-effect"><i class="icon-brand-facebook-f"></i>
-                        <th:block th:text="#{login-with-facebook}">페이스북으로 로그인</th:block>
+                    <button class="kakao-login ripple-effect"><i class="icon-brand-kakao"></i>
+                        <th:block th:text="#{login-with-kakao}">카카오로 로그인</th:block>
                     </button>
                     <button class="google-login ripple-effect"><i class="icon-brand-google-plus-g"></i>
                         <th:block th:text="#{login-with-google}">구글로 로그인</th:block>
@@ -416,8 +416,8 @@
                 <!-- Social Login -->
                 <div class="social-login-separator"><span th:text="#{or}">혹은</span></div>
                 <div class="social-login-buttons">
-                    <button class="facebook-login ripple-effect"><i class="icon-brand-facebook-f"></i>
-                        <th:block th:text="#{register-with-facebook}">페이스북으로 회원가입</th:block>
+                    <button class="kakao-login ripple-effect"><i class="icon-brand-kakao"></i>
+                        <th:block th:text="#{register-with-kakao}">카카오로 회원가입</th:block>
                     </button>
                     <button class="google-login ripple-effect"><i class="icon-brand-google-plus-g"></i>
                         <th:block th:text="#{register-with-google}">구글로 회원가입</th:block>
@@ -434,61 +434,37 @@
 
 <!-- Scripts
 ================================================== -->
-<script th:src="@{js/jquery-3.6.0.min.js}"></script>
-<script th:src="@{js/jquery-migrate-3.3.2.min.js}"></script>
-<script th:src="@{js/mmenu.min.js}"></script>
-<script th:src="@{js/tippy.all.min.js}"></script>
-<script th:src="@{js/simplebar.min.js}"></script>
-<script th:src="@{js/bootstrap-slider.min.js}"></script>
-<script th:src="@{js/bootstrap-select.min.js}"></script>
-<script th:src="@{js/snackbar.js}"></script>
-<script th:src="@{js/clipboard.min.js}"></script>
-<script th:src="@{js/counterup.min.js}"></script>
-<script th:src="@{js/magnific-popup.min.js}"></script>
-<script th:src="@{js/slick.min.js}"></script>
-<script th:src="@{js/custom.js}"></script>
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/js/jquery-migrate-3.3.2.min.js}"></script>
+<script th:src="@{/js/mmenu.min.js}"></script>
+<script th:src="@{/js/tippy.all.min.js}"></script>
+<script th:src="@{/js/simplebar.min.js}"></script>
+<script th:src="@{/js/bootstrap-slider.min.js}"></script>
+<script th:src="@{/js/bootstrap-select.min.js}"></script>
+<script th:src="@{/js/snackbar.js}"></script>
+<script th:src="@{/js/clipboard.min.js}"></script>
+<script th:src="@{/js/counterup.min.js}"></script>
+<script th:src="@{/js/magnific-popup.min.js}"></script>
+<script th:src="@{/js/slick.min.js}"></script>
+<script th:src="@{/js/custom.js}"></script>
 
 <!-- Snackbar // documentation: https://www.polonel.com/snackbar/ -->
 <script>
-    // Snackbar for user status switcher
-    $('#snackbar-user-status label').click(function () {
+    // Snackbar for copy to clipboard button
+    $('.copy-url-button').click(function () {
         Snackbar.show({
-            text: 'Your status has been changed!',
-            pos: 'bottom-center',
-            showAction: false,
-            actionText: "Dismiss",
-            duration: 3000,
-            textColor: '#fff',
-            backgroundColor: '#383838'
+            text: '클립보드로 복사되었습니다!',
         });
     });
 </script>
 
 
-<!-- Google Autocomplete -->
-<script>
-    function initAutocomplete() {
-        var options = {
-            types: ['(cities)'],
-            // componentRestrictions: {country: "us"}
-        };
-
-        var input = document.getElementById('autocomplete-input');
-        var autocomplete = new google.maps.places.Autocomplete(input, options);
-    }
-
-    // Autocomplete adjustment for homepage
-    if ($('.intro-banner-search-form')[0]) {
-        setTimeout(function () {
-            $(".pac-container").prependTo(".intro-search-field.with-autocomplete");
-        }, 300);
-    }
-
-</script>
-
 <!-- Google API & Maps -->
 <!-- Geting an API Key: https://developers.google.com/maps/documentation/javascript/get-api-key -->
-<script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>-->
+<script th:src="@{/js/infobox.min.js}"></script>
+<script th:src="@{/js/markerclusterer.js}"></script>
+<script th:src="@{/js/maps.js}"></script>
 
 </body>
 </html>

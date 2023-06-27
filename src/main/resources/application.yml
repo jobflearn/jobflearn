@@ -1,0 +1,60 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:mem:test
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ENC(81j6Ry2FL5uMs/eRGsZNm4h8MidVhKLVFvVf3QCjgBupMk+nW+r++mG6qSZnensT)
+            redirect-uri: http://localhost:8080/auth/login/oauth2/code/kakao
+            client-authentication-method: POST
+            authorization-grant-type: authorization_code
+            client-name: Kakao
+            scope:
+              - profile_nickname
+              - account_email
+          google:
+            client-id: ENC(GGxSiY4dJc/E6UNpZDNPQccupJwXNqehwl6FSxm93FC1kXczV90J0k28mFpFDgIdGeARuGdA/x/M7MCjyt7TlwuZQYCqF+xKL3nlDYmWBXB8OMWsJDGJ0w==)
+            client-secret: ENC(kLeeCLWB2GPWwQSDj+0vDSvhwvWqBkT3SK4Ou7s7G/vvWZ3tZwyBYkmWqDLdGt1Z)
+            redirect-uri: http://localhost:8080/auth/login/oauth2/code/google
+            client-name: Google
+            scope:
+              - email
+              - profile
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    defer-datasource-initialization: true
+
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    password: ${JASYPT_DEFAULT_PASSWORD}
+
+security:
+  jwt:
+    access-expiration-time: 86400000
+    refresh-expiration-time: 604800000
+    base64-secret: ENC(pMCfBtvxA+VV4S6cDjAokWd0z0Qr883sMgCOEB6fjeJbL84smdB9NnUj+NO2SiTqBUoM4LPjbw15Yxv+3tg0uBHHmH7X0E9JGtUmIhHoXEwQxc/Izw30z99On6j/DalJ5XSfSTdERxs=)
+
+file:
+    upload-dir: D:\Images

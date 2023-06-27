@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="ko" th:replace="~{templates/layouts/home::layout(content=~{::body})}" xmlns:th="http://www.thymeleaf.org">
+<body class="gray">
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+
+        <!-- Dashboard Sidebar
+        ================================================== -->
+        <div class="dashboard-sidebar">
+            <div class="dashboard-sidebar-inner" data-simplebar>
+                <div class="dashboard-nav-container">
+
+                    <!-- Responsive Navigation Trigger -->
+                    <a href="#" class="dashboard-responsive-nav-trigger">
+					<span class="hamburger hamburger--collapse">
+						<span class="hamburger-box">
+							<span class="hamburger-inner"></span>
+						</span>
+					</span>
+                        <span class="trigger-title">Dashboard Navigation</span>
+                    </a>
+
+                    <!-- Navigation -->
+                    <div class="dashboard-nav">
+                        <div class="dashboard-nav-inner">
+
+                            <ul data-submenu-title="Start">
+                                <li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i>
+                                    Dashboard</a></li>
+                                <li><a href="dashboard-messages.html"><i
+                                        class="icon-material-outline-question-answer"></i> Messages <span
+                                        class="nav-tag">2</span></a></li>
+                                <li><a href="dashboard-bookmarks.html"><i class="icon-material-outline-star-border"></i>
+                                    Bookmarks</a></li>
+                                <li><a href="dashboard-reviews.html"><i class="icon-material-outline-rate-review"></i>
+                                    Reviews</a></li>
+                            </ul>
+
+                            <ul data-submenu-title="Organize and Manage">
+                                <li class="active-submenu"><a href="#"><i
+                                        class="icon-material-outline-business-center"></i> Jobs</a>
+                                    <ul>
+                                        <li><a href="dashboard-manage-jobs.html">Manage Jobs <span
+                                                class="nav-tag">3</span></a></li>
+                                        <li><a href="dashboard-manage-candidates.html">Manage Candidates</a></li>
+                                        <li><a href="dashboard-post-a-job.html">Post a Job</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#"><i class="icon-material-outline-assignment"></i> Tasks</a>
+                                    <ul>
+                                        <li><a href="dashboard-manage-tasks.html">Manage Tasks <span
+                                                class="nav-tag">2</span></a></li>
+                                        <li><a href="dashboard-manage-bidders.html">Manage Bidders</a></li>
+                                        <li><a href="dashboard-my-active-bids.html">My Active Bids <span
+                                                class="nav-tag">4</span></a></li>
+                                        <li><a href="dashboard-post-a-task.html">Post a Task</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <ul data-submenu-title="Account">
+                                <li><a href="dashboard-settings.html"><i class="icon-material-outline-settings"></i>
+                                    Settings</a></li>
+                                <li><a href="index-logged-out.html"><i
+                                        class="icon-material-outline-power-settings-new"></i> Logout</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <!-- Navigation / End -->
+
+                </div>
+            </div>
+        </div>
+        <!-- Dashboard Sidebar / End -->
+
+
+        <!-- Dashboard Content
+        ================================================== -->
+        <div class="dashboard-content-container" data-simplebar>
+            <div class="dashboard-content-inner">
+
+                <!-- Dashboard Headline -->
+                <div class="dashboard-headline">
+                    <h3>Register a Company</h3>
+
+                    <!-- Breadcrumbs -->
+                    <nav id="breadcrumbs" class="dark">
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Dashboard</a></li>
+                            <li>Register a Company</li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <!-- Row -->
+                <div class="row">
+
+                    <!-- Dashboard Box -->
+                    <div class="col-xl-12">
+                        <div class="dashboard-box margin-top-0">
+
+                            <!-- Headline -->
+                            <div class="headline">
+                                <h3><i class="icon-feather-folder-plus"></i> Company Registration Form</h3>
+                            </div>
+
+                            <form th:action="@{/companies/new}" method="post" id="company-register-form"
+                                  enctype="multipart/form-data" th:object="${company}">
+                                <div class="content with-padding padding-bottom-10">
+                                    <div class="row">
+
+                                        <div class="col-xl-4">
+                                            <div class="submit-field">
+                                                <h5>Company Name</h5>
+                                                <input type="text" class="with-border" th:field="*{name}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4">
+                                            <div class="submit-field">
+                                                <h5>Industry</h5>
+                                                <select class="selectpicker with-border" data-size="7"
+                                                        title="Select Industry" th:field="*{industry}">
+                                                    <option th:value="TECHNOLOGY">Technology</option>
+                                                    <option th:value="HEALTHCARE">Healthcare</option>
+                                                    <option th:value="FINANCE">Finance</option>
+                                                    <option th:value="EDUCATION">Education</option>
+                                                    <option th:value="MANUFACTURING">Manufacturing</option>
+                                                    <option th:value="IT">IT</option>
+                                                    <!-- more options -->
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-4">
+                                            <div class="submit-field">
+                                                <h5>Location</h5>
+                                                <div class="input-with-icon">
+                                                    <div id="autocomplete-container">
+                                                        <input id="autocomplete-input" class="with-border" type="text"
+
+                                                               placeholder="Type Address">
+                                                        <input type="hidden" th:field="*{locationDto.latitude}">
+                                                        <input type="hidden" th:field="*{locationDto.longitude}">
+                                                        <input type="hidden" th:field="*{locationDto.countryCode}">
+                                                        <input type="hidden" th:field="*{locationDto.address.premise}">
+                                                        <input type="hidden" th:field="*{locationDto.address.street}">
+                                                        <input type="hidden" th:field="*{locationDto.address.city}">
+                                                        <input type="hidden" th:field="*{locationDto.address.province}">
+                                                        <input type="hidden" th:field="*{locationDto.address.district}">
+                                                    </div>
+                                                    <i class="icon-material-outline-location-on"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            function initMap() {
+                                                var input = document.getElementById('autocomplete-input');
+                                                var autocomplete = new google.maps.places.Autocomplete(input);
+
+                                                autocomplete.addListener('place_changed', function () {
+                                                    var place = autocomplete.getPlace();
+                                                    if (!place.geometry) {
+                                                        window.alert("Autocomplete's returned place contains no geometry");
+                                                        return;
+                                                    }
+
+                                                    var lat = place.geometry.location.lat();
+                                                    var lng = place.geometry.location.lng();
+
+                                                    var country_code, state, city, district, street, premise;
+
+                                                    for (var i = 0; i < place.address_components.length; i++) {
+                                                        var component = place.address_components[i];
+
+                                                        if (component.types.includes('country')) {
+                                                            country_code = component.short_name;
+                                                        } else if (component.types.includes('administrative_area_level_1')) {
+                                                            state = component.long_name;
+                                                        } else if (component.types.includes('administrative_area_level_2')) {
+                                                            city = component.long_name;
+                                                        } else if (component.types.includes('sublocality') || component.types.includes('locality')) {
+                                                            district = component.long_name;
+                                                        } else if (component.types.includes('sublocality_level_2')) {
+                                                            street = component.long_name;
+                                                        } else if (component.types.includes('premise')) {
+                                                            premise = component.long_name;
+                                                        }
+                                                    }
+
+                                                    var address = {}
+                                                    document.getElementById('locationDto.latitude').value = lat;
+                                                    document.getElementById('locationDto.longitude').value = lng;
+                                                    document.getElementById('locationDto.countryCode').value = country_code;
+                                                    document.getElementById('locationDto.address.province').value = country_code;
+                                                    document.getElementById('locationDto.address.city').value = city;
+                                                    document.getElementById('locationDto.address.district').value = district;
+                                                    document.getElementById('locationDto.address.street').value = street;
+                                                    document.getElementById('locationDto.address.premise').value = premise;
+
+                                                    console.log("Latitude: " + lat);
+                                                    console.log("Longitude: " + lng);
+                                                    console.log("Country Code: " + country_code);
+                                                    console.log("State: " + state);
+                                                    console.log("City: " + city);
+                                                    console.log("District: " + district);
+                                                    console.log("Street: " + street);
+                                                    console.log("Premise: " + premise);
+                                                });
+                                            }
+                                        </script>
+
+                                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRaZQqhqUXmsAsr3pd9Riek_vkGS6jOls&libraries=places&callback=initMap"
+                                                async defer></script>
+                                        <div class="col-xl-12">
+                                            <div class="submit-field">
+                                                <h5>Description</h5>
+                                                <textarea cols="30" rows="5" class="with-border"
+                                                          th:field="*{description}"></textarea>
+                                                <div class="uploadButton margin-top-30">
+                                                    <input class="uploadButton-input" type="file"
+                                                           accept="image/*, application/pdf"
+                                                           id="upload" th:field="*{companyLogo}" multiple/>
+                                                    <label class="uploadButton-button ripple-effect" for="upload">Upload
+                                                        Files</label>
+                                                    <span class="uploadButton-file-name">Images or documents that might be helpful in describing your company</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                            <button class="button full-width button-sliding-icon ripple-effect margin-top-10"
+                                    type="submit"
+                                    form="company-register-form">
+                                <th:block th:text="#{new-company}">회사 등록</th:block>
+                                <i class="icon-material-outline-arrow-right-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!--    <div class="col-xl-12">
+                            <a href="#" class="button ripple-effect big margin-top-30"><i class="icon-feather-plus"></i>
+                                Register a Company</a>
+                        </div>-->
+
+                </div>
+                <!-- Row / End -->
+
+                <!-- Footer -->
+                <div class="dashboard-footer-spacer"></div>
+                <div class="small-footer margin-top-15">
+                    <div class="small-footer-copyrights">
+                        © 2023 <strong>Hireo</strong>. All Rights Reserved.
+                    </div>
+                    <ul class="footer-social-links">
+                        <li>
+                            <a href="#" title="Facebook" data-tippy-placement="top">
+                                <i class="icon-brand-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="Twitter" data-tippy-placement="top">
+                                <i class="icon-brand-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="Google Plus" data-tippy-placement="top">
+                                <i class="icon-brand-google-plus-g"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" title="LinkedIn" data-tippy-placement="top">
+                                <i class="icon-brand-linkedin-in"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <!-- Footer / End -->
+
+            </div>
+        </div>
+        <!-- Dashboard Content / End -->
+
+
+    </div>
+    <!-- Dashboard Container / End -->
+
+</div>
+<!-- Wrapper / End -->
+
+
+<!-- Scripts
+================================================== -->
+<!-- Chart.js // documentation: http://www.chartjs.org/docs/latest/ -->
+<script th:src="@{/js/chart.min.js}"></script>
+<script>
+    Chart.defaults.global.defaultFontFamily = "Nunito";
+    Chart.defaults.global.defaultFontColor = '#888';
+    Chart.defaults.global.defaultFontSize = '14';
+
+    var ctx = document.getElementById('chart').getContext('2d');
+
+    var chart = new Chart(ctx, {
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June"],
+            // Information about the dataset
+            datasets: [{
+                label: "Views",
+                backgroundColor: 'rgba(42,65,232,0.08)',
+                borderColor: '#2a41e8',
+                borderWidth: "3",
+                data: [196, 132, 215, 362, 210, 252],
+                pointRadius: 5,
+                pointHoverRadius: 5,
+                pointHitRadius: 10,
+                pointBackgroundColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointBorderWidth: "2",
+            }]
+        },
+
+        // Configuration options
+        options: {
+
+            layout: {
+                padding: 10,
+            },
+
+            legend: {display: false},
+            title: {display: false},
+
+            scales: {
+                yAxes: [{
+                    scaleLabel: {
+                        display: false
+                    },
+                    gridLines: {
+                        borderDash: [6, 10],
+                        color: "#d8d8d8",
+                        lineWidth: 1,
+                    },
+                }],
+                xAxes: [{
+                    scaleLabel: {display: false},
+                    gridLines: {display: false},
+                }],
+            },
+
+            tooltips: {
+                backgroundColor: '#333',
+                titleFontSize: 13,
+                titleFontColor: '#fff',
+                bodyFontColor: '#fff',
+                bodyFontSize: 13,
+                displayColors: false,
+                xPadding: 10,
+                yPadding: 10,
+                intersect: false
+            }
+        },
+
+
+    });
+
+</script>
+
+
+<!--&lt;!&ndash; Google Autocomplete &ndash;&gt;-->
+<!--<script>-->
+<!--	function initAutocomplete() {-->
+<!--		 var options = {-->
+<!--		  types: ['(cities)'],-->
+<!--		  // componentRestrictions: {country: "us"}-->
+<!--		 };-->
+
+<!--		 var input = document.getElementById('autocomplete-input');-->
+<!--		 var autocomplete = new google.maps.places.Autocomplete(input, options);-->
+
+<!--		if ($('.submit-field')[0]) {-->
+<!--		    setTimeout(function(){ -->
+<!--		        $(".pac-container").prependTo("#autocomplete-container");-->
+<!--		    }, 300);-->
+<!--		}-->
+<!--	}-->
+<!--</script>-->
+
+<!--&lt;!&ndash; Google API & Maps &ndash;&gt;-->
+<!--&lt;!&ndash; Geting an API Key: https://developers.google.com/maps/documentation/javascript/get-api-key &ndash;&gt;-->
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>-->
+
+
+</body>
+</html>
