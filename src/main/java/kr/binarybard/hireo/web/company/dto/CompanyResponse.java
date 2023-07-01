@@ -14,4 +14,5 @@ public class CompanyResponse {
 	private String countryName;
 	private LocationDto locationDto;
 	private Industry industry;
+	private String logoHash;
 }

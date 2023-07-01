@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import kr.binarybard.hireo.common.AcceptanceTest;
-import kr.binarybard.hireo.common.exceptions.AuthException;
+import kr.binarybard.hireo.common.exceptions.AuthenticationException;
 import kr.binarybard.hireo.common.exceptions.ErrorCode;
 import kr.binarybard.hireo.common.fixture.LoginFixture;
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
@@ -60,7 +60,7 @@ class LoginControllerTest extends AcceptanceTest {
 	@Test
 	@DisplayName("회원가입 요청 - 이메일 중복")
 	void registerMemberWithDuplicateEmailTest() throws Exception {
-		when(memberService.save(any())).thenThrow(new AuthException(ErrorCode.DUPLICATED_EMAIL));
+		when(memberService.save(any())).thenThrow(new AuthenticationException(ErrorCode.DUPLICATED_EMAIL));
 
 		performSignUpRequest(LoginFixture.TEST_SIGNUP_REQUEST_FREELANCER)
 			.andExpect(status().isOk())

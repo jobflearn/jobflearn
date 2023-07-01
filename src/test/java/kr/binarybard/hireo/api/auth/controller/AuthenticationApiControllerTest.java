@@ -86,7 +86,7 @@ class AuthenticationApiControllerTest extends AcceptanceTest {
 			.refreshToken("invalid_refresh_token")
 			.build();
 
-		mockMvc.perform(post("/api/auth/reissue")
+		mockMvc.perform(post("/api/auth/refresh")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(request)))
 			.andExpect(status().isUnauthorized());
@@ -126,7 +126,7 @@ class AuthenticationApiControllerTest extends AcceptanceTest {
 			.refreshToken(refreshToken)
 			.build();
 
-		mockMvc.perform(post("/api/auth/reissue")
+		mockMvc.perform(post("/api/auth/refresh")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(refreshTokenRequest)))
 			.andExpect(status().isOk())

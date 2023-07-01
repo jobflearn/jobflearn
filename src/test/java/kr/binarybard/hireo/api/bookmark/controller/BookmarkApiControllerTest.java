@@ -1,8 +1,9 @@
 package kr.binarybard.hireo.api.bookmark.controller;
 
-import kr.binarybard.hireo.common.fixture.CompanyFixture;
-import kr.binarybard.hireo.web.company.service.CompanyService;
-import kr.binarybard.hireo.web.member.service.MemberService;
+import static kr.binarybard.hireo.common.fixture.MemberFixture.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,11 +15,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import static kr.binarybard.hireo.common.fixture.MemberFixture.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import kr.binarybard.hireo.common.fixture.CompanyFixture;
+import kr.binarybard.hireo.web.company.service.CompanyService;
+import kr.binarybard.hireo.web.member.service.MemberService;
 
 @Transactional
 @SpringBootTest

@@ -2,6 +2,7 @@ package kr.binarybard.hireo.common.fixture;
 
 import java.util.List;
 
+import kr.binarybard.hireo.api.auth.dto.SignInRequest;
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.web.member.dto.MemberResponse;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,6 +29,11 @@ public class MemberFixture {
 		.role(TEST_ROLE)
 		.password(TEST_PASSWORD)
 		.passwordConfirm(TEST_PASSWORD)
+		.build();
+
+	public static final SignInRequest SIGNIN_REQUEST_MEMBER = SignInRequest.builder()
+		.email(TEST_EMAIL)
+		.password(TEST_PASSWORD)
 		.build();
 
 	public static final User USER = new User(

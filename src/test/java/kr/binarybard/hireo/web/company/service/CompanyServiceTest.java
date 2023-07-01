@@ -1,14 +1,11 @@
 package kr.binarybard.hireo.web.company.service;
 
-import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
-import kr.binarybard.hireo.common.fixture.CompanyFixture;
-import kr.binarybard.hireo.common.fixture.MemberFixture;
-import kr.binarybard.hireo.web.company.domain.Company;
-import kr.binarybard.hireo.web.company.dto.CompanyMapper;
-import kr.binarybard.hireo.web.company.dto.CompanyRegister;
-import kr.binarybard.hireo.web.company.dto.CompanyResponse;
-import kr.binarybard.hireo.web.company.repository.CompanyRepository;
-import kr.binarybard.hireo.web.member.repository.MemberRepository;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
+
+import java.io.IOException;
+import java.util.Optional;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,16 +13,22 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.MessageSource;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.BDDMockito.*;
+import kr.binarybard.hireo.api.file.service.FileService;
+import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
+import kr.binarybard.hireo.common.fixture.CompanyFixture;
+import kr.binarybard.hireo.common.fixture.FileResponseFixture;
+import kr.binarybard.hireo.common.fixture.MemberFixture;
+import kr.binarybard.hireo.web.company.domain.Company;
+import kr.binarybard.hireo.web.company.dto.CompanyMapper;
+import kr.binarybard.hireo.web.company.dto.CompanyRegister;
+import kr.binarybard.hireo.web.company.dto.CompanyResponse;
+import kr.binarybard.hireo.web.company.repository.CompanyRepository;
+import kr.binarybard.hireo.web.member.repository.MemberRepository;
 
 @ExtendWith(MockitoExtension.class)
 class CompanyServiceTest {
-
 	@Mock
 	CompanyRepository companyRepository;
 
@@ -33,10 +36,16 @@ class CompanyServiceTest {
 	MemberRepository memberRepository;
 
 	@Mock
+	FileService fileService;
+
+	@Mock
 	CompanyMapper companyMapper;
 
 	@Mock
 	MessageSource messageSource;
+
+	@Mock
+	MultipartFile file;
 
 	@InjectMocks
 	CompanyService companyService;
@@ -47,13 +56,13 @@ class CompanyServiceTest {
 
 	@Test
 	@DisplayName("회사 등록 정상 동작 확인")
-	void registerCompanyTest() {
+	void registerCompanyTest() throws IOException {
 		// given
 		when(companyRepository.save(testCompanyA)).thenReturn(testCompanyA);
 		when(companyMapper.toEntity(testCompanyARegister)).thenReturn(testCompanyA);
 		when(companyMapper.toDto(testCompanyA)).thenReturn(testCompanyAResponse);
-		when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(MemberFixture.createMember()));
-
+		when(memberRepository.findByEmailOrThrow(anyString())).thenReturn(MemberFixture.createMember());
+		when(fileService.storeAsHash(any(MultipartFile.class))).thenReturn(FileResponseFixture.createFileResponse());
 		// when
 		companyService.registerCompany(testCompanyARegister, MemberFixture.USER);
 
@@ -92,7 +101,6 @@ class CompanyServiceTest {
 	void findOneTest() {
 		// given
 		when(companyRepository.findById(any(Long.class))).thenReturn(Optional.of(testCompanyA));
-		when(messageSource.getMessage(any(String.class), any(), any())).thenReturn("CountryName");
 		when(companyMapper.toDto(testCompanyA)).thenReturn(testCompanyAResponse);
 
 		// when
@@ -100,6 +108,7 @@ class CompanyServiceTest {
 
 		// then
 		assertThat(foundCompanyResponse).isEqualTo(testCompanyAResponse);
-		assertThat(foundCompanyResponse.getCountryName()).isEqualTo("CountryName");
+		assertThat(foundCompanyResponse.getCountryName()).isEqualTo("CountryA");
 	}
+
 }

@@ -1,7 +1,7 @@
 package kr.binarybard.hireo.web.auth.controller;
 
 import jakarta.validation.Valid;
-import kr.binarybard.hireo.common.exceptions.AuthException;
+import kr.binarybard.hireo.common.exceptions.AuthenticationException;
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.web.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class LoginController {
 
 		try {
 			memberService.save(memberDto);
-		} catch (AuthException e) {
+		} catch (AuthenticationException e) {
 			log.error("Failed to create account", e);
 			bindingResult.reject("exists.email");
 			return "new";
