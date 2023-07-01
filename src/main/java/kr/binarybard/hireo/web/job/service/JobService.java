@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class JobService {
 	private final JobRepository jobRepository;
