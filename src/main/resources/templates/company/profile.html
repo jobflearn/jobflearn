@@ -14,7 +14,8 @@
               <h3><th:block th:text="${company.name}">회사명</th:block> <span>대충 회사 분류</span></h3>
               <ul>
                 <li><div class="star-rating" data-rating="0"></div></li>
-                <li><img class="flag" th:src="@{/images/flags/{countryCode}.svg(countryCode=${company.locationDto.countryCode.toLowerCase()})}" alt=""> <th:block th:text="${company.countryName}">국가명</th:block></li>
+                <li><img class="flag" th:src="@{/images/flags/{countryCode}.svg(countryCode=${company.locationDto.countryCode.toLowerCase()})}" alt="">
+                  <th:block th:text="${company.countryName}">국가명</th:block></li>
                 <li><div class="verified-badge-with-title">인증됨</div></li>
               </ul>
             </div>

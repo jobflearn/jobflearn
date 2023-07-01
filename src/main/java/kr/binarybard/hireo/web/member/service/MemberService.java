@@ -1,7 +1,7 @@
 package kr.binarybard.hireo.web.member.service;
 
 import jakarta.transaction.Transactional;
-import kr.binarybard.hireo.common.exceptions.AuthException;
+import kr.binarybard.hireo.common.exceptions.AuthenticationException;
 import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
 import kr.binarybard.hireo.common.exceptions.ErrorCode;
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
@@ -30,7 +30,7 @@ public class MemberService {
 			member.encodePassword(passwordEncoder);
 			return memberRepository.save(member).getId();
 		} catch (DataIntegrityViolationException e) {
-			throw new AuthException(ErrorCode.DUPLICATED_EMAIL, memberDto.getEmail());
+			throw new AuthenticationException(ErrorCode.DUPLICATED_EMAIL, memberDto.getEmail());
 		}
 	}
 

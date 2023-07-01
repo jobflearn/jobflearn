@@ -2,7 +2,7 @@ package kr.binarybard.hireo.api.auth.service;
 
 import kr.binarybard.hireo.api.auth.dto.RefreshTokenRequest;
 import kr.binarybard.hireo.api.auth.dto.TokenResponse;
-import kr.binarybard.hireo.common.exceptions.AuthException;
+import kr.binarybard.hireo.common.exceptions.AuthenticationException;
 import kr.binarybard.hireo.common.exceptions.ErrorCode;
 import kr.binarybard.hireo.config.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class JwtTokenService {
 
 	private void validateRefreshToken(String token) {
 		if (!refreshTokenService.validateToken(token)) {
-			throw new AuthException(ErrorCode.INVALID_TOKEN);
+			throw new AuthenticationException(ErrorCode.INVALID_TOKEN);
 		}
 	}
 }
