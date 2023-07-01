@@ -30,4 +30,8 @@ public class Address {
 		this.district = district;
 		this.premise = premise;
 	}
+
+	public String getShortAddress() {
+		return String.format("%s %s %s", province, city, street);
+	}
 }
