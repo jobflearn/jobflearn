@@ -101,7 +101,6 @@ class CompanyServiceTest {
 	void findOneTest() {
 		// given
 		when(companyRepository.findById(any(Long.class))).thenReturn(Optional.of(testCompanyA));
-		when(messageSource.getMessage(any(String.class), any(), any())).thenReturn("CountryName");
 		when(companyMapper.toDto(testCompanyA)).thenReturn(testCompanyAResponse);
 
 		// when
@@ -109,7 +108,7 @@ class CompanyServiceTest {
 
 		// then
 		assertThat(foundCompanyResponse).isEqualTo(testCompanyAResponse);
-		assertThat(foundCompanyResponse.getCountryName()).isEqualTo("CountryName");
+		assertThat(foundCompanyResponse.getCountryName()).isEqualTo("CountryA");
 	}
 
 }
