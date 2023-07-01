@@ -10,11 +10,15 @@ public enum ErrorCode {
 	DUPLICATED_EMAIL(HttpStatus.BAD_REQUEST, "AU_001", "이미 사용중인 이메일입니다."),
 	AUTHENTICATION_FAILED(HttpStatus.UNAUTHORIZED, "AU_002", "이메일 또는 비밀번호가 일치하지 않습니다."),
 
+	AUTHORIZATION_FAILED(HttpStatus.FORBIDDEN, "AR_001", "권한이 없습니다."),
+
 	MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "M_001", "회원을 찾을 수 없습니다."),
 
 	COMPANY_NOT_FOUND(HttpStatus.NOT_FOUND, "C_001", "회사를 찾을 수 없습니다."),
 
 	LOCATION_NOT_FOUND(HttpStatus.NOT_FOUND, "L_001", "주소가 존재하지 않습니다."),
+
+	JOB_NOT_FOUND(HttpStatus.NOT_FOUND, "J_001", "채용 공고를 찾을 수 없습니다."),
 
 	COMPANY_BOOKMARK_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "B_001", "이미 북마크한 회사입니다."),
 	COMPANY_BOOKMARK_NOT_FOUND(HttpStatus.NOT_FOUND, "B_002", "북마크한 회사를 찾을 수 없습니다."),
