@@ -1,28 +1,33 @@
 package kr.binarybard.hireo.web.job.controller;
 
-import kr.binarybard.hireo.common.fixture.JobFixture;
-import kr.binarybard.hireo.common.fixture.MemberFixture;
-import kr.binarybard.hireo.web.job.dto.JobResponse;
-import kr.binarybard.hireo.web.job.service.JobService;
-import kr.binarybard.hireo.web.member.dto.MemberResponse;
-import kr.binarybard.hireo.web.member.service.MemberService;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import kr.binarybard.hireo.common.fixture.JobFixture;
+import kr.binarybard.hireo.common.fixture.MemberFixture;
+import kr.binarybard.hireo.web.job.dto.JobListResponse;
+import kr.binarybard.hireo.web.job.dto.JobResponse;
+import kr.binarybard.hireo.web.job.service.JobService;
+import kr.binarybard.hireo.web.member.dto.MemberResponse;
+import kr.binarybard.hireo.web.member.service.MemberService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @WithMockUser(username = MemberFixture.TEST_EMAIL)
-class JobBrowseControllerIntegrationTest {
+class JobBrowseControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -48,5 +53,19 @@ class JobBrowseControllerIntegrationTest {
 			.andExpect(model().attribute("job", jobResponse))
 			.andExpect(model().attribute("member", memberResponse))
 			.andExpect(view().name("job/info"));
+	}
+
+	@Test
+	@DisplayName("페이지 단위 구직 공고 조회")
+	void searchJobListByPageTest() throws Exception {
+		//given
+		Page<JobListResponse> jobListByPage = JobFixture.createJobListByPage(0, 4);
+		when(jobService.findByPage(any(Pageable.class))).thenReturn(jobListByPage);
+
+		//expected
+		mockMvc.perform(MockMvcRequestBuilders.get("/jobs?page=1"))
+			.andExpect(status().isOk())
+			.andExpect(model().attribute("jobs", jobListByPage))
+			.andExpect(view().name("job/joblist"));
 	}
 }
