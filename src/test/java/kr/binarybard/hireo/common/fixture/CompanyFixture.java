@@ -3,18 +3,20 @@ package kr.binarybard.hireo.common.fixture;
 import java.util.Arrays;
 import java.util.List;
 
-import kr.binarybard.hireo.web.company.dto.CompanyReviewResponse;
-import kr.binarybard.hireo.web.review.domain.Review;
-import kr.binarybard.hireo.web.review.dto.ReviewResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import kr.binarybard.hireo.web.company.domain.Company;
 import kr.binarybard.hireo.web.company.domain.Industry;
+import kr.binarybard.hireo.web.company.dto.CompanyListResponse;
 import kr.binarybard.hireo.web.company.dto.CompanyRegister;
 import kr.binarybard.hireo.web.company.dto.CompanyResponse;
+import kr.binarybard.hireo.web.company.dto.CompanyReviewResponse;
+import kr.binarybard.hireo.web.location.domain.Address;
 import kr.binarybard.hireo.web.location.domain.Location;
 import kr.binarybard.hireo.web.location.dto.LocationDto;
+import kr.binarybard.hireo.web.review.domain.Review;
+import kr.binarybard.hireo.web.review.dto.ReviewResponse;
 
 public class CompanyFixture {
 	private static final String TEST_COMPANY_A_NAME = "companyA";
@@ -31,6 +33,14 @@ public class CompanyFixture {
 
 	private static final LocationDto TEST_LOCATION_DTO_1 = LocationFixture.TEST_LOCATION_DTO_1;
 	private static final LocationDto TEST_LOCATION_DTO_2 = LocationFixture.TEST_LOCATION_DTO_1;
+
+	private static final Address TEST_ADDRESS = Address.builder()
+		.city("seoul")
+		.district("jongro")
+		.premise("premise")
+		.street("3ga")
+		.province("seoul")
+		.build();
 
 	private static final MockMultipartFile TEST_LOGO_FILE = new MockMultipartFile("test.png", "test.png",
 		"application/x-www-form-urlencoded", "test.png".getBytes());
@@ -66,6 +76,10 @@ public class CompanyFixture {
 		return createCompanyResponse(1L, TEST_COMPANY_A_NAME, TEST_COMPANY_A_DESC, TEST_COMPANY_A_LOGO_HASH,
 			TEST_COMPANY_A_COUNTRY,
 			TEST_LOCATION_DTO_1, Industry.IT, reviewResponse);
+	}
+
+	public static CompanyListResponse createCompanyListResponseWithId(Long id) {
+		return createCompanyListReponse(id, TEST_COMPANY_A_NAME, TEST_ADDRESS, TEST_COMPANY_A_LOGO_HASH);
 	}
 
 	private static CompanyReviewResponse createTestCompanyReviewResponse() {
@@ -111,7 +125,7 @@ public class CompanyFixture {
 	}
 
 	private static Company createCompany(Long id, String name, Boolean isVerified, String description, String logoHash,
-										 Location location, Industry industry, List<Review> reviews) {
+		Location location, Industry industry, List<Review> reviews) {
 		Company company = createCompany(id, name, isVerified, description, logoHash, location, industry);
 		ReflectionTestUtils.setField(company, "reviews", reviews);
 		return company;
@@ -140,6 +154,16 @@ public class CompanyFixture {
 			.isVerified(isVerified)
 			.industry(industry)
 			.companyLogo(TEST_LOGO_FILE)
+			.build();
+	}
+
+	private static CompanyListResponse createCompanyListReponse(Long id, String name, Address address,
+		String logoHash) {
+		return CompanyListResponse.builder()
+			.id(id)
+			.name(name)
+			.address(address)
+			.logoHash(logoHash)
 			.build();
 	}
 }

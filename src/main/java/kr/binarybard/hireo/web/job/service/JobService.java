@@ -1,12 +1,16 @@
 package kr.binarybard.hireo.web.job.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import kr.binarybard.hireo.web.job.dto.JobListResponse;
 import kr.binarybard.hireo.web.job.dto.JobMapper;
 import kr.binarybard.hireo.web.job.dto.JobResponse;
 import kr.binarybard.hireo.web.job.repository.JobRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -25,5 +29,10 @@ public class JobService {
 	public JobResponse findOne(Long id) {
 		var foundJob = jobRepository.findByIdOrThrow(id);
 		return jobMapper.toDto(foundJob);
+	}
+
+	@Transactional(readOnly = true)
+	public Page<JobListResponse> findByPage(Pageable pageable) {
+		return jobRepository.listJobs(pageable);
 	}
 }
