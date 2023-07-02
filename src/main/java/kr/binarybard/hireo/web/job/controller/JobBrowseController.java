@@ -1,15 +1,21 @@
 package kr.binarybard.hireo.web.job.controller;
 
-import kr.binarybard.hireo.common.CurrentUser;
-import kr.binarybard.hireo.web.job.service.JobService;
-import kr.binarybard.hireo.web.member.service.MemberService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import kr.binarybard.hireo.common.CurrentUser;
+import kr.binarybard.hireo.utils.DateUtils;
+import kr.binarybard.hireo.web.job.dto.JobListResponse;
+import kr.binarybard.hireo.web.job.service.JobService;
+import kr.binarybard.hireo.web.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/jobs")
@@ -29,5 +35,13 @@ public class JobBrowseController {
 		model.addAttribute("job", foundJob);
 		model.addAttribute("member", memberService.findByEmail(user.getUsername()));
 		return "job/info";
+	}
+
+	@GetMapping
+	public String jobList(@RequestParam Integer page, Model model) {
+		Page<JobListResponse> jobListByPage = jobService.findByPage(PageRequest.of(page, 4));
+		jobListByPage.stream().forEach(j -> j.setElapsedDate(DateUtils.getElapsedDateTime(j.getPostedAt())));
+		model.addAttribute("jobs", jobListByPage);
+		return "job/joblist";
 	}
 }
