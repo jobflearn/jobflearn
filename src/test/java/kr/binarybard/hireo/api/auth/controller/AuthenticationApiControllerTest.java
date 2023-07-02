@@ -9,6 +9,7 @@ import kr.binarybard.hireo.common.AcceptanceTest;
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import kr.binarybard.hireo.web.member.service.MemberService;
+import kr.binarybard.hireo.web.review.repository.ReviewRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,9 @@ class AuthenticationApiControllerTest extends AcceptanceTest {
 	private MemberRepository memberRepository;
 
 	@Autowired
+	private ReviewRepository reviewRepository;
+
+	@Autowired
 	private RefreshTokenRepository refreshTokenRepository;
 
 	private final String username = "testuser@test.com";
@@ -40,6 +44,7 @@ class AuthenticationApiControllerTest extends AcceptanceTest {
 	@BeforeEach
 	public void setUp() {
 		refreshTokenRepository.deleteAll();
+		reviewRepository.deleteAll();
 		memberRepository.deleteAll();
 
 		SignUpRequest signUpRequest = SignUpRequest.builder()

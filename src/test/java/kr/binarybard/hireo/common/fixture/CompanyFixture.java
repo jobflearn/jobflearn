@@ -3,6 +3,9 @@ package kr.binarybard.hireo.common.fixture;
 import java.util.Arrays;
 import java.util.List;
 
+import kr.binarybard.hireo.web.company.dto.CompanyReviewResponse;
+import kr.binarybard.hireo.web.review.domain.Review;
+import kr.binarybard.hireo.web.review.dto.ReviewResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -38,6 +41,16 @@ public class CompanyFixture {
 			Industry.IT);
 	}
 
+	public static Company createTestCompanyAWithReviews() {
+		List<Review> reviews = List.of(
+			ReviewFixture.createTestReview1(createTestCompanyA()),
+			ReviewFixture.createTestReview2(createTestCompanyA()),
+			ReviewFixture.createTestReview3(createTestCompanyA())
+		);
+		return createCompany(1L, TEST_COMPANY_A_NAME, true, TEST_COMPANY_A_DESC, TEST_COMPANY_A_LOGO_HASH,
+			LocationFixture.TEST_LOCATION_1, Industry.IT, reviews);
+	}
+
 	public static Company createTestCompanyB() {
 		return createCompany(2L, TEST_COMPANY_B_NAME, false, TEST_COMPANY_B_DESC, TEST_COMPANY_B_LOGO_HASH,
 			LocationFixture.TEST_LOCATION_2,
@@ -49,15 +62,28 @@ public class CompanyFixture {
 	}
 
 	public static CompanyResponse createTestCompanyAResponse() {
+		CompanyReviewResponse reviewResponse = createTestCompanyReviewResponse();
 		return createCompanyResponse(1L, TEST_COMPANY_A_NAME, TEST_COMPANY_A_DESC, TEST_COMPANY_A_LOGO_HASH,
 			TEST_COMPANY_A_COUNTRY,
-			TEST_LOCATION_DTO_1, Industry.IT);
+			TEST_LOCATION_DTO_1, Industry.IT, reviewResponse);
+	}
+
+	private static CompanyReviewResponse createTestCompanyReviewResponse() {
+		List<ReviewResponse> reviews = List.of(
+			ReviewFixture.createTestReviewResponse1(),
+			ReviewFixture.createTestReviewResponse2(),
+			ReviewFixture.createTestReviewResponse3()
+		);
+		return CompanyReviewResponse.builder()
+			.reviews(reviews)
+			.build();
 	}
 
 	public static CompanyResponse createTestCompanyBResponse() {
+		CompanyReviewResponse reviewResponse = createTestCompanyReviewResponse();
 		return createCompanyResponse(2L, TEST_COMPANY_B_NAME, TEST_COMPANY_B_DESC, TEST_COMPANY_B_LOGO_HASH,
 			TEST_COMPANY_B_COUNTRY,
-			TEST_LOCATION_DTO_2, Industry.FINANCE);
+			TEST_LOCATION_DTO_2, Industry.FINANCE, reviewResponse);
 	}
 
 	public static CompanyRegister createTestCompanyARegister() {
@@ -84,8 +110,15 @@ public class CompanyFixture {
 		return company;
 	}
 
+	private static Company createCompany(Long id, String name, Boolean isVerified, String description, String logoHash,
+										 Location location, Industry industry, List<Review> reviews) {
+		Company company = createCompany(id, name, isVerified, description, logoHash, location, industry);
+		ReflectionTestUtils.setField(company, "reviews", reviews);
+		return company;
+	}
+
 	private static CompanyResponse createCompanyResponse(Long id, String name, String description, String logoHash,
-		String countryName, LocationDto locationDto, Industry industry) {
+		String countryName, LocationDto locationDto, Industry industry, CompanyReviewResponse reviewResponse) {
 		return CompanyResponse.builder()
 			.id(id)
 			.name(name)
@@ -94,6 +127,7 @@ public class CompanyFixture {
 			.locationDto(locationDto)
 			.industry(industry)
 			.logoHash(logoHash)
+			.reviews(reviewResponse)
 			.build();
 	}
 
@@ -109,5 +143,3 @@ public class CompanyFixture {
 			.build();
 	}
 }
-
-
