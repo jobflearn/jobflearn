@@ -105,3 +105,30 @@ VALUES
     ('소셜 미디어 매니저', 'FULLTIME', 6000, 7000, '소셜 미디어 프로모션 및 관리', 'SALE_MAR', 28, '2022-01-28 21:00:00', '2022-01-28 21:00:00'),
     ('웹 디자이너', 'PARTTIME', 3500, 4500, '시각적으로 매력적인 웹 디자인', 'GRAP_DES', 29, '2022-01-29 22:00:00', '2022-01-29 22:00:00'),
     ('교육 및 개발 매니저', 'FULLTIME', 8000, 9000, '교육 및 개발 프로젝트 리더십', 'EDU_TRAI', 30, '2022-01-30 23:00:00', '2022-01-30 23:00:00');
+
+INSERT INTO reviews (title, content, rating, member_id, company_id, created_date, modified_date)
+WITH generator AS (
+    SELECT ROW_NUMBER() OVER () AS rn
+    FROM (
+             SELECT 0 UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL
+             SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9
+         ) a
+             CROSS JOIN (
+        SELECT 0 UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL
+        SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9
+    ) b
+)
+SELECT
+    CONCAT('Review ', g1.rn, ' for Company ', c.company_id),
+    CONCAT('This is review ', g1.rn, ' for Company ', c.company_id, '.'),
+    FLOOR(1 + RAND() * 5),
+    m.member_id,
+    c.company_id,
+    CURRENT_TIMESTAMP,
+    CURRENT_TIMESTAMP
+FROM
+    generator g1
+        CROSS JOIN companies c
+        CROSS JOIN members m
+WHERE g1.rn <= 30;
+
