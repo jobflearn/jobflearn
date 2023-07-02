@@ -32,8 +32,15 @@ public class JobListResponse {
 	private CompanyListResponse company;
 
 	public void cutDescription() {
-		String[] splited = this.description.split("\\.");
-		this.description = splited[0] + ". " + splited[1] + ".";
+		if (this.description.contains("\\.")) {
+			String[] splited = this.description.split("\\.");
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < splited.length || i < 2; i++) {
+				sb.append(splited[i]).append(". ");
+			}
+			this.description = sb.toString();
+		}
+
 	}
 
 	@Builder
