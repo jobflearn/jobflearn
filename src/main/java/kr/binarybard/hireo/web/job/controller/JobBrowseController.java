@@ -38,10 +38,9 @@ public class JobBrowseController {
 	}
 
 	@GetMapping
-	public String jobList(@RequestParam(defaultValue = "0") Integer page, Model model) {
-		Page<JobListResponse> jobListByPage = jobService.findByPage(PageRequest.of(page, 4));
+	public String jobList(@RequestParam(defaultValue = "1") Integer page, Model model) {
+		Page<JobListResponse> jobListByPage = jobService.findByPage(PageRequest.of(page - 1, 4));
 		jobListByPage.stream().forEach(j -> j.setElapsedDate(DateUtils.getElapsedDateTime(j.getPostedAt())));
-		jobListByPage.stream().forEach(JobListResponse::cutDescription);
 		model.addAttribute("jobs", jobListByPage);
 		return "job/joblist";
 	}

@@ -31,16 +31,16 @@ public class JobListResponse {
 
 	private CompanyListResponse company;
 
-	public void cutDescription() {
-		if (this.description.contains("\\.")) {
+	public String shortenDescription() {
+		if (this.description != null && this.description.contains("\\.")) {
 			String[] splited = this.description.split("\\.");
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < splited.length || i < 2; i++) {
 				sb.append(splited[i]).append(". ");
 			}
-			this.description = sb.toString();
+			return sb.toString();
 		}
-
+		return this.description;
 	}
 
 	@Builder
