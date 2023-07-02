@@ -38,7 +38,7 @@ class CompanyControllerTest extends AcceptanceTest {
 	void setup() {
 		CompanyResponse testCompanyResponse = CompanyFixture.createTestCompanyAResponse();
 
-		when(companyService.findOne(CompanyFixture.createTestCompanyA().getId())).thenReturn(testCompanyResponse);
+		when(companyService.findOne(CompanyFixture.createTestCompanyAWithReviews().getId())).thenReturn(testCompanyResponse);
 		when(companyService.findOne(NON_EXISTING_COMPANY_ID)).thenThrow(new EntityNotFoundException(
 			ErrorCode.COMPANY_NOT_FOUND));
 		when(memberService.findByEmail(anyString())).thenReturn(MemberFixture.MEMBER_RESPONSE);
@@ -81,7 +81,7 @@ class CompanyControllerTest extends AcceptanceTest {
 	@Test
 	@DisplayName("존재하는 회사 프로필 요청")
 	void existingCompanyProfileTest() throws Exception {
-		mockMvc.perform(get("/companies/" + CompanyFixture.createTestCompanyA().getId()))
+		mockMvc.perform(get("/companies/" + CompanyFixture.createTestCompanyAWithReviews().getId()))
 			.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(view().name("company/profile"))
