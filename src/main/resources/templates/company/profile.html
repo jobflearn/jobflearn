@@ -13,7 +13,7 @@
             <div class="header-details">
               <h3><th:block th:text="${company.name}">회사명</th:block> <span>대충 회사 분류</span></h3>
               <ul>
-                <li><div class="star-rating" data-rating="0"></div></li>
+                <li><div class="star-rating" th:data-rating="${#numbers.formatDecimal(company.reviews.averageRating, 1, 1)}"></div></li>
                 <li><img class="flag" th:src="@{/images/flags/{countryCode}.svg(countryCode=${company.locationDto.countryCode.toLowerCase()})}" alt="">
                   <th:block th:text="${company.countryName}">국가명</th:block></li>
                 <li><div class="verified-badge-with-title">인증됨</div></li>
@@ -69,7 +69,42 @@
           <h3><i class="icon-material-outline-thumb-up"></i> <th:block th:text="#{reviews}">리뷰</th:block></h3>
         </div>
         <ul class="boxed-list-ul">
+          <li th:each="review : ${reviews.getContent()}">
+            <div class="boxed-list-item">
+              <!-- Content -->
+              <div class="item-content">
+                <h4><th:block th:text="${review.title}">리뷰 제목</th:block> <span th:text="${review.name}">익명의 사용자</span></h4>
+                <div class="item-details margin-top-10">
+                  <div class="star-rating" th:data-rating="${review.rating}"></div>
+                  <div class="detail-item"><i class="icon-material-outline-date-range"></i>
+                    <th:block th:text="${#temporals.format(review.postedAt, 'yyyy년 M월')}">작성일</th:block></div>
+                </div>
+                <div class="item-description">
+                  <p th:text="${review.content}">리뷰 내용</p>
+                </div>
+              </div>
+            </div>
+          </li>
         </ul>
+
+        <div class="clearfix"></div>
+        <div class="row">
+          <div class="col-md-12" th:if="${reviews.totalPages > 1}">
+            <!-- Pagination -->
+            <div class="pagination-container margin-top-30 margin-bottom-60">
+              <nav class="pagination">
+                <ul>
+                  <li class="pagination-arrow" th:unless="${reviews.first}"><a th:href="@{/companies/{id}(id=${company.id},page=${reviews.number})}"><i class="icon-material-outline-keyboard-arrow-left"></i></a></li>
+                  <li th:each="item : ${#numbers.sequence(beginPage, endPage)}">
+                    <a th:href="@{/companies/{id}(id=${company.id},page=${item + 1})}" th:text="${item + 1}" th:class="${item == reviews.number ? 'current-page' : ''}"></a>
+                  </li>
+                  <li class="pagination-arrow" th:unless="${reviews.last}"><a th:href="@{/companies/{id}(id=${company.id},page=${reviews.number + 2})}"><i class="icon-material-outline-keyboard-arrow-right"></i></a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <!-- Pagination / End -->
+        </div>
 
         <div class="centered-button margin-top-35">
           <a href="#small-dialog" class="popup-with-zoom-anim button button-sliding-icon"><th:block th:text="#{reviews.leave}">리뷰 남기기</th:block> <i class="icon-material-outline-arrow-right-alt"></i></a>
@@ -154,7 +189,7 @@
   <div class="sign-in-form">
 
     <ul class="popup-tabs-nav">
-      <li><a href="#tab">Leave a Review</a></li>
+      <li><a href="#tab" th:text="#{reviews.leave}">리뷰 남기기</a></li>
     </ul>
 
     <div class="popup-tabs-container">
@@ -163,26 +198,26 @@
       <div class="popup-tab-content" id="tab">
 
         <!-- Form -->
-        <form method="post" id="leave-company-review-form">
+        <form method="post" th:action="@{/companies/{id}/review(id=${company.id})}" id="leave-company-review-form">
 
         <!-- Welcome Text -->
         <div class="welcome-text">
-          <h3>What is it like to work at Acodia?</h3>
+          <h3 th:text="|${company.name} #{welcome.review}|">회사에서 일하는 건 어떠신가요?</h3>
 
             <!-- Leave Rating -->
             <div class="clearfix"></div>
             <div class="leave-rating-container">
               <div class="leave-rating margin-bottom-5">
-                <input type="radio" name="rating" id="rating-1" value="1" required>
-                <label for="rating-1" class="icon-material-outline-star"></label>
-                <input type="radio" name="rating" id="rating-2" value="2" required>
-                <label for="rating-2" class="icon-material-outline-star"></label>
-                <input type="radio" name="rating" id="rating-3" value="3" required>
-                <label for="rating-3" class="icon-material-outline-star"></label>
-                <input type="radio" name="rating" id="rating-4" value="4" required>
-                <label for="rating-4" class="icon-material-outline-star"></label>
                 <input type="radio" name="rating" id="rating-5" value="5" required>
                 <label for="rating-5" class="icon-material-outline-star"></label>
+                <input type="radio" name="rating" id="rating-4" value="4" required>
+                <label for="rating-4" class="icon-material-outline-star"></label>
+                <input type="radio" name="rating" id="rating-3" value="3" required>
+                <label for="rating-3" class="icon-material-outline-star"></label>
+                <input type="radio" name="rating" id="rating-2" value="2" required>
+                <label for="rating-2" class="icon-material-outline-star"></label>
+                <input type="radio" name="rating" id="rating-1" value="1" required>
+                <label for="rating-1" class="icon-material-outline-star"></label>
               </div>
             </div>
             <div class="clearfix"></div>
@@ -193,22 +228,14 @@
 
         <div class="row">
           <div class="col-xl-12">
-            <div class="input-with-icon-left" title="Leave blank to add review anonymously" data-tippy-placement="bottom">
-              <i class="icon-material-outline-account-circle"></i>
-              <input type="text" class="input-text with-border" name="name" id="name" placeholder="First and Last Name"/>
-            </div>
-          </div>
-
-          <div class="col-xl-12">
             <div class="input-with-icon-left">
               <i class="icon-material-outline-rate-review"></i>
-              <input type="text" class="input-text with-border" name="reviewtitle" id="reviewtitle" placeholder="Review Title"  required/>
+              <input type="text" class="input-text with-border" name="title" id="title" placeholder="제목" th:placeholder="#{title}" required minlength="1"/>
             </div>
           </div>
         </div>
 
-        <textarea class="with-border" placeholder="Review" name="message" id="message" cols="7"  required></textarea>
-
+        <textarea class="with-border" th:placeholder="#{reviews}" name="content" id="content" cols="7" required minlength="10"></textarea>
         </form>
 
         <!-- Button -->
@@ -220,5 +247,7 @@
   </div>
 </div>
 <!-- Leave a Review Popup / End -->
+
+<script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places"></script>
 </body>
 </html>

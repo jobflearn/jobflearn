@@ -1,25 +1,17 @@
 package kr.binarybard.hireo.web.company.domain;
 
+import jakarta.persistence.*;
+import kr.binarybard.hireo.web.review.domain.Review;
 import org.springframework.util.Assert;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import kr.binarybard.hireo.web.location.domain.Location;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -46,23 +38,10 @@ public class Company {
 	@Enumerated(value = EnumType.STRING)
 	private Industry industry;
 
+	@OneToMany(mappedBy = "company")
+	private final List<Review> reviews = new ArrayList<>();
+
 	private String logoHash;
-
-	public void changeLocation(Location location) {
-		this.location = location;
-	}
-
-	public void changeLogo(String logoHash) {
-		this.logoHash = logoHash;
-	}
-
-	public void changeDescription(String description) {
-		this.description = description;
-	}
-
-	public void changeName(String name) {
-		this.name = name;
-	}
 
 	@Builder
 	public Company(String name, Boolean isVerified, String description, String logoHash,
@@ -75,5 +54,16 @@ public class Company {
 		this.logoHash = logoHash;
 		this.location = location;
 		this.industry = industry;
+	}
+
+	public void changeLogo(String logoHash) {
+		this.logoHash = logoHash;
+	}
+
+	public double getAverageRating() {
+		return reviews.stream()
+			.mapToDouble(Review::getRating)
+			.average()
+			.orElse(0);
 	}
 }
