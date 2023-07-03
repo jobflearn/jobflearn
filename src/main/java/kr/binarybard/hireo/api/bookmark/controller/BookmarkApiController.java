@@ -31,4 +31,22 @@ public class BookmarkApiController {
 		bookmarkService.deleteCompanyBookmark(user, companyId);
 		return ResponseEntity.noContent().build();
 	}
+
+	@PostMapping({"/api/jobs/{id}/bookmarks", "/jobs/{id}/bookmarks"})
+	public ResponseEntity<Void> bookmarkJob(
+		@CurrentUser User user,
+		@PathVariable("id") Long jobId
+	) {
+		Long bookmarkId = bookmarkService.bookmarkJob(user, jobId);
+		return ResponseEntity.created(URI.create("/api/jobs/" + jobId + "/bookmarks/" + bookmarkId)).build();
+	}
+
+	@DeleteMapping({"/api/jobs/{id}/bookmarks", "/jobs/{id}/bookmarks"})
+	public ResponseEntity<Object> deleteJobBookmark(
+		@CurrentUser User user,
+		@PathVariable("id") Long jobId
+	) {
+		bookmarkService.deleteJobBookmark(user, jobId);
+		return ResponseEntity.noContent().build();
+	}
 }
