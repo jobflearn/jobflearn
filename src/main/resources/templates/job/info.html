@@ -173,7 +173,7 @@
                         <h3 th:text="|#{bookmark} #{or} #{share-it}|">북마크 혹은 공유하기</h3>
 
                         <!-- Bookmark Button -->
-                        <button class="bookmark-button margin-bottom-25">
+                        <button class="bookmark-button margin-bottom-25" th:data-bookmark-type="jobs" th:classappend="${member?.isJobBookmarked(job.id)} ? 'bookmarked' : ''" th:data-id="${job.id}">
                             <span class="bookmark-icon"></span>
                             <span class="bookmark-text" th:text="#{bookmark}">북마크</span>
                             <span class="bookmarked-text" th:text="#{bookmarked}">북마크됨</span>
@@ -191,10 +191,10 @@
                             <div class="share-buttons-content">
                                 <span><th:block th:text="#{interesting}">관심이 있으신가요?</th:block> <strong th:text="|#{share-it}!|">공유하기!</strong></span>
                                 <ul class="share-buttons-icons">
-                                    <li><a href="#" data-button-color="#3b5998" title="Share on Facebook" data-tippy-placement="top"><i class="icon-brand-facebook-f"></i></a></li>
-                                    <li><a href="#" data-button-color="#1da1f2" title="Share on Twitter" data-tippy-placement="top"><i class="icon-brand-twitter"></i></a></li>
-                                    <li><a href="#" data-button-color="#dd4b39" title="Share on Google Plus" data-tippy-placement="top"><i class="icon-brand-google-plus-g"></i></a></li>
-                                    <li><a href="#" data-button-color="#0077b5" title="Share on LinkedIn" data-tippy-placement="top"><i class="icon-brand-linkedin-in"></i></a></li>
+                                    <li><a href="#" data-button-color="#3b5998" th:class="'share-on-facebook'" th:title="|#{social.facebook}#{on} #{share-it}|" data-tippy-placement="top"><i class="icon-brand-facebook-f"></i></a></li>
+                                    <li><a href="#" data-button-color="#1da1f2" th:class="'share-on-twitter'" th:title="|#{social.twitter}#{on} #{share-it}|" data-tippy-placement="top"><i class="icon-brand-twitter"></i></a></li>
+                                    <li><a href="#" data-button-color="#dd4b39" th:class="'share-on-google'" th:title="|#{social.google-plus}#{on} #{share-it}|" data-tippy-placement="top"><i class="icon-brand-google-plus-g"></i></a></li>
+                                    <li><a href="#" data-button-color="#0077b5" th:class="'share-on-linkedin'" th:title="|#{social.linkedin}#{on} #{share-it}|" data-tippy-placement="top"><i class="icon-brand-linkedin-in"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -205,166 +205,6 @@
 
         </div>
     </div>
-
-
-    <!-- Footer
-    ================================================== -->
-    <div id="footer">
-
-        <!-- Footer Top Section -->
-        <div class="footer-top-section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-
-                        <!-- Footer Rows Container -->
-                        <div class="footer-rows-container">
-
-                            <!-- Left Side -->
-                            <div class="footer-rows-left">
-                                <div class="footer-row">
-                                    <div class="footer-row-inner footer-logo">
-                                        <img src="images/logo2.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Right Side -->
-                            <div class="footer-rows-right">
-
-                                <!-- Social Icons -->
-                                <div class="footer-row">
-                                    <div class="footer-row-inner">
-                                        <ul class="footer-social-links">
-                                            <li>
-                                                <a href="#" title="Facebook" data-tippy-placement="bottom" data-tippy-theme="light">
-                                                    <i class="icon-brand-facebook-f"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" title="Twitter" data-tippy-placement="bottom" data-tippy-theme="light">
-                                                    <i class="icon-brand-twitter"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" title="Google Plus" data-tippy-placement="bottom" data-tippy-theme="light">
-                                                    <i class="icon-brand-google-plus-g"></i>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" title="LinkedIn" data-tippy-placement="bottom" data-tippy-theme="light">
-                                                    <i class="icon-brand-linkedin-in"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-
-                                <!-- Language Switcher -->
-                                <div class="footer-row">
-                                    <div class="footer-row-inner">
-                                        <select class="selectpicker language-switcher" data-selected-text-format="count" data-size="5">
-                                            <option selected>English</option>
-                                            <option>Français</option>
-                                            <option>Español</option>
-                                            <option>Deutsch</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- Footer Rows Container / End -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer Top Section / End -->
-
-        <!-- Footer Middle Section -->
-        <div class="footer-middle-section">
-            <div class="container">
-                <div class="row">
-
-                    <!-- Links -->
-                    <div class="col-xl-2 col-lg-2 col-md-3">
-                        <div class="footer-links">
-                            <h3>For Candidates</h3>
-                            <ul>
-                                <li><a href="#"><span>Browse Jobs</span></a></li>
-                                <li><a href="#"><span>Add Resume</span></a></li>
-                                <li><a href="#"><span>Job Alerts</span></a></li>
-                                <li><a href="#"><span>My Bookmarks</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Links -->
-                    <div class="col-xl-2 col-lg-2 col-md-3">
-                        <div class="footer-links">
-                            <h3>For Employers</h3>
-                            <ul>
-                                <li><a href="#"><span>Browse Candidates</span></a></li>
-                                <li><a href="#"><span>Post a Job</span></a></li>
-                                <li><a href="#"><span>Post a Task</span></a></li>
-                                <li><a href="#"><span>Plans & Pricing</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Links -->
-                    <div class="col-xl-2 col-lg-2 col-md-3">
-                        <div class="footer-links">
-                            <h3>Helpful Links</h3>
-                            <ul>
-                                <li><a href="#"><span>Contact</span></a></li>
-                                <li><a href="#"><span>Privacy Policy</span></a></li>
-                                <li><a href="#"><span>Terms of Use</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Links -->
-                    <div class="col-xl-2 col-lg-2 col-md-3">
-                        <div class="footer-links">
-                            <h3>Account</h3>
-                            <ul>
-                                <li><a href="#"><span>Log In</span></a></li>
-                                <li><a href="#"><span>My Account</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Newsletter -->
-                    <div class="col-xl-4 col-lg-4 col-md-12">
-                        <h3><i class="icon-feather-mail"></i> Sign Up For a Newsletter</h3>
-                        <p>Weekly breaking news, analysis and cutting edge advices on job searching.</p>
-                        <form action="#" method="get" class="newsletter">
-                            <input type="text" name="fname" placeholder="Enter your email address">
-                            <button type="submit"><i class="icon-feather-arrow-right"></i></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer Middle Section / End -->
-
-        <!-- Footer Copyrights -->
-        <div class="footer-bottom-section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        © 2019 <strong>Hireo</strong>. All Rights Reserved.
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer Copyrights / End -->
-
-    </div>
-    <!-- Footer / End -->
-
 
 <!-- Apply for a job popup
 ================================================== -->

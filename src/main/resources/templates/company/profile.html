@@ -149,7 +149,7 @@
           <h3 th:text="|#{bookmark} #{or} #{share-it}|">북마크 혹은 공유하기</h3>
 
           <!-- Bookmark Button -->
-          <button class="bookmark-button margin-bottom-25" th:classappend="${member?.isCompanyBookmarked(company.id)} ? 'bookmarked' : ''" th:data-id="${company.id}">
+          <button class="bookmark-button margin-bottom-25" th:data-bookmark-type="companies" th:classappend="${member?.isCompanyBookmarked(company.id)} ? 'bookmarked' : ''" th:data-id="${company.id}">
             <span class="bookmark-icon"></span>
             <span class="bookmark-text" th:text="#{bookmark}">북마크</span>
             <span class="bookmarked-text" th:text="#{bookmarked}">북마크됨</span>
@@ -167,10 +167,10 @@
             <div class="share-buttons-content">
               <span><th:block th:text="#{interesting}">관심이 있으신가요?</th:block> <strong th:text="|#{share-it}!|">공유하기!</strong></span>
               <ul class="share-buttons-icons">
-                <li><a href="#" data-button-color="#3b5998" title="Share on Facebook" data-tippy-placement="top"><i class="icon-brand-facebook-f"></i></a></li>
-                <li><a href="#" data-button-color="#1da1f2" title="Share on Twitter" data-tippy-placement="top"><i class="icon-brand-twitter"></i></a></li>
-                <li><a href="#" data-button-color="#dd4b39" title="Share on Google Plus" data-tippy-placement="top"><i class="icon-brand-google-plus-g"></i></a></li>
-                <li><a href="#" data-button-color="#0077b5" title="Share on LinkedIn" data-tippy-placement="top"><i class="icon-brand-linkedin-in"></i></a></li>
+                <li><a href="#" data-button-color="#3b5998" th:class="'share-on-facebook'" th:title="|#{social.facebook}#{on} #{share-it}|" data-tippy-placement="top"><i class="icon-brand-facebook-f"></i></a></li>
+                <li><a href="#" data-button-color="#1da1f2" th:class="'share-on-twitter'" th:title="|#{social.twitter}#{on} #{share-it}|" data-tippy-placement="top"><i class="icon-brand-twitter"></i></a></li>
+                <li><a href="#" data-button-color="#dd4b39" th:class="'share-on-google'" th:title="|#{social.google-plus}#{on} #{share-it}|" data-tippy-placement="top"><i class="icon-brand-google-plus-g"></i></a></li>
+                <li><a href="#" data-button-color="#0077b5" th:class="'share-on-linkedin'" th:title="|#{social.linkedin}#{on} #{share-it}|" data-tippy-placement="top"><i class="icon-brand-linkedin-in"></i></a></li>
               </ul>
             </div>
           </div>
