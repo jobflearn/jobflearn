@@ -34,7 +34,7 @@ class CompanyBookmarkServiceTest {
 	private MemberRepository memberRepository;
 
 	@InjectMocks
-	private BookmarkService bookmarkService;
+	private CompanyBookmarkService bookmarkService;
 
 	private final Company testCompanyA = CompanyFixture.createTestCompanyA();
 
@@ -47,7 +47,7 @@ class CompanyBookmarkServiceTest {
 		when(bookmarkRepository.save(any(CompanyBookmark.class))).thenReturn(BookmarkFixture.createCompanyBookmarkWithId(1L));
 
 		// when
-		Long bookmarkId = bookmarkService.bookmarkCompany(MemberFixture.USER, testCompanyA.getId());
+		Long bookmarkId = bookmarkService.bookmark(MemberFixture.USER, testCompanyA.getId());
 
 		// then
 		Assertions.assertThat(bookmarkId).isEqualTo(1L);
@@ -61,7 +61,7 @@ class CompanyBookmarkServiceTest {
 		when(bookmarkRepository.findByMemberIdAndCompanyIdOrThrow(anyLong(), anyLong())).thenReturn(BookmarkFixture.createCompanyBookmarkWithId(1L));
 
 		// when
-		bookmarkService.deleteCompanyBookmark(MemberFixture.USER, testCompanyA.getId());
+		bookmarkService.deleteBookmark(MemberFixture.USER, testCompanyA.getId());
 
 		// then
 		verify(bookmarkRepository).delete(any(CompanyBookmark.class));
