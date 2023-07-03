@@ -20,6 +20,9 @@ public class WebExceptionHandler {
 		mav.addObject("url", req.getRequestURL());
 		mav.addObject("exception", e);
 		mav.setViewName(viewName);
+		if (e instanceof BusinessException businessException) {
+			mav.addObject("errorCode", businessException.getErrorCode());
+		}
 		resp.setStatus(status.value());
 		return mav;
 	}
