@@ -13,6 +13,7 @@ import kr.binarybard.hireo.web.job.domain.Job;
 import kr.binarybard.hireo.web.job.domain.JobType;
 import kr.binarybard.hireo.web.job.dto.JobListResponse;
 import kr.binarybard.hireo.web.job.dto.JobResponse;
+import org.springframework.test.util.ReflectionTestUtils;
 
 public class JobFixture {
 
@@ -45,12 +46,12 @@ public class JobFixture {
 	public static Page<JobListResponse> createJobListByPage(int page, int limit) {
 		List<JobListResponse> jobList = new ArrayList<>();
 		for (int i = 0; i < 100; i++) {
-			jobList.add(createJobListReponse((long)i, (long)i));
+			jobList.add(createJobListResponse((long)i, (long)i));
 		}
 		return new PageImpl<>(jobList, PageRequest.of(page, limit), 100);
 	}
 
-	public static JobListResponse createJobListReponse(Long jobId, Long companyId) {
+	public static JobListResponse createJobListResponse(Long jobId, Long companyId) {
 		return JobListResponse.builder()
 			.id(jobId)
 			.name(SOFTWARE_ENGINEER_NAME)
@@ -120,7 +121,7 @@ public class JobFixture {
 	}
 
 	public static Job createSoftwareEngineerJob() {
-		return Job.builder()
+		Job job = Job.builder()
 			.name(SOFTWARE_ENGINEER_NAME)
 			.jobType(JobType.FULLTIME)
 			.startSalary(5000)
@@ -129,10 +130,12 @@ public class JobFixture {
 			.category(Category.WEB_SOFT)
 			.company(CompanyFixture.createTestCompanyA())
 			.build();
+		ReflectionTestUtils.setField(job, "id", 1L);
+		return job;
 	}
 
 	public static Job createDataScientistJob() {
-		return Job.builder()
+		Job job = Job.builder()
 			.name(DATA_SCIENTIST_NAME)
 			.jobType(JobType.FULLTIME)
 			.startSalary(6000)
@@ -141,10 +144,12 @@ public class JobFixture {
 			.category(Category.DATA_SCI)
 			.company(CompanyFixture.createTestCompanyB())
 			.build();
+		ReflectionTestUtils.setField(job, "id", 2L);
+		return job;
 	}
 
 	public static Job createMarketingManagerJob() {
-		return Job.builder()
+		Job job = Job.builder()
 			.name(MARKETING_MANAGER_NAME)
 			.jobType(JobType.PARTTIME)
 			.startSalary(4000)
@@ -153,10 +158,12 @@ public class JobFixture {
 			.category(Category.SALE_MAR)
 			.company(CompanyFixture.createTestCompanyB())
 			.build();
+		ReflectionTestUtils.setField(job, "id", 3L);
+		return job;
 	}
 
 	public static Job createGraphicDesignerJob() {
-		return Job.builder()
+		Job job = Job.builder()
 			.name(GRAPHIC_DESIGNER_NAME)
 			.jobType(JobType.PARTTIME)
 			.startSalary(3000)
@@ -165,10 +172,12 @@ public class JobFixture {
 			.category(Category.GRAP_DES)
 			.company(CompanyFixture.createTestCompanyA())
 			.build();
+		ReflectionTestUtils.setField(job, "id", 4L);
+		return job;
 	}
 
 	public static Job createEducationTrainerJob() {
-		return Job.builder()
+		Job job = Job.builder()
 			.name(EDUCATION_TRAINER_NAME)
 			.jobType(JobType.INTERNSHIP)
 			.startSalary(2000)
@@ -177,6 +186,8 @@ public class JobFixture {
 			.category(Category.EDU_TRAI)
 			.company(CompanyFixture.createTestCompanyB())
 			.build();
+		ReflectionTestUtils.setField(job, "id", 5L);
+		return job;
 	}
 }
 
