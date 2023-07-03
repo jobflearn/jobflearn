@@ -18,4 +18,10 @@ public class MemberResponse {
 			.filter(bookmark -> bookmark.getCompanyId() != null)
 			.anyMatch(bookmark -> bookmark.getCompanyId().equals(companyId));
 	}
+
+	public boolean isJobBookmarked(Long jobId) {
+		return bookmarks.stream()
+			.filter(bookmark -> bookmark.getJobId() != null)
+			.anyMatch(bookmark -> bookmark.getJobId().equals(jobId));
+	}
 }

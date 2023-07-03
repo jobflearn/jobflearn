@@ -9,4 +9,6 @@ public class BookmarkResponse {
 	private Long id;
 
 	private Long companyId;
+
+	private Long jobId;
 }

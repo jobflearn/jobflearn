@@ -9,5 +9,6 @@ import org.mapstruct.Mapping;
 public interface BookmarkMapper extends BaseMapper<BookmarkResponse, Bookmark> {
 
 	@Mapping(source = "company.id", target = "companyId")
+	@Mapping(source = "job.id", target = "jobId")
 	BookmarkResponse toDto(Bookmark bookmark);
 }
