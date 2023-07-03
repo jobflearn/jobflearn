@@ -20,7 +20,7 @@ public class MemberFixture {
 
 	public static final MemberResponse MEMBER_RESPONSE = MemberResponse.builder()
 		.email(TEST_EMAIL)
-		.bookmarks(List.of(BookmarkFixture.BOOKMARK_RESPONSE))
+		.companyBookmarks(List.of(BookmarkFixture.COMPANY_BOOKMARK_RESPONSE))
 		.build();
 
 	public static final SignUpRequest SIGNUP_REQUEST_MEMBER = SignUpRequest.builder()

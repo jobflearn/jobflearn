@@ -5,10 +5,8 @@ import lombok.Data;
 
 @Data
 @Builder
-public class BookmarkResponse {
+public class CompanyBookmarkResponse {
 	private Long id;
 
 	private Long companyId;
-
-	private Long jobId;
 }
