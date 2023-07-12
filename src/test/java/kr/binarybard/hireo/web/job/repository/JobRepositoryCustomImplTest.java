@@ -1,6 +1,5 @@
 package kr.binarybard.hireo.web.job.repository;
 
-
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
@@ -13,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import kr.binarybard.hireo.common.fixture.JobFixture;
 import kr.binarybard.hireo.common.fixture.LocationFixture;
 import kr.binarybard.hireo.web.job.domain.Category;
 import kr.binarybard.hireo.web.job.domain.JobType;
@@ -32,15 +32,26 @@ class JobRepositoryCustomImplTest {
 		PageRequest pageRequest = PageRequest.of(0, 4);
 		//when
 		Page<JobListResponse> jobListResponses = jobRepository.listJobs(pageRequest);
-
-		Page<JobListResponse> jobListResponses2 = jobRepository.listJobs(PageRequest.of(1, 4));
 		//then
-		System.out.println(jobListResponses.getNumber());
-		System.out.println(jobListResponses2.getNumber());
-
 		List<JobListResponse> content = jobListResponses.getContent();
 		assertThat(content).hasSize(4);
 		assertThat(jobListResponses.getNumber()).isZero();
+	}
+
+	@Test
+	@DisplayName("주어진 모든 조건을 만족하는 직업을 찾을수 있다.")
+	void listJobsWithAllConditionsTest() throws Exception {
+		//given
+		JobSearchCondition jobSearchCondition = JobFixture.createJobSearchCondition();
+		PageRequest pageRequest = PageRequest.of(0, 4);
+		//when
+		Page<JobListResponse> jobListResponses = jobRepository.listJobsWithCondition(jobSearchCondition, pageRequest);
+		List<JobListResponse> content = jobListResponses.getContent();
+		//then
+		assertThat(Objects.requireNonNull(content.stream().findAny().orElse(null)).getName()).contains("소프트");
+		assertThat(content.stream().findAny().orElse(null).getCategory()).isEqualTo(Category.WEB_SOFT);
+		assertThat(Objects.requireNonNull(content.stream().findAny().orElse(null)).getJobType()).isEqualTo(
+			JobType.FULLTIME);
 	}
 
 	@Test
@@ -70,7 +81,6 @@ class JobRepositoryCustomImplTest {
 		PageRequest pageRequest = PageRequest.of(0, 4);
 		//when
 		Page<JobListResponse> jobListResponses = jobRepository.listJobsWithCondition(simpleCondition, pageRequest);
-		List<JobListResponse> content1 = jobListResponses.getContent();
 		//then
 		List<JobListResponse> content = jobListResponses.getContent();
 		assertThat(Objects.requireNonNull(content.stream().findAny().orElse(null)).getName()).contains("소프트");
