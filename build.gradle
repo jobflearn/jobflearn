@@ -106,11 +106,7 @@ jacocoTestReport {
 
 jacocoTestCoverageVerification {
     dependsOn jacocoTestReport
-    def Qdomains = []
-    // 패키지 + 클래스명
-    for (qPattern in '*.QA'..'*.QZ') { // qPattern = '*.QA', '*.QB', ... '*.QZ'
-        Qdomains.add(qPattern + '*')
-    }
+    
     violationRules {
         rule {
             limit {
@@ -134,11 +130,15 @@ jacocoTestCoverageVerification {
                 value = 'COVEREDRATIO'
                 minimum = 0.80
             }
-            excludes = [] + Qdomains // 제외할 Qdomains 패턴 추가
         }
     }
 
     afterEvaluate {
+        def Qdomains = []
+        for (qPattern in 'QA'..'QZ') {
+            Qdomains.add('**/Q' + qPattern + '*.class')
+        }
+
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it,
                     exclude: ['**/*Application.class',
@@ -154,9 +154,7 @@ jacocoTestCoverageVerification {
                               '**/*Handler.class',
                               '**/config/**/*',
                               '**/domain/**/*',
-                              '**/dto/**/*',
-
-                    ])
+                              '**/dto/**/*'] + Qdomains)
         }))
     }
 }
