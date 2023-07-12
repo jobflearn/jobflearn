@@ -1,11 +1,18 @@
 package kr.binarybard.hireo.common.fixture;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+
 import kr.binarybard.hireo.web.job.domain.Category;
 import kr.binarybard.hireo.web.job.domain.Job;
 import kr.binarybard.hireo.web.job.domain.JobType;
+import kr.binarybard.hireo.web.job.dto.JobListResponse;
 import kr.binarybard.hireo.web.job.dto.JobResponse;
-
-import java.time.LocalDateTime;
 
 public class JobFixture {
 
@@ -32,6 +39,27 @@ public class JobFixture {
 			.postedAt(LocalDateTime.now())
 			.category(Category.WEB_SOFT)
 			.company(CompanyFixture.createTestCompanyAResponse())
+			.build();
+	}
+
+	public static Page<JobListResponse> createJobListByPage(int page, int limit) {
+		List<JobListResponse> jobList = new ArrayList<>();
+		for (int i = 0; i < 100; i++) {
+			jobList.add(createJobListReponse((long)i, (long)i));
+		}
+		return new PageImpl<>(jobList, PageRequest.of(page, limit), 100);
+	}
+
+	public static JobListResponse createJobListReponse(Long jobId, Long companyId) {
+		return JobListResponse.builder()
+			.id(jobId)
+			.name(SOFTWARE_ENGINEER_NAME)
+			.description(SOFTWARE_ENGINEER_DESCRIPTION)
+			.jobType(JobType.INTERNSHIP)
+			.startSalary(5000)
+			.endSalary(10000)
+			.postedAt(LocalDateTime.now())
+			.company(CompanyFixture.createCompanyListResponseWithId(companyId))
 			.build();
 	}
 
