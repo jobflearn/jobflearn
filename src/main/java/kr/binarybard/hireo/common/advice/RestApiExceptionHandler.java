@@ -1,15 +1,16 @@
 package kr.binarybard.hireo.common.advice;
 
-import kr.binarybard.hireo.common.dto.ErrorResponse;
-import kr.binarybard.hireo.common.exceptions.BusinessException;
-import kr.binarybard.hireo.common.exceptions.ErrorCode;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import kr.binarybard.hireo.common.dto.ErrorResponse;
+import kr.binarybard.hireo.common.exceptions.BusinessException;
+import kr.binarybard.hireo.common.exceptions.ErrorCode;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice(annotations = RestController.class, basePackages = "kr.binarybard.hireo.api")
@@ -23,6 +24,7 @@ public class RestApiExceptionHandler {
 	@ExceptionHandler(BusinessException.class)
 	protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
 		var response = ErrorResponse.of(e.getErrorCode());
+		log.error("An unexpected error occurred: ", e);
 		return new ResponseEntity<>(response, response.getStatus());
 	}
 

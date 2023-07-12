@@ -2,6 +2,7 @@ package kr.binarybard.hireo.common.fixture;
 
 import kr.binarybard.hireo.web.location.domain.Address;
 import kr.binarybard.hireo.web.location.domain.Location;
+import kr.binarybard.hireo.web.location.dto.LocationCondition;
 import kr.binarybard.hireo.web.location.dto.LocationDto;
 
 public class LocationFixture {
@@ -33,6 +34,10 @@ public class LocationFixture {
 		.countryCode("US")
 		.build();
 
+	public static final LocationCondition TEST_LOCATION_CONDITION_1 = LocationCondition.builder()
+		.latitude(37.5665)
+		.longitude(126.978)
+		.build();
 	public static final LocationDto TEST_LOCATION_DTO_1 = LocationDto.builder()
 		.latitude(37.4493638197085)
 		.longitude(127.1275005197085)

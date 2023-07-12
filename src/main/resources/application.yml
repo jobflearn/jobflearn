@@ -9,6 +9,7 @@ spring:
     username: sa
     password:
 
+
   security:
     oauth2:
       client:
@@ -16,7 +17,7 @@ spring:
           kakao:
             client-id: ENC(81j6Ry2FL5uMs/eRGsZNm4h8MidVhKLVFvVf3QCjgBupMk+nW+r++mG6qSZnensT)
             redirect-uri: http://localhost:8080/auth/login/oauth2/code/kakao
-            client-authentication-method: POST
+            client-authentication-method: client_secret_post
             authorization-grant-type: authorization_code
             client-name: Kakao
             scope:
@@ -43,6 +44,8 @@ spring:
 
   jpa:
     defer-datasource-initialization: true
+
+
 
 jasypt:
   encryptor:

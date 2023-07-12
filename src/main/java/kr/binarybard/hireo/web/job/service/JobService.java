@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.binarybard.hireo.web.job.dto.JobListResponse;
 import kr.binarybard.hireo.web.job.dto.JobMapper;
 import kr.binarybard.hireo.web.job.dto.JobResponse;
+import kr.binarybard.hireo.web.job.dto.JobSearchCondition;
 import kr.binarybard.hireo.web.job.repository.JobRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,4 +36,14 @@ public class JobService {
 	public Page<JobListResponse> findByPage(Pageable pageable) {
 		return jobRepository.listJobs(pageable);
 	}
+
+
+	@Transactional(readOnly = true)
+	public Page<JobListResponse> findByPageWithCondition(JobSearchCondition condition, Pageable pageable) {
+		String[] range = condition.getSalaryRange().split(",");
+		condition.setMinSalary(Integer.parseInt(range[0]));
+		condition.setMaxSalary(Integer.parseInt(range[1]));
+		return jobRepository.listJobsWithCondition(condition, pageable);
+	}
+
 }
