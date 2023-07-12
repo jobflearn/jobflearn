@@ -139,4 +139,74 @@ class JobRepositoryCustomImplTest {
 		assertThat(jobListResponses.getNumber()).isZero();
 
 	}
+
+	@Test
+	@DisplayName("Null 위치 조건에 대한 테스트")
+	void testNullLocationCondition() {
+		//given
+		JobSearchCondition condition = JobSearchCondition.builder().build();
+		PageRequest pageRequest = PageRequest.of(0, 4);
+
+		//when
+		Page<JobListResponse> jobListResponses = jobRepository.listJobsWithCondition(condition, pageRequest);
+
+		//then
+		assertThat(jobListResponses).isNotNull();
+	}
+
+	@Test
+	@DisplayName("Null 키워드 조건에 대한 테스트")
+	void testNullKeywordCondition() {
+		//given
+		JobSearchCondition condition = JobSearchCondition.builder().build();
+		PageRequest pageRequest = PageRequest.of(0, 4);
+
+		//when
+		Page<JobListResponse> jobListResponses = jobRepository.listJobsWithCondition(condition, pageRequest);
+
+		//then
+		assertThat(jobListResponses).isNotNull();
+	}
+
+	@Test
+	@DisplayName("Null 카테고리 조건에 대한 테스트")
+	void testNullCategoryCondition() {
+		//given
+		JobSearchCondition condition = JobSearchCondition.builder().build();
+		PageRequest pageRequest = PageRequest.of(0, 4);
+
+		//when
+		Page<JobListResponse> jobListResponses = jobRepository.listJobsWithCondition(condition, pageRequest);
+
+		//then
+		assertThat(jobListResponses).isNotNull();
+	}
+
+	@Test
+	@DisplayName("Null 직무타입 조건에 대한 테스트")
+	void testNullJobTypeCondition() {
+		//given
+		JobSearchCondition condition = JobSearchCondition.builder().build();
+		PageRequest pageRequest = PageRequest.of(0, 4);
+
+		//when
+		Page<JobListResponse> jobListResponses = jobRepository.listJobsWithCondition(condition, pageRequest);
+
+		//then
+		assertThat(jobListResponses).isNotNull();
+	}
+
+	@Test
+	@DisplayName("Null 연봉 조건에 대한 테스트")
+	void testNullSalaryCondition() {
+		//given
+		JobSearchCondition condition = JobSearchCondition.builder().build();
+		PageRequest pageRequest = PageRequest.of(0, 4);
+
+		//when
+		Page<JobListResponse> jobListResponses = jobRepository.listJobsWithCondition(condition, pageRequest);
+
+		//then
+		assertThat(jobListResponses).isNotNull();
+	}
 }
