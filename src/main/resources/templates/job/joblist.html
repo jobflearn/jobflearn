@@ -386,139 +386,153 @@
     <div class="margin-top-90"></div>
     <!-- Spacer / End-->
 
-    <!-- Page Content
-    ================================================== -->
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-3 col-lg-4">
-                <div class="sidebar-container">
-
-                    <!-- Location -->
-                    <div class="sidebar-widget">
-                        <h3>Location</h3>
-                        <div class="input-with-icon">
-                            <div id="autocomplete-container">
-                                <input id="autocomplete-input" type="text" placeholder="Location">
+<!-- Page Content
+================================================== -->
+<div class="container">
+    <div class="row">
+        <div class="col-xl-3 col-lg-4">
+            <div class="sidebar-container">
+                <th:block>
+                    <form th:action="@{/jobs/search}" th:method="get" th:object="${condition}">
+                        <!-- Location -->
+                        <div class="submit-field">
+                            <h3>Location</h3>
+                            <div class="input-with-icon">
+                                <div id="autocomplete-container">
+                                    <input id="autocomplete-input" class="with-border" type="text"
+                                           placeholder="Type Address">
+                                    <input type="hidden" th:field="*{locationDto.latitude}">
+                                    <input type="hidden" th:field="*{locationDto.longitude}">
+                                </div>
+                                <i class="icon-material-outline-location-on"></i>
                             </div>
-                            <i class="icon-material-outline-location-on"></i>
                         </div>
-                    </div>
 
+                        <script>
+                            function initMap() {
+                                var input = document.getElementById('autocomplete-input');
+                                var autocomplete = new google.maps.places.Autocomplete(input);
 
-                    <!-- Keywords -->
-                    <div class="sidebar-widget">
-                        <h3>Keywords</h3>
-                        <div class="keywords-container">
-                            <div class="keyword-input-container">
-                                <input type="text" class="keyword-input" placeholder="e.g. job title"/>
-                                <button class="keyword-input-button ripple-effect"><i
-                                        class="icon-material-outline-add"></i></button>
+                                autocomplete.addListener('place_changed', function () {
+                                    var place = autocomplete.getPlace();
+                                    if (!place.geometry) {
+                                        window.alert("Autocomplete's returned place contains no geometry");
+                                        return;
+                                    }
+
+                                    var lat = place.geometry.location.lat();
+                                    var lng = place.geometry.location.lng();
+
+                                    var address = {}
+                                    document.getElementById('locationDto.latitude').value = lat;
+                                    document.getElementById('locationDto.longitude').value = lng;
+                                });
+                            }
+                        </script>
+
+                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRaZQqhqUXmsAsr3pd9Riek_vkGS6jOls&libraries=places&callback=initMap"
+                                async defer></script>
+
+                        <!-- Keywords -->
+                        <div class="sidebar-widget">
+                            <h3>Keywords</h3>
+                            <div class="keywords-container">
+                                <div class="keyword-input-container">
+                                    <input th:type="text" class="keyword-input" placeholder="e.g. job title"
+                                           th:field="*{keyword}"/>
+                                </div>
+                                <div class="keywords-list"><!-- keywords go here --></div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="keywords-list"><!-- keywords go here --></div>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="sidebar-widget">
+                            <h3>Category</h3>
+                            <select class="selectpicker default" multiple data-selected-text-format="count"
+                                    data-size="7"
+                                    title="All Categories" id="category" name="category" th:field="*{category}">
+                                <option th:value="WEB_SOFT">Software</option>
+                                <option th:value="DATA_SCI">Data Science</option>
+                                <option th:value="SALE_MAR">Marketing</option>
+                                <option th:value="GRAP_DES">Graphic, Design</option>
+                                <option th:value="EDU_TRAI">Education</option>
+                            </select>
+                        </div>
+
+                        <!-- Job Types -->
+                        <div class="sidebar-widget">
+                            <h3>Job Type</h3>
+
+                            <div class="switches-list">
+                                <div class="switch-container" th:each="type : ${jobTypes}">
+                                    <label class="switch"> <!-- th:for="${#ids.prev('jobType')}" -->
+                                        <input type="radio" th:field="*{jobType}" th:value="${type.name()}"
+                                               class="form-check-input">
+                                        <span class="switch-button"></span>
+                                        <th:block th:text="${type.name()}">Full Time</th:block>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Salary -->
+                        <div class="sidebar-widget">
+                            <h3>Salary</h3>
+                            <div class="margin-top-55"></div>
+
+                            <!-- Range Slider -->
+                            <input class="range-slider" th:field="*{salaryRange}" type="text" value=""
+                                   data-slider-currency="만원" data-slider-min="1500"
+                                   data-slider-max="9999" data-slider-step="100" data-slider-value="[1500,9999]"/>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="sidebar-widget">
+                            <h3>Tags</h3>
+
+                            <div class="tags-container">
+                                <div class="tag">
+                                    <input type="checkbox" id="tag1"/>
+                                    <label for="tag1">front-end dev</label>
+                                </div>
+                                <div class="tag">
+                                    <input type="checkbox" id="tag2"/>
+                                    <label for="tag2">angular</label>
+                                </div>
+                                <div class="tag">
+                                    <input type="checkbox" id="tag3"/>
+                                    <label for="tag3">react</label>
+                                </div>
+                                <div class="tag">
+                                    <input type="checkbox" id="tag4"/>
+                                    <label for="tag4">vue js</label>
+                                </div>
+                                <div class="tag">
+                                    <input type="checkbox" id="tag5"/>
+                                    <label for="tag5">web apps</label>
+                                </div>
+                                <div class="tag">
+                                    <input type="checkbox" id="tag6"/>
+                                    <label for="tag6">design</label>
+                                </div>
+                                <div class="tag">
+                                    <input type="checkbox" id="tag7"/>
+                                    <label for="tag7">wordpress</label>
+                                </div>
+                            </div>
                             <div class="clearfix"></div>
                         </div>
-                    </div>
-
-                    <!-- Category -->
-                    <div class="sidebar-widget">
-                        <h3>Category</h3>
-                        <select class="selectpicker default" multiple data-selected-text-format="count" data-size="7"
-                                title="All Categories">
-                            <option>Admin Support</option>
-                            <option>Customer Service</option>
-                            <option>Data Analytics</option>
-                            <option>Design & Creative</option>
-                            <option>Legal</option>
-                            <option>Software Developing</option>
-                            <option>IT & Networking</option>
-                            <option>Writing</option>
-                            <option>Translation</option>
-                            <option>Sales & Marketing</option>
-                        </select>
-                    </div>
-
-                    <!-- Job Types -->
-                    <div class="sidebar-widget">
-                        <h3>Job Type</h3>
-
-                        <div class="switches-list">
-                            <div class="switch-container">
-                                <label class="switch"><input type="checkbox"><span class="switch-button"></span>
-                                    Freelance</label>
-                            </div>
-
-                            <div class="switch-container">
-                                <label class="switch"><input type="checkbox"><span class="switch-button"></span> Full
-                                    Time</label>
-                            </div>
-
-                            <div class="switch-container">
-                                <label class="switch"><input type="checkbox"><span class="switch-button"></span> Part
-                                    Time</label>
-                            </div>
-
-                            <div class="switch-container">
-                                <label class="switch"><input type="checkbox"><span class="switch-button"></span>
-                                    Internship</label>
-                            </div>
-                            <div class="switch-container">
-                                <label class="switch"><input type="checkbox"><span class="switch-button"></span>
-                                    Temporary</label>
-                            </div>
+                        <div class="sidebar-search-button-container">
+                            <button type="submit" class="button ripple-effect">검색</button>
                         </div>
-
-                    </div>
-
-                    <!-- Salary -->
-                    <div class="sidebar-widget">
-                        <h3>Salary</h3>
-                        <div class="margin-top-55"></div>
-
-                        <!-- Range Slider -->
-                        <input class="range-slider" type="text" value="" data-slider-currency="$" data-slider-min="1500"
-                               data-slider-max="15000" data-slider-step="100" data-slider-value="[1500,15000]"/>
-                    </div>
-
-                    <!-- Tags -->
-                    <div class="sidebar-widget">
-                        <h3>Tags</h3>
-
-                        <div class="tags-container">
-                            <div class="tag">
-                                <input type="checkbox" id="tag1"/>
-                                <label for="tag1">front-end dev</label>
-                            </div>
-                            <div class="tag">
-                                <input type="checkbox" id="tag2"/>
-                                <label for="tag2">angular</label>
-                            </div>
-                            <div class="tag">
-                                <input type="checkbox" id="tag3"/>
-                                <label for="tag3">react</label>
-                            </div>
-                            <div class="tag">
-                                <input type="checkbox" id="tag4"/>
-                                <label for="tag4">vue js</label>
-                            </div>
-                            <div class="tag">
-                                <input type="checkbox" id="tag5"/>
-                                <label for="tag5">web apps</label>
-                            </div>
-                            <div class="tag">
-                                <input type="checkbox" id="tag6"/>
-                                <label for="tag6">design</label>
-                            </div>
-                            <div class="tag">
-                                <input type="checkbox" id="tag7"/>
-                                <label for="tag7">wordpress</label>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-
-                </div>
+                    </form>
+                </th:block>
             </div>
-            <div class="col-xl-9 col-lg-8 content-left-offset">
+        </div>
+
+        <div class="col-xl-9 col-lg-8 content-left-offset">
 
                 <h3 class="page-title">Search Results</h3>
 
@@ -544,13 +558,13 @@
                     <!-- Job Listing -->
                     <a href="single-job-page.html" class="job-listing" th:each="job : ${jobs}">
 
-                        <!-- Job Listing Details -->
-                        <div class="job-listing-details">
-                            <!-- Logo -->
-                            <div class="job-listing-company-logo">
-                                <img src="images/company-logo-01.png" alt=""
-                                     th:src="|/attachments/${job.company.logoHash}|">
-                            </div>
+                    <!-- Job Listing Details -->
+                    <div class="job-listing-details">
+                        <!-- Logo -->
+                        <div class="job-listing-company-logo">
+                            <img src="images/company-logo-01.png" alt="">
+                            <!-- th:src="|/attachments/${job.company.logoHash}|" -->
+                        </div>
 
                             <!-- Details -->
                             <div class="job-listing-description">
