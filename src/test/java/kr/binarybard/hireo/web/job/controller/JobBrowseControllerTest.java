@@ -14,6 +14,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+
+import org.springframework.test.web.servlet.ResultActions;
+
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import kr.binarybard.hireo.common.fixture.JobFixture;
@@ -68,4 +71,19 @@ class JobBrowseControllerTest {
 			.andExpect(model().attribute("jobs", jobListByPage))
 			.andExpect(view().name("job/joblist"));
 	}
+
+
+	@Test
+	@DisplayName("페이지 단위로 조건을 추가해 조회한다.")
+	void jobSearchConditionTest() throws Exception {
+		//given
+		ResultActions perform = mockMvc.perform(get("/jobs/search")
+			.param("keyword", "소프트")
+			.param("salaryRange", "1500,3500")
+		);
+
+		//expected
+		perform.andExpect(status().isOk());
+	}
+
 }

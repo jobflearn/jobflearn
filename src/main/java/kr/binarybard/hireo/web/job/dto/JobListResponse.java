@@ -3,6 +3,9 @@ package kr.binarybard.hireo.web.job.dto;
 import java.time.LocalDateTime;
 
 import kr.binarybard.hireo.web.company.dto.CompanyListResponse;
+
+import kr.binarybard.hireo.web.job.domain.Category;
+
 import kr.binarybard.hireo.web.job.domain.JobType;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,6 +21,9 @@ public class JobListResponse {
 	private String name;
 
 	private String description;
+
+	private Category category;
+
 
 	private JobType jobType;
 
@@ -44,16 +50,19 @@ public class JobListResponse {
 	}
 
 	@Builder
-	public JobListResponse(Long id, String name, String description, JobType jobType, int startSalary, int endSalary,
-		LocalDateTime postedAt, CompanyListResponse company) {
+
+	public JobListResponse(Long id, String name, String description, Category category, JobType jobType,
+		int startSalary,
+		int endSalary, LocalDateTime postedAt, CompanyListResponse company) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.category = category;
+
 		this.jobType = jobType;
 		this.startSalary = startSalary;
 		this.endSalary = endSalary;
 		this.postedAt = postedAt;
 		this.company = company;
-
 	}
 }

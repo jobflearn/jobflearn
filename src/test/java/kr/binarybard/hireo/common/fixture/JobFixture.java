@@ -1,5 +1,7 @@
 package kr.binarybard.hireo.common.fixture;
 
+import static kr.binarybard.hireo.common.fixture.LocationFixture.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +9,16 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import kr.binarybard.hireo.web.company.dto.CompanyListResponse;
 import kr.binarybard.hireo.web.job.domain.Category;
 import kr.binarybard.hireo.web.job.domain.Job;
 import kr.binarybard.hireo.web.job.domain.JobType;
 import kr.binarybard.hireo.web.job.dto.JobListResponse;
 import kr.binarybard.hireo.web.job.dto.JobResponse;
+import kr.binarybard.hireo.web.job.dto.JobSearchCondition;
+import kr.binarybard.hireo.web.location.domain.Address;
 
 public class JobFixture {
 
@@ -40,6 +46,35 @@ public class JobFixture {
 			.category(Category.WEB_SOFT)
 			.company(CompanyFixture.createTestCompanyAResponse())
 			.build();
+	}
+
+	public static JobListResponse createJobListResposne() {
+		return JobListResponse.builder()
+			.jobType(JobType.FULLTIME)
+			.startSalary(3000)
+			.endSalary(4500)
+			.postedAt(LocalDateTime.now())
+			.description("3년차 소프트웨어 엔지니어 구합니다.")
+			.name("소프트웨어 엔지니어")
+			.category(Category.WEB_SOFT)
+			.id(1L)
+			.company(new CompanyListResponse(1L, "Google", "image.png",
+				new Address("경기도", "안양시", "원골로", "노원구", "미상")
+			))
+			.build();
+	}
+
+	public static JobSearchCondition createJobSearchCondition() {
+		JobSearchCondition condition = JobSearchCondition.builder()
+			.keyword("소프트")
+			.locationDto(TEST_LOCATION_CONDITION_1)
+			.jobType(JobType.FULLTIME)
+			.category(Category.WEB_SOFT)
+			.salaryRange("1500,9999")
+			.build();
+		ReflectionTestUtils.setField(condition, "minSalary", 1500);
+		ReflectionTestUtils.setField(condition, "maxSalary", 9999);
+		return condition;
 	}
 
 	public static Page<JobListResponse> createJobListByPage(int page, int limit) {
