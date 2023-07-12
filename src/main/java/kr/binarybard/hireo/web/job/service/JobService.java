@@ -37,6 +37,7 @@ public class JobService {
 		return jobRepository.listJobs(pageable);
 	}
 
+
 	@Transactional(readOnly = true)
 	public Page<JobListResponse> findByPageWithCondition(JobSearchCondition condition, Pageable pageable) {
 		String[] range = condition.getSalaryRange().split(",");

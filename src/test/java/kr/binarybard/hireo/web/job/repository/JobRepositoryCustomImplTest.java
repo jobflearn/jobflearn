@@ -1,5 +1,6 @@
 package kr.binarybard.hireo.web.job.repository;
 
+
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ class JobRepositoryCustomImplTest {
 		PageRequest pageRequest = PageRequest.of(0, 4);
 		//when
 		Page<JobListResponse> jobListResponses = jobRepository.listJobs(pageRequest);
+
 		Page<JobListResponse> jobListResponses2 = jobRepository.listJobs(PageRequest.of(1, 4));
 		//then
 		System.out.println(jobListResponses.getNumber());
@@ -125,5 +127,6 @@ class JobRepositoryCustomImplTest {
 		List<JobListResponse> content = jobListResponses.getContent();
 		assertThat(content.stream().findAny()).isPresent();
 		assertThat(jobListResponses.getNumber()).isZero();
+
 	}
 }

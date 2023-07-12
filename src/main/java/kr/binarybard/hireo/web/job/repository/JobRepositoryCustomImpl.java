@@ -1,6 +1,8 @@
 package kr.binarybard.hireo.web.job.repository;
 
+
 import static com.querydsl.core.types.dsl.MathExpressions.*;
+
 import static kr.binarybard.hireo.web.company.domain.QCompany.*;
 import static kr.binarybard.hireo.web.job.domain.QJob.*;
 import static kr.binarybard.hireo.web.location.domain.QLocation.*;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
+
 import org.springframework.util.StringUtils;
 
 import com.querydsl.core.types.Projections;
@@ -18,17 +21,20 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.core.types.dsl.NumberPath;
+
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
 import kr.binarybard.hireo.web.company.dto.CompanyListResponse;
+
 import kr.binarybard.hireo.web.job.domain.Category;
 import kr.binarybard.hireo.web.job.domain.Job;
 import kr.binarybard.hireo.web.job.domain.JobType;
 import kr.binarybard.hireo.web.job.dto.JobListResponse;
 import kr.binarybard.hireo.web.job.dto.JobSearchCondition;
 import kr.binarybard.hireo.web.location.dto.LocationCondition;
+
 
 @Repository
 public class JobRepositoryCustomImpl implements JobRepositoryCustom {
@@ -41,6 +47,7 @@ public class JobRepositoryCustomImpl implements JobRepositoryCustom {
 
 	@Override
 	public Page<JobListResponse> listJobs(Pageable pageable) {
+
 		List<JobListResponse> jobLists = createJobListQuery()
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
@@ -146,6 +153,7 @@ public class JobRepositoryCustomImpl implements JobRepositoryCustom {
 	private BooleanExpression salaryLoe(Integer salaryLoe) {
 		return salaryLoe != null ? job.endSalary.loe(salaryLoe) : null;
 	}
+
 
 }
 

@@ -386,8 +386,8 @@
     <div class="margin-top-90"></div>
     <!-- Spacer / End-->
 
-<!-- Page Content
-================================================== -->
+
+<!-- Page Content -->
 <div class="container">
     <div class="row">
         <div class="col-xl-3 col-lg-4">
@@ -558,14 +558,14 @@
                     <!-- Job Listing -->
                     <a href="single-job-page.html" class="job-listing" th:each="job : ${jobs}">
 
+
                     <!-- Job Listing Details -->
                     <div class="job-listing-details">
                         <!-- Logo -->
                         <div class="job-listing-company-logo">
                             <img src="images/company-logo-01.png" alt="">
                             <!-- th:src="|/attachments/${job.company.logoHash}|" -->
-                        </div>
-
+                      </div>
                             <!-- Details -->
                             <div class="job-listing-description">
                                 <h4 class="job-listing-company" th:text="${job.company.name}">Hexagon <span
