@@ -191,6 +191,7 @@ $(document).ready(function(){
 		e.preventDefault();
 
 		// Post bookmark when button is clicked
+		const bookmarkType = $(this).data('bookmark-type');
 		const targetId = $(this).data('id');
 		let method = 'POST';
 
@@ -198,7 +199,7 @@ $(document).ready(function(){
 			method = 'DELETE';
 
 		$.ajax({
-			url: '/companies/' + targetId + '/bookmarks',
+			url: '/' + bookmarkType + '/' + targetId + '/bookmarks',
 			context: this,
 			type: method,
 			success: function() {
@@ -1038,6 +1039,25 @@ $(document).ready(function(){
         }
 	});
 
+	$('.share-on-facebook').click(function(e) {
+		e.preventDefault();
+		window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), 'facebook-share-dialog', 'width=626,height=436');
+	});
+
+	$('.share-on-twitter').click(function(e) {
+		e.preventDefault();
+		window.open('https://twitter.com/share?url=' + encodeURIComponent(window.location.href), 'twitter-share-dialog', 'width=626,height=436');
+	});
+
+	$('.share-on-linkedin').click(function(e) {
+		e.preventDefault();
+		window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(window.location.href), 'linkedin-share-dialog', 'width=626,height=436');
+	});
+
+	$('.share-on-google').click(function(e) {
+		e.preventDefault();
+		window.open('https://plus.google.com/share?url=' + encodeURIComponent(window.location.href), 'google-share-dialog', 'width=626,height=436');
+	});
 
 	/*----------------------------------------------------*/
 	/*  Tabs

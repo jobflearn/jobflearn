@@ -1,16 +1,15 @@
 package kr.binarybard.hireo.common.fixture;
 
-import java.util.List;
-
 import kr.binarybard.hireo.api.auth.dto.SignInRequest;
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
+import kr.binarybard.hireo.web.member.domain.Member;
+import kr.binarybard.hireo.web.member.domain.Role;
 import kr.binarybard.hireo.web.member.dto.MemberResponse;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-
-import kr.binarybard.hireo.web.member.domain.Member;
-import kr.binarybard.hireo.web.member.domain.Role;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import java.util.List;
 
 public class MemberFixture {
 	public static final String TEST_EMAIL = "test@test.com";
@@ -20,7 +19,8 @@ public class MemberFixture {
 
 	public static final MemberResponse MEMBER_RESPONSE = MemberResponse.builder()
 		.email(TEST_EMAIL)
-		.bookmarks(List.of(BookmarkFixture.BOOKMARK_RESPONSE))
+		.companyBookmarks(List.of(BookmarkFixture.COMPANY_BOOKMARK_RESPONSE))
+		.jobBookmarks(List.of(BookmarkFixture.JOB_BOOKMARK_RESPONSE))
 		.build();
 
 	public static final SignUpRequest SIGNUP_REQUEST_MEMBER = SignUpRequest.builder()
