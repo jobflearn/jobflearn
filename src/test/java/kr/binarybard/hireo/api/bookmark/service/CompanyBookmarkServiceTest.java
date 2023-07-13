@@ -1,7 +1,7 @@
 package kr.binarybard.hireo.api.bookmark.service;
 
-import kr.binarybard.hireo.api.bookmark.domain.Bookmark;
-import kr.binarybard.hireo.api.bookmark.repository.BookmarkRepository;
+import kr.binarybard.hireo.api.bookmark.domain.CompanyBookmark;
+import kr.binarybard.hireo.api.bookmark.repository.CompanyBookmarkRepository;
 import kr.binarybard.hireo.common.fixture.BookmarkFixture;
 import kr.binarybard.hireo.common.fixture.CompanyFixture;
 import kr.binarybard.hireo.common.fixture.MemberFixture;
@@ -22,10 +22,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class BookmarkServiceTest {
+class CompanyBookmarkServiceTest {
 
 	@Mock
-	private BookmarkRepository bookmarkRepository;
+	private CompanyBookmarkRepository bookmarkRepository;
 
 	@Mock
 	private CompanyRepository companyRepository;
@@ -34,7 +34,7 @@ class BookmarkServiceTest {
 	private MemberRepository memberRepository;
 
 	@InjectMocks
-	private BookmarkService bookmarkService;
+	private CompanyBookmarkService bookmarkService;
 
 	private final Company testCompanyA = CompanyFixture.createTestCompanyA();
 
@@ -44,10 +44,10 @@ class BookmarkServiceTest {
 		// given
 		when(companyRepository.findByIdOrThrow(anyLong())).thenReturn(testCompanyA);
 		when(memberRepository.findByEmailOrThrow(anyString())).thenReturn(MemberFixture.createMember());
-		when(bookmarkRepository.save(any(Bookmark.class))).thenReturn(BookmarkFixture.createBookmarkWithId(1L));
+		when(bookmarkRepository.save(any(CompanyBookmark.class))).thenReturn(BookmarkFixture.createCompanyBookmarkWithId(1L));
 
 		// when
-		Long bookmarkId = bookmarkService.bookmarkCompany(MemberFixture.USER, testCompanyA.getId());
+		Long bookmarkId = bookmarkService.bookmark(MemberFixture.USER, testCompanyA.getId());
 
 		// then
 		Assertions.assertThat(bookmarkId).isEqualTo(1L);
@@ -58,12 +58,12 @@ class BookmarkServiceTest {
 	void deleteCompanyBookmark() {
 		// given
 		when(memberRepository.findByEmailOrThrow(anyString())).thenReturn(MemberFixture.createMemberWithId(1L));
-		when(bookmarkRepository.findByMemberIdAndCompanyIdOrThrow(anyLong(), anyLong())).thenReturn(BookmarkFixture.createBookmarkWithId(1L));
+		when(bookmarkRepository.findByMemberIdAndCompanyIdOrThrow(anyLong(), anyLong())).thenReturn(BookmarkFixture.createCompanyBookmarkWithId(1L));
 
 		// when
-		bookmarkService.deleteCompanyBookmark(MemberFixture.USER, testCompanyA.getId());
+		bookmarkService.deleteBookmark(MemberFixture.USER, testCompanyA.getId());
 
 		// then
-		verify(bookmarkRepository).delete(any(Bookmark.class));
+		verify(bookmarkRepository).delete(any(CompanyBookmark.class));
 	}
 }

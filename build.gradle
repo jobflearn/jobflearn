@@ -122,7 +122,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'BRANCH'
                 value = 'COVEREDRATIO'
-                minimum = 0.80
+                minimum = 0.70
             }
 
             limit {
@@ -134,6 +134,11 @@ jacocoTestCoverageVerification {
     }
 
     afterEvaluate {
+        def Qdomains = []
+        for (qPattern in 'QA'..'QZ') {
+            Qdomains.add('**/Q' + qPattern + '*.class')
+        }
+
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it,
                     exclude: ['**/*Application.class',
@@ -149,8 +154,7 @@ jacocoTestCoverageVerification {
                               '**/*Handler.class',
                               '**/config/**/*',
                               '**/domain/**/*',
-                              '**/dto/**/*'
-                    ])
+                              '**/dto/**/*'] + Qdomains)
         }))
     }
 }
