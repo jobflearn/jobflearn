@@ -1,12 +1,12 @@
-package kr.binarybard.hireo.web.member.controller;
+package kr.binarybard.hireo.web.account.controller;
 
-import kr.binarybard.hireo.common.AcceptanceTest;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import kr.binarybard.hireo.common.AcceptanceTest;
 
 class MainControllerTest extends AcceptanceTest {
 

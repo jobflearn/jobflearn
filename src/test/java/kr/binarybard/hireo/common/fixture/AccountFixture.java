@@ -18,13 +18,13 @@ public class AccountFixture {
 	public static final String TEST_PASSWORD = "test123456";
 	public static final String TEST_USERNAME = "testUser";
 
-	public static final AccountResponse account_RESPONSE = AccountResponse.builder()
+	public static final AccountResponse ACCOUNT_RESPONSE = AccountResponse.builder()
 		.email(TEST_EMAIL)
 		.companyBookmarks(List.of(BookmarkFixture.COMPANY_BOOKMARK_RESPONSE))
 		.jobBookmarks(List.of(BookmarkFixture.JOB_BOOKMARK_RESPONSE))
 		.build();
 
-	public static final SignUpRequest SIGNUP_REQUEST_account = SignUpRequest.builder()
+	public static final SignUpRequest SIGNUP_REQUEST_ACCOUNT = SignUpRequest.builder()
 		.email(TEST_EMAIL)
 		.name(TEST_USERNAME)
 		.password(TEST_PASSWORD)
@@ -32,7 +32,7 @@ public class AccountFixture {
 		.type(AccountType.PERSONNEL)
 		.build();
 
-	public static final SignInRequest SIGNIN_REQUEST_account = SignInRequest.builder()
+	public static final SignInRequest SIGNIN_REQUEST_ACCOUNT = SignInRequest.builder()
 		.email(TEST_EMAIL)
 		.password(TEST_PASSWORD)
 		.build();
@@ -43,7 +43,7 @@ public class AccountFixture {
 		List.of(new SimpleGrantedAuthority("USER"))
 	);
 
-	public static Account createaccount() {
+	public static Account createAccount() {
 		return Personnel.builder()
 			.email(TEST_EMAIL)
 			.password(TEST_PASSWORD)
@@ -51,8 +51,8 @@ public class AccountFixture {
 			.build();
 	}
 
-	public static Account createaccountWithId(Long id) {
-		var Account = createaccount();
+	public static Account createAccountWithId(Long id) {
+		var Account = createAccount();
 		ReflectionTestUtils.setField(Account, "id", id);
 		return Account;
 	}
