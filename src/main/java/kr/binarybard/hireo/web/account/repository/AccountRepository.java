@@ -18,4 +18,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 		return findByEmail(email)
 			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_FOUND, email));
 	}
+
+	void deleteByEmail(String email);
 }
