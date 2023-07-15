@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - main
-    types: [opened, synchronize, reopened]
+    types: [ opened, synchronize, reopened ]
 
 jobs:
   build:
@@ -39,7 +39,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           JASYPT_DEFAULT_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
-        run: ./gradlew compileJava jacocoTestReport sonar --info
+        run: ./gradlew compileJava sonar --info
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
