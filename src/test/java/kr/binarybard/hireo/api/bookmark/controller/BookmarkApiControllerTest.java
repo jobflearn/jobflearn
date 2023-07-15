@@ -1,9 +1,9 @@
 package kr.binarybard.hireo.api.bookmark.controller;
 
-import kr.binarybard.hireo.common.AcceptanceTest;
-import kr.binarybard.hireo.common.fixture.CompanyFixture;
-import kr.binarybard.hireo.web.company.service.CompanyService;
-import kr.binarybard.hireo.web.member.service.MemberService;
+import static kr.binarybard.hireo.common.fixture.AccountFixture.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,11 +13,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import static kr.binarybard.hireo.common.fixture.MemberFixture.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import kr.binarybard.hireo.common.AcceptanceTest;
+import kr.binarybard.hireo.common.fixture.CompanyFixture;
+import kr.binarybard.hireo.web.account.service.AccountService;
+import kr.binarybard.hireo.web.company.service.CompanyService;
 
 @Transactional
 @WithMockUser(TEST_EMAIL)
@@ -27,14 +26,14 @@ class BookmarkApiControllerTest extends AcceptanceTest {
 	private MockMvc mockMvc;
 
 	@Autowired
-	private MemberService memberService;
+	private AccountService accountService;
 
 	@Autowired
 	private CompanyService companyService;
 
 	@BeforeEach
 	void setup() {
-		memberService.save(SIGNUP_REQUEST_MEMBER);
+		accountService.save(SIGNUP_REQUEST_ACCOUNT);
 		companyService.registerCompany(CompanyFixture.createTestCompanyARegister(), USER);
 	}
 
