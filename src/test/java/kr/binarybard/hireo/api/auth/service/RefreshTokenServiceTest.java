@@ -1,10 +1,12 @@
 package kr.binarybard.hireo.api.auth.service;
 
-import kr.binarybard.hireo.api.auth.domain.RefreshToken;
-import kr.binarybard.hireo.api.auth.repository.RefreshTokenRepository;
-import kr.binarybard.hireo.config.jwt.JwtTokenProvider;
-import kr.binarybard.hireo.web.member.domain.Member;
-import kr.binarybard.hireo.web.member.repository.MemberRepository;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.BDDMockito.*;
+
+import java.time.Instant;
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,13 +15,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.Instant;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.given;
+import kr.binarybard.hireo.api.auth.domain.RefreshToken;
+import kr.binarybard.hireo.api.auth.repository.RefreshTokenRepository;
+import kr.binarybard.hireo.config.jwt.JwtTokenProvider;
+import kr.binarybard.hireo.web.account.domain.Account;
+import kr.binarybard.hireo.web.account.domain.JobSeeker;
+import kr.binarybard.hireo.web.account.repository.AccountRepository;
 
 @ExtendWith(MockitoExtension.class)
 class RefreshTokenServiceTest {
@@ -31,21 +32,21 @@ class RefreshTokenServiceTest {
 	private JwtTokenProvider jwtTokenProvider;
 
 	@Mock
-	private MemberRepository memberRepository;
+	private AccountRepository accountRepository;
 
 	@InjectMocks
 	private RefreshTokenService refreshTokenService;
 
 	private String validToken;
 	private String username;
-	private Member member;
+	private Account account;
 	private RefreshToken refreshToken;
 
 	@BeforeEach
 	public void setup() {
 		validToken = "valid_token";
 		username = "username";
-		member = Member.builder()
+		account = JobSeeker.builder()
 			.email(username)
 			.build();
 		refreshToken = RefreshToken.builder()
@@ -59,8 +60,8 @@ class RefreshTokenServiceTest {
 		// given
 		given(jwtTokenProvider.validateToken(validToken)).willReturn(true);
 		given(jwtTokenProvider.getUsernameFromToken(validToken)).willReturn(username);
-		given(memberRepository.findByEmailOrThrow(username)).willReturn(member);
-		given(refreshTokenRepository.findByMemberAndToken(any(Member.class), anyString()))
+		given(accountRepository.findByEmailOrThrow(username)).willReturn(account);
+		given(refreshTokenRepository.findByAccountAndToken(any(Account.class), anyString()))
 			.willReturn(Optional.of(refreshToken));
 
 		// when
@@ -90,8 +91,8 @@ class RefreshTokenServiceTest {
 		// given
 		given(jwtTokenProvider.validateToken(validToken)).willReturn(true);
 		given(jwtTokenProvider.getUsernameFromToken(validToken)).willReturn(username);
-		given(memberRepository.findByEmailOrThrow(username)).willReturn(member);
-		given(refreshTokenRepository.findByMemberAndToken(any(Member.class), anyString()))
+		given(accountRepository.findByEmailOrThrow(username)).willReturn(account);
+		given(refreshTokenRepository.findByAccountAndToken(any(Account.class), anyString()))
 			.willReturn(Optional.empty());
 
 		// when
@@ -110,8 +111,8 @@ class RefreshTokenServiceTest {
 			.build();
 		given(jwtTokenProvider.validateToken(validToken)).willReturn(true);
 		given(jwtTokenProvider.getUsernameFromToken(validToken)).willReturn(username);
-		given(memberRepository.findByEmailOrThrow(username)).willReturn(member);
-		given(refreshTokenRepository.findByMemberAndToken(any(Member.class), anyString()))
+		given(accountRepository.findByEmailOrThrow(username)).willReturn(account);
+		given(refreshTokenRepository.findByAccountAndToken(any(Account.class), anyString()))
 			.willReturn(Optional.of(expiredToken));
 
 		// when

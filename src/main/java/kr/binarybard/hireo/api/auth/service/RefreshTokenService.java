@@ -1,16 +1,5 @@
 package kr.binarybard.hireo.api.auth.service;
 
-import jakarta.transaction.Transactional;
-import kr.binarybard.hireo.api.auth.domain.RefreshToken;
-import kr.binarybard.hireo.api.auth.repository.RefreshTokenRepository;
-import kr.binarybard.hireo.common.exceptions.ErrorCode;
-import kr.binarybard.hireo.common.exceptions.InvalidValueException;
-import kr.binarybard.hireo.config.jwt.JwtTokenProvider;
-import kr.binarybard.hireo.web.member.domain.Member;
-import kr.binarybard.hireo.web.member.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -18,22 +7,34 @@ import java.time.Instant;
 import java.util.Base64;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
+import kr.binarybard.hireo.api.auth.domain.RefreshToken;
+import kr.binarybard.hireo.api.auth.repository.RefreshTokenRepository;
+import kr.binarybard.hireo.common.exceptions.ErrorCode;
+import kr.binarybard.hireo.common.exceptions.InvalidValueException;
+import kr.binarybard.hireo.config.jwt.JwtTokenProvider;
+import kr.binarybard.hireo.web.account.domain.Account;
+import kr.binarybard.hireo.web.account.repository.AccountRepository;
+import lombok.RequiredArgsConstructor;
+
 @Service
 @RequiredArgsConstructor
 public class RefreshTokenService {
 	private final RefreshTokenRepository refreshTokenRepository;
 	private final JwtTokenProvider tokenProvider;
-	private final MemberRepository memberRepository;
+	private final AccountRepository accountRepository;
 
 	@Transactional
 	public void deleteTokenByEmail(String email) {
-		refreshTokenRepository.deleteByMember(memberRepository.findByEmailOrThrow(email));
+		refreshTokenRepository.deleteByAccount(accountRepository.findByEmailOrThrow(email));
 	}
 
 	@Transactional
 	public Long save(String email, String token) {
 		var refreshToken = RefreshToken.builder()
-			.member(memberRepository.findByEmailOrThrow(email))
+			.account(accountRepository.findByEmailOrThrow(email))
 			.token(hashToken(token))
 			.expiryDate(Instant.now().plusMillis(tokenProvider.REFRESH_TOKEN_EXPIRE_TIME))
 			.build();
@@ -61,8 +62,8 @@ public class RefreshTokenService {
 
 	private Optional<RefreshToken> getStoredRefreshToken(String token) {
 		String username = tokenProvider.getUsernameFromToken(token);
-		Member member = memberRepository.findByEmailOrThrow(username);
-		return refreshTokenRepository.findByMemberAndToken(member, hashToken(token));
+		Account account = accountRepository.findByEmailOrThrow(username);
+		return refreshTokenRepository.findByAccountAndToken(account, hashToken(token));
 	}
 
 	private boolean isTokenNotExpired(RefreshToken token) {
