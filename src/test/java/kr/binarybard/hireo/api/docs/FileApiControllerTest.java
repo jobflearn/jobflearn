@@ -27,9 +27,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.binarybard.hireo.api.file.dto.FileResponse;
 import kr.binarybard.hireo.api.file.service.FileService;
-import kr.binarybard.hireo.common.fixture.MemberFixture;
+import kr.binarybard.hireo.common.fixture.AccountFixture;
 
-@WithMockUser(username = MemberFixture.TEST_EMAIL)
+@WithMockUser(username = AccountFixture.TEST_EMAIL)
 class FileApiControllerTest extends RestDocsConfiguration {
 
 	@Autowired

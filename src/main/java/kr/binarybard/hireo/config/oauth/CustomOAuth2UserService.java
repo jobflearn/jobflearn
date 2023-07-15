@@ -1,10 +1,8 @@
 package kr.binarybard.hireo.config.oauth;
 
-import kr.binarybard.hireo.config.oauth.userinfo.CustomOAuth2UserInfo;
-import kr.binarybard.hireo.web.member.domain.Member;
-import kr.binarybard.hireo.web.member.domain.Role;
-import kr.binarybard.hireo.web.member.repository.MemberRepository;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -13,17 +11,20 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.UUID;
+import kr.binarybard.hireo.config.oauth.userinfo.CustomOAuth2UserInfo;
+import kr.binarybard.hireo.web.account.domain.Account;
+import kr.binarybard.hireo.web.account.domain.Employee;
+import kr.binarybard.hireo.web.account.repository.AccountRepository;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
-	private final MemberRepository memberRepository;
+	private final AccountRepository accountRepository;
 	private final PasswordEncoder passwordEncoder;
 
-	public CustomOAuth2UserService(MemberRepository memberRepository, @Lazy PasswordEncoder passwordEncoder) {
-		this.memberRepository = memberRepository;
+	public CustomOAuth2UserService(AccountRepository accountRepository, @Lazy PasswordEncoder passwordEncoder) {
+		this.accountRepository = accountRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
 
@@ -34,18 +35,17 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		String registrationId = userRequest.getClientRegistration().getRegistrationId();
 		var userInfo = CustomOAuth2UserInfo.of(registrationId, user.getAttributes());
 
-		Optional<Member> foundMember = memberRepository.findByEmail(userInfo.getEmail());
-		if (foundMember.isEmpty()) {
-			Member member = Member.builder()
+		Optional<Account> foundAccount = accountRepository.findByEmail(userInfo.getEmail());
+		if (foundAccount.isEmpty()) {
+			Account account = Employee.builder()
 				.email(userInfo.getEmail())
 				.password(createDummyPassword())
-				.role(Role.FREELANCER)
 				.build();
-			member.encodePassword(passwordEncoder);
-			memberRepository.save(member);
-			return new CustomOAuth2UserPrincipal(member, userInfo);
+			account.encodePassword(passwordEncoder);
+			accountRepository.save(account);
+			return new CustomOAuth2UserPrincipal(account, userInfo);
 		}
-		return new CustomOAuth2UserPrincipal(foundMember.get(), userInfo);
+		return new CustomOAuth2UserPrincipal(foundAccount.get(), userInfo);
 	}
 
 	private String createDummyPassword() {

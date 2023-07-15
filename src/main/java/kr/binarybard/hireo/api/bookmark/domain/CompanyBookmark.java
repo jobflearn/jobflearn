@@ -1,9 +1,18 @@
 package kr.binarybard.hireo.api.bookmark.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import kr.binarybard.hireo.common.BaseTimeEntity;
+import kr.binarybard.hireo.web.account.domain.Account;
 import kr.binarybard.hireo.web.company.domain.Company;
-import kr.binarybard.hireo.web.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @Table(name = "company_bookmarks", uniqueConstraints = {
-	@UniqueConstraint(columnNames = {"member_id", "company_id"})})
+	@UniqueConstraint(columnNames = {"account_id", "company_id"})})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CompanyBookmark extends BaseTimeEntity {
 	@Id
@@ -25,12 +34,12 @@ public class CompanyBookmark extends BaseTimeEntity {
 	private Company company;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id", nullable = false)
-	private Member member;
+	@JoinColumn(name = "account_id", nullable = false)
+	private Account account;
 
 	@Builder
-	public CompanyBookmark(Company company, Member member) {
+	public CompanyBookmark(Company company, Account account) {
 		this.company = company;
-		this.member = member;
+		this.account = account;
 	}
 }

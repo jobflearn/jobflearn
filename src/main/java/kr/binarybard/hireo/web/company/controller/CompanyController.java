@@ -1,18 +1,23 @@
 package kr.binarybard.hireo.web.company.controller;
 
-import kr.binarybard.hireo.web.review.dto.ReviewResponse;
-import kr.binarybard.hireo.web.review.service.ReviewService;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.binarybard.hireo.common.CurrentUser;
+import kr.binarybard.hireo.web.account.service.AccountService;
 import kr.binarybard.hireo.web.company.dto.CompanyRegister;
 import kr.binarybard.hireo.web.company.dto.CompanyResponse;
 import kr.binarybard.hireo.web.company.service.CompanyService;
-import kr.binarybard.hireo.web.member.service.MemberService;
+import kr.binarybard.hireo.web.review.dto.ReviewResponse;
+import kr.binarybard.hireo.web.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class CompanyController {
 	private final CompanyService companyService;
-	private final MemberService memberService;
+	private final AccountService accountService;
 	private final ReviewService reviewService;
 
 	@GetMapping("/{id:\\d+}")
@@ -42,7 +47,7 @@ public class CompanyController {
 		model.addAttribute("reviews", reviews);
 		model.addAttribute("beginPage", beginPage);
 		model.addAttribute("endPage", endPage);
-		model.addAttribute("member", memberService.findByEmail(user.getUsername()));
+		model.addAttribute("account", accountService.findByEmail(user.getUsername()));
 		return "company/profile";
 	}
 

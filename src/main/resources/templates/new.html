@@ -38,21 +38,21 @@
                     <span><th:block th:text="#{already-have-account}">계정이 있으신가요?</th:block> <a href="pages-login.html"
                                                                                                th:text="|#{login}!|">로그인!</a></span>
                 </div>
-                <form th:action="@{/auth/new}" th:object="${member}"  method="post" id="register-account-form">
+                <form th:action="@{/auth/new}" th:object="${account}"  method="post" id="register-account-form">
                 <!-- Account Type -->
 
                     <div class="account-type">
                         <div>
                             <input type="radio" name="account-type-radio" id="freelancer-radio"
-                                   class="account-type-radio" th:field="*{role}" th:value="FREELANCER" checked/>
+                                   class="account-type-radio" th:field="*{type}" th:value="JOBSEEKER" checked/>
                             <label for="freelancer-radio" class="ripple-effect-dark"><i
-                                class="icon-material-outline-account-circle"></i> <th:block th:text="#{freelancer}">프리랜서<th:block></th:block></label>
+                                class="icon-material-outline-account-circle"></i> <th:block th:text="#{jobseeker}">프리랜서<th:block></th:block></label>
                         </div>
                         <div>
                             <input type="radio" name="account-type-radio" id="employer-radio"
-                               class="account-type-radio" th:field="*{role}" th:value="EMPLOYER"/>
+                               class="account-type-radio" th:field="*{type}" th:value="EMPLOYEE"/>
                             <label for="employer-radio" class="ripple-effect-dark"><i
-                                class="icon-material-outline-business-center"></i> <th:block th:text="#{employer}">고용주</th:block></label>
+                                class="icon-material-outline-business-center"></i> <th:block th:text="#{personnel}">고용주</th:block></label>
                         </div>
                     </div>
 

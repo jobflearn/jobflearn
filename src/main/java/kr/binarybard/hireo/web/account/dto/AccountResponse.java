@@ -1,15 +1,15 @@
-package kr.binarybard.hireo.web.member.dto;
+package kr.binarybard.hireo.web.account.dto;
+
+import java.util.List;
 
 import kr.binarybard.hireo.api.bookmark.dto.CompanyBookmarkResponse;
 import kr.binarybard.hireo.api.bookmark.dto.JobBookmarkResponse;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @Builder
-public class MemberResponse {
+public class AccountResponse {
 	private String email;
 
 	private List<CompanyBookmarkResponse> companyBookmarks;

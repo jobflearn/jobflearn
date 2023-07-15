@@ -1,29 +1,28 @@
 package kr.binarybard.hireo.web.auth.controller;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import kr.binarybard.hireo.common.AcceptanceTest;
-import kr.binarybard.hireo.common.exceptions.AuthenticationException;
-import kr.binarybard.hireo.common.exceptions.ErrorCode;
-import kr.binarybard.hireo.common.fixture.LoginFixture;
-import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
-import kr.binarybard.hireo.web.member.domain.Role;
-import kr.binarybard.hireo.web.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import kr.binarybard.hireo.common.AcceptanceTest;
+import kr.binarybard.hireo.common.exceptions.AuthenticationException;
+import kr.binarybard.hireo.common.exceptions.ErrorCode;
+import kr.binarybard.hireo.common.fixture.LoginFixture;
+import kr.binarybard.hireo.web.account.service.AccountService;
+import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
+
 class LoginControllerTest extends AcceptanceTest {
 
 	@MockBean
-	private MemberService memberService;
+	private AccountService accountService;
 
 	private ResultActions performSignUpRequest(SignUpRequest signUpRequest) throws Exception {
 		return mockMvc.perform(post("/auth/new")
@@ -31,17 +30,16 @@ class LoginControllerTest extends AcceptanceTest {
 				.param("email", signUpRequest.getEmail())
 				.param("password", signUpRequest.getPassword())
 				.param("passwordConfirm", signUpRequest.getPasswordConfirm())
-				.param("name", signUpRequest.getName())
-				.param("role", signUpRequest.getRole().toString()))
+				.param("name", signUpRequest.getName()))
 			.andDo(print());
 	}
 
 	@Test
 	@DisplayName("회원가입 요청")
-	void registerMemberTest() throws Exception {
-		SignUpRequest signUpRequest = LoginFixture.TEST_SIGNUP_REQUEST_FREELANCER;
+	void registerAccountTest() throws Exception {
+		SignUpRequest signUpRequest = LoginFixture.TEST_SIGNUP_REQUEST_JOBSEEKER;
 
-		when(memberService.save(signUpRequest)).thenReturn(1L);
+		when(accountService.save(signUpRequest)).thenReturn(1L);
 
 		performSignUpRequest(signUpRequest)
 			.andExpect(status().is3xxRedirection())
@@ -54,28 +52,27 @@ class LoginControllerTest extends AcceptanceTest {
 		mockMvc.perform(get("/auth/new"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("new"))
-			.andExpect(model().attributeExists("member"));
+			.andExpect(model().attributeExists("account"));
 	}
 
 	@Test
 	@DisplayName("회원가입 요청 - 이메일 중복")
-	void registerMemberWithDuplicateEmailTest() throws Exception {
-		when(memberService.save(any())).thenThrow(new AuthenticationException(ErrorCode.DUPLICATED_EMAIL));
+	void registerAccountWithDuplicateEmailTest() throws Exception {
+		when(accountService.save(any())).thenThrow(new AuthenticationException(ErrorCode.DUPLICATED_EMAIL));
 
-		performSignUpRequest(LoginFixture.TEST_SIGNUP_REQUEST_FREELANCER)
+		performSignUpRequest(LoginFixture.TEST_SIGNUP_REQUEST_JOBSEEKER)
 			.andExpect(status().isOk())
 			.andExpect(view().name("new"));
 	}
 
 	@Test
 	@DisplayName("회원가입 요청 - BindingResult 에러")
-	void registerMemberWithBindingResultError() throws Exception {
+	void registerAccountWithBindingResultError() throws Exception {
 		SignUpRequest invalidRequest = SignUpRequest.builder()
 			.email("freelancer@test.com")
 			.password("password123")
 			.passwordConfirm("password456")
 			.name("freelancerUser")
-			.role(Role.FREELANCER)
 			.build();
 
 		performSignUpRequest(invalidRequest)

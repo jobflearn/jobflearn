@@ -1,8 +1,8 @@
 package kr.binarybard.hireo.api.auth.service;
 
-import kr.binarybard.hireo.api.auth.dto.SignInRequest;
-import kr.binarybard.hireo.api.auth.dto.TokenResponse;
-import kr.binarybard.hireo.common.fixture.MemberFixture;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,8 +14,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import kr.binarybard.hireo.api.auth.dto.SignInRequest;
+import kr.binarybard.hireo.api.auth.dto.TokenResponse;
+import kr.binarybard.hireo.common.fixture.AccountFixture;
 
 @ExtendWith(MockitoExtension.class)
 class JwtLoginServiceTest {
@@ -41,7 +42,7 @@ class JwtLoginServiceTest {
 		// given
 		String testAccessToken = "testAccessToken";
 		String testRefreshToken = "testRefreshToken";
-		SignInRequest request = MemberFixture.SIGNIN_REQUEST_MEMBER;
+		SignInRequest request = AccountFixture.SIGNIN_REQUEST_ACCOUNT;
 
 		when(authenticationManagerBuilder.getObject()).thenReturn(authenticationManager);
 		when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))

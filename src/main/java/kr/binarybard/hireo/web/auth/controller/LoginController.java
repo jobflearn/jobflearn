@@ -1,11 +1,5 @@
 package kr.binarybard.hireo.web.auth.controller;
 
-import jakarta.validation.Valid;
-import kr.binarybard.hireo.common.exceptions.AuthenticationException;
-import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
-import kr.binarybard.hireo.web.member.service.MemberService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,23 +8,33 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.validation.Valid;
+import kr.binarybard.hireo.common.exceptions.AuthenticationException;
+import kr.binarybard.hireo.web.account.domain.AccountType;
+import kr.binarybard.hireo.web.account.service.AccountService;
+import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Controller
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class LoginController {
-	private final MemberService memberService;
+	private final AccountService accountService;
 
 	@GetMapping("/new")
 	public String registerForm(Model model) {
-		var member = SignUpRequest.builder()
+		var account = SignUpRequest.builder()
 			.build();
-		model.addAttribute("member", member);
+		AccountType[] types = AccountType.values();
+		model.addAttribute("types", types);
+		model.addAttribute("account", account);
 		return "new";
 	}
 
 	@PostMapping("/new")
-	public String registerMember(@Valid @ModelAttribute("member") SignUpRequest memberDto,
+	public String registerAccount(@Valid @ModelAttribute("account") SignUpRequest accountDto,
 		BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			log.info("bindingResult has errors: {}", bindingResult);
@@ -38,7 +42,7 @@ public class LoginController {
 		}
 
 		try {
-			memberService.save(memberDto);
+			accountService.save(accountDto);
 		} catch (AuthenticationException e) {
 			log.error("Failed to create account", e);
 			bindingResult.reject("exists.email");

@@ -63,15 +63,11 @@ VALUES ('OpenAI', true, 'OpenAI는 인공 지능 연구소입니다.', 1),
        ('Super Selectos', false, 'Super Selectos는 엘살바도르의 슈퍼마켓 체인입니다.', 30);
 
 -- 비밀번호 죄다 1임
-INSERT INTO members (email, password, name, role)
-VALUES ('free@test.com', '{bcrypt}$2a$10$HlVJohlGeJPOmW.pi231Ke/dTztPmv8s7GS7DZS8fcWHVIP4Dez7m', 'Test User 1',
-        'FREELANCER');
-INSERT INTO members (email, password, name, role)
-VALUES ('emp@test.com', '{bcrypt}$2a$10$HlVJohlGeJPOmW.pi231Ke/dTztPmv8s7GS7DZS8fcWHVIP4Dez7m', 'Test User 2',
-        'EMPLOYER');
-INSERT INTO members (email, password, name, role)
-VALUES ('admin@test.com', '{bcrypt}$2a$10$HlVJohlGeJPOmW.pi231Ke/dTztPmv8s7GS7DZS8fcWHVIP4Dez7m', 'Test User 3',
-        'ADMINISTRATOR');
+INSERT INTO accounts (email, password, name, account_type) VALUES ('free@test.com', '{bcrypt}$2a$10$HlVJohlGeJPOmW.pi231Ke/dTztPmv8s7GS7DZS8fcWHVIP4Dez7m', 'Test User 1', 'JOBSEEKER');
+INSERT INTO accounts (email, password, name, account_type)
+VALUES ('emp@test.com', '{bcrypt}$2a$10$HlVJohlGeJPOmW.pi231Ke/dTztPmv8s7GS7DZS8fcWHVIP4Dez7m', 'Test User 2', 'EMPLOYEE');
+INSERT INTO accounts (email, password, name, account_type)
+VALUES ('admin@test.com', '{bcrypt}$2a$10$HlVJohlGeJPOmW.pi231Ke/dTztPmv8s7GS7DZS8fcWHVIP4Dez7m', 'Test User 3', 'PERSONNEL');
 
 INSERT INTO job (name, job_type, start_salary, end_salary, description, category, company_id, created_date, modified_date)
 VALUES
@@ -106,7 +102,7 @@ VALUES
     ('웹 디자이너', 'PARTTIME', 3500, 4500, '시각적으로 매력적인 웹 디자인', 'GRAP_DES', 29, '2022-01-29 22:00:00', '2022-01-29 22:00:00'),
     ('교육 및 개발 매니저', 'FULLTIME', 8000, 9000, '교육 및 개발 프로젝트 리더십', 'EDU_TRAI', 30, '2022-01-30 23:00:00', '2022-01-30 23:00:00');
 
-INSERT INTO reviews (title, content, rating, member_id, company_id, created_date, modified_date)
+INSERT INTO reviews (title, content, rating, account_id, company_id, created_date, modified_date)
 WITH generator AS (
     SELECT ROW_NUMBER() OVER () AS rn
     FROM (
@@ -122,13 +118,13 @@ SELECT
     CONCAT('Review ', g1.rn, ' for Company ', c.company_id),
     CONCAT('This is review ', g1.rn, ' for Company ', c.company_id, '.'),
     FLOOR(1 + RAND() * 5),
-    m.member_id,
+    m.account_id,
     c.company_id,
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP
 FROM
     generator g1
         CROSS JOIN companies c
-        CROSS JOIN members m
+        CROSS JOIN accounts m
 WHERE g1.rn <= 30;
 

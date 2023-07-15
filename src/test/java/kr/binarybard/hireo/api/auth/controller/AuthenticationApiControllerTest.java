@@ -1,15 +1,8 @@
 package kr.binarybard.hireo.api.auth.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
-import kr.binarybard.hireo.api.auth.dto.RefreshTokenRequest;
-import kr.binarybard.hireo.api.auth.dto.SignInRequest;
-import kr.binarybard.hireo.api.auth.repository.RefreshTokenRepository;
-import kr.binarybard.hireo.common.AcceptanceTest;
-import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
-import kr.binarybard.hireo.web.member.repository.MemberRepository;
-import kr.binarybard.hireo.web.member.service.MemberService;
-import kr.binarybard.hireo.web.review.repository.ReviewRepository;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
+
+import kr.binarybard.hireo.api.auth.dto.RefreshTokenRequest;
+import kr.binarybard.hireo.api.auth.dto.SignInRequest;
+import kr.binarybard.hireo.api.auth.repository.RefreshTokenRepository;
+import kr.binarybard.hireo.common.AcceptanceTest;
+import kr.binarybard.hireo.web.account.domain.AccountType;
+import kr.binarybard.hireo.web.account.repository.AccountRepository;
+import kr.binarybard.hireo.web.account.service.AccountService;
+import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
+import kr.binarybard.hireo.web.review.repository.ReviewRepository;
 
 class AuthenticationApiControllerTest extends AcceptanceTest {
 
@@ -27,10 +29,10 @@ class AuthenticationApiControllerTest extends AcceptanceTest {
 	private ObjectMapper objectMapper;
 
 	@Autowired
-	private MemberService memberService;
+	private AccountService accountService;
 
 	@Autowired
-	private MemberRepository memberRepository;
+	private AccountRepository accountRepository;
 
 	@Autowired
 	private ReviewRepository reviewRepository;
@@ -45,13 +47,14 @@ class AuthenticationApiControllerTest extends AcceptanceTest {
 	public void setUp() {
 		refreshTokenRepository.deleteAll();
 		reviewRepository.deleteAll();
-		memberRepository.deleteAll();
+		accountRepository.deleteAll();
 
 		SignUpRequest signUpRequest = SignUpRequest.builder()
 			.email(username)
 			.password(password)
+			.type(AccountType.PERSONNEL)
 			.build();
-		memberService.save(signUpRequest);
+		accountService.save(signUpRequest);
 	}
 
 	@DisplayName("로그인을 성공적으로 수행한다.")

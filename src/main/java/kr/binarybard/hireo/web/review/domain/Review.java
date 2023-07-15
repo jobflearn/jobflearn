@@ -1,9 +1,17 @@
 package kr.binarybard.hireo.web.review.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import kr.binarybard.hireo.common.BaseTimeEntity;
+import kr.binarybard.hireo.web.account.domain.Account;
 import kr.binarybard.hireo.web.company.domain.Company;
-import kr.binarybard.hireo.web.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,15 +37,15 @@ public class Review extends BaseTimeEntity {
 	private int rating;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id")
-	private Member author;
+	@JoinColumn(name = "account_id")
+	private Account author;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "company_id")
 	private Company company;
 
 	@Builder
-	public Review(String title, String content, int rating, Member author, Company company) {
+	public Review(String title, String content, int rating, Account author, Company company) {
 		this.title = title;
 		this.content = content;
 		this.rating = rating;
@@ -45,8 +53,8 @@ public class Review extends BaseTimeEntity {
 		this.company = company;
 	}
 
-	public void assignAuthor(Member member) {
-		this.author = member;
+	public void assignAuthor(Account account) {
+		this.author = account;
 	}
 
 	public void associateWithCompany(Company company) {

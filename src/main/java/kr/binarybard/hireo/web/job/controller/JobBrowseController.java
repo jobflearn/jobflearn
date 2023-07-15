@@ -13,20 +13,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.binarybard.hireo.common.CurrentUser;
 import kr.binarybard.hireo.utils.DateUtils;
-
+import kr.binarybard.hireo.web.account.service.AccountService;
 import kr.binarybard.hireo.web.job.domain.JobType;
 import kr.binarybard.hireo.web.job.dto.JobListResponse;
 import kr.binarybard.hireo.web.job.dto.JobSearchCondition;
-
 import kr.binarybard.hireo.web.job.service.JobService;
-import kr.binarybard.hireo.web.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/jobs")
 @RequiredArgsConstructor
 public class JobBrowseController {
-	private final MemberService memberService;
+	private final AccountService accountService;
 	private final JobService jobService;
 
 	@ModelAttribute("jobTypes")
@@ -44,7 +42,7 @@ public class JobBrowseController {
 		var foundJob = jobService.findOne(id);
 		model.addAttribute("company", foundJob.getCompany());
 		model.addAttribute("job", foundJob);
-		model.addAttribute("member", memberService.findByEmail(user.getUsername()));
+		model.addAttribute("account", accountService.findByEmail(user.getUsername()));
 		return "job/info";
 	}
 

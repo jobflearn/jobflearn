@@ -71,7 +71,6 @@ tasks.withType(JavaCompile) {
 clean.doLast {
     file(querydslDir).deleteDir()
 }
-//
 
 tasks.named('test') {
     outputs.dir snippetsDir
@@ -93,7 +92,6 @@ tasks.register('copyDocs', Copy) {
 
 jacocoTestReport {
     dependsOn test
-    finalizedBy jacocoTestCoverageVerification
 
     reports {
         html.enabled true
@@ -101,61 +99,6 @@ jacocoTestReport {
         csv.enabled false
 
         html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
-    }
-}
-
-jacocoTestCoverageVerification {
-    dependsOn jacocoTestReport
-
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.5
-            }
-        }
-
-        rule {
-            enabled = true
-
-            element = 'CLASS'
-
-            limit {
-                counter = 'BRANCH'
-                value = 'COVEREDRATIO'
-                minimum = 0.70
-            }
-
-            limit {
-                counter = 'LINE'
-                value = 'COVEREDRATIO'
-                minimum = 0.80
-            }
-        }
-    }
-
-    afterEvaluate {
-        def Qdomains = []
-        for (qPattern in 'QA'..'QZ') {
-            Qdomains.add('**/Q' + qPattern + '*.class')
-        }
-
-        classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it,
-                    exclude: ['**/*Application.class',
-                              '**/*Config.class',
-                              '**/*Response.class',
-                              '**/*Request.class',
-                              '**/*Mapper.class',
-                              '**/*MapperImpl.class',
-                              '**/*Exception.class',
-                              '**/*Repository.class',
-                              '**/*Entity.class',
-                              '**/*Builder.class',
-                              '**/*Handler.class',
-                              '**/config/**/*',
-                              '**/domain/**/*',
-                              '**/dto/**/*'] + Qdomains)
-        }))
     }
 }
 

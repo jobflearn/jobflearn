@@ -1,18 +1,12 @@
 package kr.binarybard.hireo.web.review.service;
 
-import kr.binarybard.hireo.common.fixture.CompanyFixture;
-import kr.binarybard.hireo.common.fixture.MemberFixture;
-import kr.binarybard.hireo.common.fixture.ReviewFixture;
-import kr.binarybard.hireo.web.company.domain.Company;
-import kr.binarybard.hireo.web.company.repository.CompanyRepository;
-import kr.binarybard.hireo.web.member.domain.Member;
-import kr.binarybard.hireo.web.member.repository.MemberRepository;
-import kr.binarybard.hireo.web.review.domain.Review;
-import kr.binarybard.hireo.web.review.dto.ReviewRequest;
-import kr.binarybard.hireo.web.review.dto.ReviewRequestMapper;
-import kr.binarybard.hireo.web.review.dto.ReviewResponse;
-import kr.binarybard.hireo.web.review.dto.ReviewResponseMapper;
-import kr.binarybard.hireo.web.review.repository.ReviewRepository;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,12 +18,19 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.User;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import kr.binarybard.hireo.common.fixture.AccountFixture;
+import kr.binarybard.hireo.common.fixture.CompanyFixture;
+import kr.binarybard.hireo.common.fixture.ReviewFixture;
+import kr.binarybard.hireo.web.account.domain.Account;
+import kr.binarybard.hireo.web.account.repository.AccountRepository;
+import kr.binarybard.hireo.web.company.domain.Company;
+import kr.binarybard.hireo.web.company.repository.CompanyRepository;
+import kr.binarybard.hireo.web.review.domain.Review;
+import kr.binarybard.hireo.web.review.dto.ReviewRequest;
+import kr.binarybard.hireo.web.review.dto.ReviewRequestMapper;
+import kr.binarybard.hireo.web.review.dto.ReviewResponse;
+import kr.binarybard.hireo.web.review.dto.ReviewResponseMapper;
+import kr.binarybard.hireo.web.review.repository.ReviewRepository;
 
 @ExtendWith(MockitoExtension.class)
 class ReviewServiceTest {
@@ -37,7 +38,7 @@ class ReviewServiceTest {
 	private ReviewRepository reviewRepository;
 
 	@Mock
-	private MemberRepository memberRepository;
+	private AccountRepository accountRepository;
 
 	@Mock
 	private CompanyRepository companyRepository;
@@ -55,13 +56,13 @@ class ReviewServiceTest {
 	@DisplayName("회원과 회사가 있을 때, 리뷰를 성공적으로 등록할 수 있다.")
 	void postReviewSuccessfully() {
 		// given
-		User testUser = MemberFixture.USER;
-		Member testMember = MemberFixture.createMember();
+		User testUser = AccountFixture.USER;
+		Account testAccount = AccountFixture.createAccount();
 		Company testCompany = CompanyFixture.createTestCompanyA();
 		ReviewRequest testReviewRequest = ReviewFixture.createTestReviewRequest1();
 		Review testReview = ReviewFixture.createTestReview1(testCompany);
 
-		when(memberRepository.findByEmailOrThrow(testUser.getUsername())).thenReturn(testMember);
+		when(accountRepository.findByEmailOrThrow(testUser.getUsername())).thenReturn(testAccount);
 		when(companyRepository.findByIdOrThrow(testCompany.getId())).thenReturn(testCompany);
 		when(reviewRequestMapper.toEntity(testReviewRequest)).thenReturn(testReview);
 		when(reviewRepository.save(testReview)).thenReturn(testReview);

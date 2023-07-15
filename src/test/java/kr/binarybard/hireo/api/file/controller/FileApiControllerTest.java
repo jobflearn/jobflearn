@@ -23,9 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.binarybard.hireo.api.file.dto.FileResponse;
 import kr.binarybard.hireo.api.file.service.FileService;
 import kr.binarybard.hireo.common.AcceptanceTest;
-import kr.binarybard.hireo.common.fixture.MemberFixture;
+import kr.binarybard.hireo.common.fixture.AccountFixture;
 
-@WithMockUser(username = MemberFixture.TEST_EMAIL)
+@WithMockUser(username = AccountFixture.TEST_EMAIL)
 class FileApiControllerTest extends AcceptanceTest {
 
 	@Autowired

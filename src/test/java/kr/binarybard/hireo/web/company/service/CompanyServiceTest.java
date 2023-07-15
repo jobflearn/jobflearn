@@ -17,15 +17,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.binarybard.hireo.api.file.service.FileService;
 import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
+import kr.binarybard.hireo.common.fixture.AccountFixture;
 import kr.binarybard.hireo.common.fixture.CompanyFixture;
 import kr.binarybard.hireo.common.fixture.FileResponseFixture;
-import kr.binarybard.hireo.common.fixture.MemberFixture;
+import kr.binarybard.hireo.web.account.repository.AccountRepository;
 import kr.binarybard.hireo.web.company.domain.Company;
 import kr.binarybard.hireo.web.company.dto.CompanyMapper;
 import kr.binarybard.hireo.web.company.dto.CompanyRegister;
 import kr.binarybard.hireo.web.company.dto.CompanyResponse;
 import kr.binarybard.hireo.web.company.repository.CompanyRepository;
-import kr.binarybard.hireo.web.member.repository.MemberRepository;
 
 @ExtendWith(MockitoExtension.class)
 class CompanyServiceTest {
@@ -33,7 +33,7 @@ class CompanyServiceTest {
 	CompanyRepository companyRepository;
 
 	@Mock
-	MemberRepository memberRepository;
+	AccountRepository accountRepository;
 
 	@Mock
 	FileService fileService;
@@ -61,10 +61,10 @@ class CompanyServiceTest {
 		when(companyRepository.save(testCompanyA)).thenReturn(testCompanyA);
 		when(companyMapper.toEntity(testCompanyARegister)).thenReturn(testCompanyA);
 		when(companyMapper.toDto(testCompanyA)).thenReturn(testCompanyAResponse);
-		when(memberRepository.findByEmailOrThrow(anyString())).thenReturn(MemberFixture.createMember());
+		when(accountRepository.findByEmailOrThrow(anyString())).thenReturn(AccountFixture.createAccount());
 		when(fileService.storeAsHash(any(MultipartFile.class))).thenReturn(FileResponseFixture.createFileResponse());
 		// when
-		companyService.registerCompany(testCompanyARegister, MemberFixture.USER);
+		companyService.registerCompany(testCompanyARegister, AccountFixture.USER);
 
 		// then
 		verify(companyRepository, times(1)).save(testCompanyA);
