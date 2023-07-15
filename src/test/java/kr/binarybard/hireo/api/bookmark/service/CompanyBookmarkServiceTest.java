@@ -1,14 +1,8 @@
 package kr.binarybard.hireo.api.bookmark.service;
 
-import kr.binarybard.hireo.api.bookmark.domain.CompanyBookmark;
-import kr.binarybard.hireo.api.bookmark.repository.CompanyBookmarkRepository;
-import kr.binarybard.hireo.common.fixture.BookmarkFixture;
-import kr.binarybard.hireo.common.fixture.CompanyFixture;
-import kr.binarybard.hireo.common.fixture.MemberFixture;
-import kr.binarybard.hireo.web.company.domain.Company;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
-import kr.binarybard.hireo.web.company.repository.CompanyRepository;
-import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,9 +11,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import kr.binarybard.hireo.api.bookmark.domain.CompanyBookmark;
+import kr.binarybard.hireo.api.bookmark.repository.CompanyBookmarkRepository;
+import kr.binarybard.hireo.common.fixture.AccountFixture;
+import kr.binarybard.hireo.common.fixture.BookmarkFixture;
+import kr.binarybard.hireo.common.fixture.CompanyFixture;
+import kr.binarybard.hireo.web.account.repository.AccountRepository;
+import kr.binarybard.hireo.web.company.domain.Company;
+import kr.binarybard.hireo.web.company.repository.CompanyRepository;
 
 @ExtendWith(MockitoExtension.class)
 class CompanyBookmarkServiceTest {
@@ -31,7 +30,7 @@ class CompanyBookmarkServiceTest {
 	private CompanyRepository companyRepository;
 
 	@Mock
-	private MemberRepository memberRepository;
+	private AccountRepository accountRepository;
 
 	@InjectMocks
 	private CompanyBookmarkService bookmarkService;
@@ -43,11 +42,12 @@ class CompanyBookmarkServiceTest {
 	void bookmarkCompany() {
 		// given
 		when(companyRepository.findByIdOrThrow(anyLong())).thenReturn(testCompanyA);
-		when(memberRepository.findByEmailOrThrow(anyString())).thenReturn(MemberFixture.createMember());
-		when(bookmarkRepository.save(any(CompanyBookmark.class))).thenReturn(BookmarkFixture.createCompanyBookmarkWithId(1L));
+		when(accountRepository.findByEmailOrThrow(anyString())).thenReturn(AccountFixture.createAccount());
+		when(bookmarkRepository.save(any(CompanyBookmark.class))).thenReturn(
+			BookmarkFixture.createCompanyBookmarkWithId(1L));
 
 		// when
-		Long bookmarkId = bookmarkService.bookmark(MemberFixture.USER, testCompanyA.getId());
+		Long bookmarkId = bookmarkService.bookmark(AccountFixture.USER, testCompanyA.getId());
 
 		// then
 		Assertions.assertThat(bookmarkId).isEqualTo(1L);
@@ -57,11 +57,12 @@ class CompanyBookmarkServiceTest {
 	@DisplayName("사용자가 회사의 북마크를 삭제할 수 있다")
 	void deleteCompanyBookmark() {
 		// given
-		when(memberRepository.findByEmailOrThrow(anyString())).thenReturn(MemberFixture.createMemberWithId(1L));
-		when(bookmarkRepository.findByMemberIdAndCompanyIdOrThrow(anyLong(), anyLong())).thenReturn(BookmarkFixture.createCompanyBookmarkWithId(1L));
+		when(accountRepository.findByEmailOrThrow(anyString())).thenReturn(AccountFixture.createAccountWithId(1L));
+		when(bookmarkRepository.findByAccountIdAndCompanyIdOrThrow(anyLong(), anyLong())).thenReturn(
+			BookmarkFixture.createCompanyBookmarkWithId(1L));
 
 		// when
-		bookmarkService.deleteBookmark(MemberFixture.USER, testCompanyA.getId());
+		bookmarkService.deleteBookmark(AccountFixture.USER, testCompanyA.getId());
 
 		// then
 		verify(bookmarkRepository).delete(any(CompanyBookmark.class));

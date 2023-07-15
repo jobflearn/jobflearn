@@ -16,12 +16,12 @@ import org.springframework.security.test.context.support.WithMockUser;
 import kr.binarybard.hireo.common.AcceptanceTest;
 import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
 import kr.binarybard.hireo.common.exceptions.ErrorCode;
+import kr.binarybard.hireo.common.fixture.AccountFixture;
 import kr.binarybard.hireo.common.fixture.CompanyFixture;
-import kr.binarybard.hireo.common.fixture.MemberFixture;
+import kr.binarybard.hireo.web.account.service.AccountService;
 import kr.binarybard.hireo.web.company.dto.CompanyRegister;
 import kr.binarybard.hireo.web.company.dto.CompanyResponse;
 import kr.binarybard.hireo.web.company.service.CompanyService;
-import kr.binarybard.hireo.web.member.service.MemberService;
 
 @WithMockUser
 class CompanyControllerTest extends AcceptanceTest {
@@ -30,7 +30,7 @@ class CompanyControllerTest extends AcceptanceTest {
 	private CompanyService companyService;
 
 	@MockBean
-	private MemberService memberService;
+	private AccountService accountService;
 
 	private static final Long NON_EXISTING_COMPANY_ID = Long.MAX_VALUE;
 
@@ -38,10 +38,11 @@ class CompanyControllerTest extends AcceptanceTest {
 	void setup() {
 		CompanyResponse testCompanyResponse = CompanyFixture.createTestCompanyAResponse();
 
-		when(companyService.findOne(CompanyFixture.createTestCompanyAWithReviews().getId())).thenReturn(testCompanyResponse);
+		when(companyService.findOne(CompanyFixture.createTestCompanyAWithReviews().getId())).thenReturn(
+			testCompanyResponse);
 		when(companyService.findOne(NON_EXISTING_COMPANY_ID)).thenThrow(new EntityNotFoundException(
 			ErrorCode.COMPANY_NOT_FOUND));
-		when(memberService.findByEmail(anyString())).thenReturn(MemberFixture.MEMBER_RESPONSE);
+		when(accountService.findByEmail(anyString())).thenReturn(AccountFixture.ACCOUNT_RESPONSE);
 	}
 
 	@Test
