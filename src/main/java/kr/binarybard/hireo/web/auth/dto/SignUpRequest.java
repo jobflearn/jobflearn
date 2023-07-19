@@ -1,12 +1,13 @@
 package kr.binarybard.hireo.web.auth.dto;
 
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import kr.binarybard.hireo.common.validation.constraints.FieldMatch;
-import kr.binarybard.hireo.web.member.domain.Role;
+import kr.binarybard.hireo.web.account.domain.AccountType;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 @Data
 @Builder
@@ -25,6 +26,5 @@ public class SignUpRequest {
 	private String passwordConfirm;
 
 	private String name;
-
-	private Role role;
+	private AccountType type;
 }

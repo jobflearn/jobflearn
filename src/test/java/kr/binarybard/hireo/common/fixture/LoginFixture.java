@@ -1,15 +1,15 @@
 package kr.binarybard.hireo.common.fixture;
 
+import kr.binarybard.hireo.web.account.domain.AccountType;
 import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
-import kr.binarybard.hireo.web.member.domain.Role;
 
 public class LoginFixture {
-	public static final SignUpRequest TEST_SIGNUP_REQUEST_FREELANCER = SignUpRequest.builder()
+	public static final SignUpRequest TEST_SIGNUP_REQUEST_JOBSEEKER = SignUpRequest.builder()
 		.email("freelancer@test.com")
 		.password("password123")
 		.passwordConfirm("password123")
 		.name("freelancerUser")
-		.role(Role.FREELANCER)
+		.type(AccountType.PERSONNEL)
 		.build();
 
 	public static final SignUpRequest TEST_SIGNUP_REQUEST_EMPLOYER = SignUpRequest.builder()
@@ -17,7 +17,7 @@ public class LoginFixture {
 		.password("password123")
 		.passwordConfirm("password123")
 		.name("employerUser")
-		.role(Role.EMPLOYER)
+		.type(AccountType.PERSONNEL)
 		.build();
 
 	public static final SignUpRequest TEST_SIGNUP_REQUEST_ADMINISTRATOR = SignUpRequest.builder()
@@ -25,6 +25,6 @@ public class LoginFixture {
 		.password("password123")
 		.passwordConfirm("password123")
 		.name("adminUser")
-		.role(Role.ADMINISTRATOR)
+		.type(AccountType.PERSONNEL)
 		.build();
 }

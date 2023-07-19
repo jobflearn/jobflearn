@@ -84,7 +84,7 @@
                                             <div class="user-avatar status-online"><img
                                                     th:src="@{/images/user-avatar-small-01.jpg}" alt=""></div>
                                             <div class="user-name">
-                                                김철수 <span th:text="#{freelancer}">프리랜서</span>
+                                                김철수 <span th:text="#{jobseeker}">프리랜서</span>
                                             </div>
                                         </div>
                                     </div>
@@ -360,21 +360,21 @@
                       method="post" id="register-account-form">
                     <div class="account-type">
                         <div>
-                            <input type="radio" name="role" id="role-freelancer" value="FREELANCER"
+                            <input type="radio" name="type" id="type-jobseeker" value="JOBSEEKER"
                                    class="account-type-radio"
                                    checked/>
-                            <label for="role-freelancer" class="ripple-effect-dark"><i
+                            <label for="type-jobseeker" class="ripple-effect-dark"><i
                                     class="icon-material-outline-account-circle"></i>
-                                <th:block th:text="#{freelancer}">프리랜서</th:block>
+                                <th:block th:text="#{jobseeker}">프리랜서</th:block>
                             </label>
                         </div>
 
                         <div>
-                            <input type="radio" name="role" id="role-employer"
-                                   class="account-type-radio" value="EMPLOYER"/>
-                            <label for="role-employer" class="ripple-effect-dark"><i
+                            <input type="radio" name="type" id="type-personnel"
+                                   class="account-type-radio" value="PERSONNEL"/>
+                            <label for="type-personnel" class="ripple-effect-dark"><i
                                     class="icon-material-outline-business-center"></i>
-                                <th:block th:text="#{employer}">고용주</th:block>
+                                <th:block th:text="#{personnel}">고용주</th:block>
                             </label>
                         </div>
                     </div>

@@ -1,10 +1,11 @@
 package kr.binarybard.hireo.common.fixture;
 
+import org.springframework.test.util.ReflectionTestUtils;
+
 import kr.binarybard.hireo.api.bookmark.domain.CompanyBookmark;
 import kr.binarybard.hireo.api.bookmark.domain.JobBookmark;
 import kr.binarybard.hireo.api.bookmark.dto.CompanyBookmarkResponse;
 import kr.binarybard.hireo.api.bookmark.dto.JobBookmarkResponse;
-import org.springframework.test.util.ReflectionTestUtils;
 
 public class BookmarkFixture {
 
@@ -21,7 +22,7 @@ public class BookmarkFixture {
 	public static CompanyBookmark createCompanyBookmark() {
 		return CompanyBookmark.builder()
 			.company(CompanyFixture.createTestCompanyA())
-			.member(MemberFixture.createMember())
+			.account(AccountFixture.createAccount())
 			.build();
 	}
 
@@ -34,7 +35,7 @@ public class BookmarkFixture {
 	public static JobBookmark createJobBookmark() {
 		return JobBookmark.builder()
 			.job(JobFixture.createDataScientistJob())
-			.member(MemberFixture.createMember())
+			.account(AccountFixture.createAccount())
 			.build();
 	}
 

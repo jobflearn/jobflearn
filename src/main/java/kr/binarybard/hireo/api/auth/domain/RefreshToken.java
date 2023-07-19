@@ -1,13 +1,18 @@
 package kr.binarybard.hireo.api.auth.domain;
 
-import jakarta.persistence.*;
-import kr.binarybard.hireo.web.member.domain.Member;
+import java.time.Instant;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import kr.binarybard.hireo.web.account.domain.Account;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.Instant;
 
 @Getter
 @Entity(name = "refresh_tokens")
@@ -18,16 +23,16 @@ public class RefreshToken {
 	private Long id;
 
 	@OneToOne
-	@JoinColumn(name = "member_id")
-	private Member member;
+	@JoinColumn(name = "account_id")
+	private Account account;
 
 	private String token;
 
 	private Instant expiryDate;
 
 	@Builder
-	public RefreshToken(Member member, String token, Instant expiryDate) {
-		this.member = member;
+	public RefreshToken(Account account, String token, Instant expiryDate) {
+		this.account = account;
 		this.token = token;
 		this.expiryDate = expiryDate;
 	}

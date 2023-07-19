@@ -1,20 +1,21 @@
 package kr.binarybard.hireo.web.company.service;
 
+import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import kr.binarybard.hireo.api.file.service.FileService;
 import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
 import kr.binarybard.hireo.common.exceptions.ErrorCode;
+import kr.binarybard.hireo.web.account.domain.Personnel;
+import kr.binarybard.hireo.web.account.repository.AccountRepository;
 import kr.binarybard.hireo.web.company.domain.Company;
 import kr.binarybard.hireo.web.company.dto.CompanyMapper;
 import kr.binarybard.hireo.web.company.dto.CompanyRegister;
 import kr.binarybard.hireo.web.company.dto.CompanyResponse;
 import kr.binarybard.hireo.web.company.repository.CompanyRepository;
-import kr.binarybard.hireo.web.member.domain.Member;
-import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CompanyService {
 
 	private final CompanyRepository companyRepository;
-	private final MemberRepository memberRepository;
+	private final AccountRepository accountRepository;
 	private final CompanyMapper companyMapper;
 	private final FileService fileService;
 
@@ -31,8 +32,8 @@ public class CompanyService {
 		Company company = companyMapper.toEntity(companyRegister);
 		var fileResponse = fileService.storeAsHash(companyRegister.getCompanyLogo());
 		company.changeLogo(fileResponse.getFileName());
-		Member member = memberRepository.findByEmailOrThrow(user.getUsername());
-		member.changeCompany(company);
+		Personnel personnel = (Personnel)accountRepository.findByEmailOrThrow(user.getUsername());
+		personnel.changeCompany(company);
 		return companyMapper.toDto(companyRepository.save(company));
 	}
 

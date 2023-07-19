@@ -1,15 +1,16 @@
 package kr.binarybard.hireo.api.auth.repository;
 
-import kr.binarybard.hireo.api.auth.domain.RefreshToken;
-import kr.binarybard.hireo.web.member.domain.Member;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import kr.binarybard.hireo.api.auth.domain.RefreshToken;
+import kr.binarybard.hireo.web.account.domain.Account;
 
 @Repository
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
-	Optional<RefreshToken> findByMemberAndToken(Member member, String token);
+	Optional<RefreshToken> findByAccountAndToken(Account account, String token);
 
-	Long deleteByMember(Member member);
+	Long deleteByAccount(Account account);
 }

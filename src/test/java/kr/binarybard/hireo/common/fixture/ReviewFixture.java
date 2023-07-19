@@ -1,13 +1,13 @@
 package kr.binarybard.hireo.common.fixture;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import kr.binarybard.hireo.web.account.domain.Account;
 import kr.binarybard.hireo.web.company.domain.Company;
-import kr.binarybard.hireo.web.member.domain.Member;
 import kr.binarybard.hireo.web.review.domain.Review;
 import kr.binarybard.hireo.web.review.dto.ReviewRequest;
 import kr.binarybard.hireo.web.review.dto.ReviewResponse;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class ReviewFixture {
 	private static final String TEST_REVIEW_TITLE_1 = "Review Title 1";
@@ -25,14 +25,14 @@ public class ReviewFixture {
 	private static final String TEST_REVIEW_RESPONSE_NAME_3 = "Reviewer Name 3";
 	private static final int TEST_REVIEW_RATING_3 = 3;
 
-
 	public static Review createTestReview1(Company company) {
-		Member author = MemberFixture.createMemberWithId(1L);
+		Account author = AccountFixture.createAccountWithId(1L);
 		return createReview(TEST_REVIEW_TITLE_1, TEST_REVIEW_CONTENT_1, TEST_REVIEW_RATING_1, author, company);
 	}
 
 	public static ReviewResponse createTestReviewResponse1() {
-		return createReviewResponse(TEST_REVIEW_RESPONSE_NAME_1, ReviewFixture.TEST_REVIEW_TITLE_1, ReviewFixture.TEST_REVIEW_CONTENT_1, ReviewFixture.TEST_REVIEW_RATING_1, LocalDateTime.now());
+		return createReviewResponse(TEST_REVIEW_RESPONSE_NAME_1, ReviewFixture.TEST_REVIEW_TITLE_1,
+			ReviewFixture.TEST_REVIEW_CONTENT_1, ReviewFixture.TEST_REVIEW_RATING_1, LocalDateTime.now());
 	}
 
 	public static ReviewRequest createTestReviewRequest1() {
@@ -40,12 +40,13 @@ public class ReviewFixture {
 	}
 
 	public static Review createTestReview2(Company company) {
-		Member author = MemberFixture.createMemberWithId(2L);
+		Account author = AccountFixture.createAccountWithId(2L);
 		return createReview(TEST_REVIEW_TITLE_2, TEST_REVIEW_CONTENT_2, TEST_REVIEW_RATING_2, author, company);
 	}
 
 	public static ReviewResponse createTestReviewResponse2() {
-		return createReviewResponse(TEST_REVIEW_RESPONSE_NAME_2, ReviewFixture.TEST_REVIEW_TITLE_2, ReviewFixture.TEST_REVIEW_CONTENT_2, ReviewFixture.TEST_REVIEW_RATING_2, LocalDateTime.now());
+		return createReviewResponse(TEST_REVIEW_RESPONSE_NAME_2, ReviewFixture.TEST_REVIEW_TITLE_2,
+			ReviewFixture.TEST_REVIEW_CONTENT_2, ReviewFixture.TEST_REVIEW_RATING_2, LocalDateTime.now());
 	}
 
 	public static ReviewRequest createTestReviewRequest2() {
@@ -53,19 +54,20 @@ public class ReviewFixture {
 	}
 
 	public static Review createTestReview3(Company company) {
-		Member author = MemberFixture.createMemberWithId(3L);
+		Account author = AccountFixture.createAccountWithId(3L);
 		return createReview(TEST_REVIEW_TITLE_3, TEST_REVIEW_CONTENT_3, TEST_REVIEW_RATING_3, author, company);
 	}
 
 	public static ReviewResponse createTestReviewResponse3() {
-		return createReviewResponse(TEST_REVIEW_RESPONSE_NAME_3, ReviewFixture.TEST_REVIEW_TITLE_3, ReviewFixture.TEST_REVIEW_CONTENT_3, ReviewFixture.TEST_REVIEW_RATING_3, LocalDateTime.now());
+		return createReviewResponse(TEST_REVIEW_RESPONSE_NAME_3, ReviewFixture.TEST_REVIEW_TITLE_3,
+			ReviewFixture.TEST_REVIEW_CONTENT_3, ReviewFixture.TEST_REVIEW_RATING_3, LocalDateTime.now());
 	}
 
 	public static ReviewRequest createTestReviewRequest3() {
 		return createReviewRequest(TEST_REVIEW_TITLE_3, TEST_REVIEW_CONTENT_3, TEST_REVIEW_RATING_3, LocalDate.now());
 	}
 
-	private static Review createReview(String title, String content, int rating, Member author, Company company) {
+	private static Review createReview(String title, String content, int rating, Account author, Company company) {
 		return Review.builder()
 			.title(title)
 			.content(content)
@@ -75,7 +77,8 @@ public class ReviewFixture {
 			.build();
 	}
 
-	private static ReviewResponse createReviewResponse(String name, String title, String content, int rating, LocalDateTime postedAt) {
+	private static ReviewResponse createReviewResponse(String name, String title, String content, int rating,
+		LocalDateTime postedAt) {
 		ReviewResponse reviewResponse = new ReviewResponse();
 		reviewResponse.setName(name);
 		reviewResponse.setTitle(title);

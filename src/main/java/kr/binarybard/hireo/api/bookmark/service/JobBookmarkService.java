@@ -1,29 +1,30 @@
 package kr.binarybard.hireo.api.bookmark.service;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Service;
+
 import kr.binarybard.hireo.api.bookmark.domain.JobBookmark;
 import kr.binarybard.hireo.api.bookmark.repository.JobBookmarkRepository;
 import kr.binarybard.hireo.common.exceptions.ErrorCode;
 import kr.binarybard.hireo.common.exceptions.InvalidValueException;
+import kr.binarybard.hireo.web.account.repository.AccountRepository;
 import kr.binarybard.hireo.web.job.repository.JobRepository;
-import kr.binarybard.hireo.web.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class JobBookmarkService {
 	private final JobRepository jobRepository;
 	private final JobBookmarkRepository jobBookmarkRepository;
-	private final MemberRepository memberRepository;
+	private final AccountRepository accountRepository;
 
 	public Long bookmark(User user, Long jobId) {
 		var foundJob = jobRepository.findByIdOrThrow(jobId);
-		var loggedInUser = memberRepository.findByEmailOrThrow(user.getUsername());
+		var loggedInUser = accountRepository.findByEmailOrThrow(user.getUsername());
 		var bookmark = JobBookmark.builder()
 			.job(foundJob)
-			.member(loggedInUser)
+			.account(loggedInUser)
 			.build();
 
 		try {
@@ -35,8 +36,8 @@ public class JobBookmarkService {
 	}
 
 	public void deleteBookmark(User user, Long jobId) {
-		var loggedInUser = memberRepository.findByEmailOrThrow(user.getUsername());
-		var foundBookmark = jobBookmarkRepository.findByMemberIdAndJobIdOrThrow(loggedInUser.getId(), jobId);
+		var loggedInUser = accountRepository.findByEmailOrThrow(user.getUsername());
+		var foundBookmark = jobBookmarkRepository.findByAccountIdAndJobIdOrThrow(loggedInUser.getId(), jobId);
 		jobBookmarkRepository.delete(foundBookmark);
 	}
 }
