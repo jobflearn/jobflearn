@@ -19,7 +19,6 @@ import kr.binarybard.hireo.api.file.service.FileService;
 import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
 import kr.binarybard.hireo.common.fixture.AccountFixture;
 import kr.binarybard.hireo.common.fixture.CompanyFixture;
-import kr.binarybard.hireo.common.fixture.FileResponseFixture;
 import kr.binarybard.hireo.web.account.repository.AccountRepository;
 import kr.binarybard.hireo.web.company.domain.Company;
 import kr.binarybard.hireo.web.company.dto.CompanyMapper;
@@ -60,9 +59,7 @@ class CompanyServiceTest {
 		// given
 		when(companyRepository.save(testCompanyA)).thenReturn(testCompanyA);
 		when(companyMapper.toEntity(testCompanyARegister)).thenReturn(testCompanyA);
-		when(companyMapper.toDto(testCompanyA)).thenReturn(testCompanyAResponse);
 		when(accountRepository.findByEmailOrThrow(anyString())).thenReturn(AccountFixture.createAccount());
-		when(fileService.storeAsHash(any(MultipartFile.class))).thenReturn(FileResponseFixture.createFileResponse());
 		// when
 		companyService.registerCompany(testCompanyARegister, AccountFixture.USER);
 

@@ -51,6 +51,10 @@ public class CompanyFixture {
 			Industry.IT);
 	}
 
+	public static MockMultipartFile createMockCompanyLogo() {
+		return TEST_LOGO_FILE;
+	}
+
 	public static Company createTestCompanyAWithReviews() {
 		List<Review> reviews = List.of(
 			ReviewFixture.createTestReview1(createTestCompanyA()),
@@ -153,7 +157,6 @@ public class CompanyFixture {
 			.locationDto(locationDto)
 			.isVerified(isVerified)
 			.industry(industry)
-			.companyLogo(TEST_LOGO_FILE)
 			.build();
 	}
 
