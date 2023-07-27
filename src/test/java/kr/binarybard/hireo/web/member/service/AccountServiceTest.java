@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.binarybard.hireo.api.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
@@ -24,6 +25,7 @@ import kr.binarybard.hireo.web.account.dto.AccountResponse;
 import kr.binarybard.hireo.web.account.repository.AccountRepository;
 import kr.binarybard.hireo.web.account.service.AccountService;
 
+@Transactional
 @ExtendWith(MockitoExtension.class)
 class AccountServiceTest {
 
