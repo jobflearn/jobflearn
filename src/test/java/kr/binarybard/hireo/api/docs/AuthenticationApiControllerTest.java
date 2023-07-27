@@ -23,6 +23,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,6 +35,7 @@ import kr.binarybard.hireo.api.auth.service.RefreshTokenService;
 import kr.binarybard.hireo.config.jwt.JwtTokenProvider;
 import kr.binarybard.hireo.web.account.domain.AccountType;
 
+@Transactional
 class AuthenticationApiControllerTest extends RestDocsConfiguration {
 
 	@Autowired

@@ -16,6 +16,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -28,6 +29,7 @@ import kr.binarybard.hireo.web.job.dto.JobResponse;
 import kr.binarybard.hireo.web.job.dto.JobSearchCondition;
 import kr.binarybard.hireo.web.job.service.JobService;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
 @WithMockUser(username = AccountFixture.TEST_EMAIL)

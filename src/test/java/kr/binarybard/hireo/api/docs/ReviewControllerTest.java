@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,6 +25,7 @@ import kr.binarybard.hireo.web.company.domain.Company;
 import kr.binarybard.hireo.web.company.repository.CompanyRepository;
 import kr.binarybard.hireo.web.review.dto.ReviewRequest;
 
+@Transactional
 @WithMockUser(username = AccountFixture.TEST_EMAIL)
 class ReviewControllerTest extends RestDocsConfiguration {
 

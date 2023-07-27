@@ -21,6 +21,7 @@ import org.springframework.restdocs.snippet.Attributes;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,6 +32,7 @@ import kr.binarybard.hireo.web.job.dto.JobListResponse;
 import kr.binarybard.hireo.web.job.dto.JobSearchCondition;
 import kr.binarybard.hireo.web.job.service.JobService;
 
+@Transactional
 @WithMockUser(username = AccountFixture.TEST_EMAIL)
 class JobBrowseControllerTest extends RestDocsConfiguration {
 	@Autowired

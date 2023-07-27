@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
@@ -27,6 +28,7 @@ import kr.binarybard.hireo.web.account.repository.AccountRepository;
 import kr.binarybard.hireo.web.account.service.AccountService;
 import kr.binarybard.hireo.web.review.repository.ReviewRepository;
 
+@Transactional
 class AuthenticationApiControllerTest extends AcceptanceTest {
 
 	@Autowired
