@@ -29,6 +29,7 @@ public class RefreshTokenService {
 	@Transactional
 	public void deleteTokenByEmail(String email) {
 		refreshTokenRepository.deleteByAccount(accountRepository.findByEmailOrThrow(email));
+		refreshTokenRepository.flush();
 	}
 
 	@Transactional
