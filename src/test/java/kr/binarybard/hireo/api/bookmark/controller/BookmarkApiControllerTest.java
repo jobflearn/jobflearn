@@ -33,6 +33,7 @@ class BookmarkApiControllerTest extends AcceptanceTest {
 
 	@BeforeEach
 	void setup() {
+		accountService.save(SIGNUP_REQUEST_ACCOUNT);
 		companyService.registerCompany(CompanyFixture.createTestCompanyARegister(), USER);
 	}
 
