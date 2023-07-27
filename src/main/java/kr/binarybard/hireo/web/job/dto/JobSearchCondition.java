@@ -14,17 +14,17 @@ public class JobSearchCondition {
 	private String keyword;
 	private Category category;
 	private JobType jobType;
-	private String salaryRange;
 	private Integer minSalary;
 	private Integer maxSalary;
 
 	@Builder
 	public JobSearchCondition(LocationCondition locationDto, String keyword, Category category, JobType jobType,
-		String salaryRange) {
+		Integer minSalary, Integer maxSalary) {
 		this.locationDto = locationDto;
 		this.keyword = keyword;
 		this.category = category;
 		this.jobType = jobType;
-		this.salaryRange = salaryRange;
+		this.minSalary = minSalary;
+		this.maxSalary = maxSalary;
 	}
 }
