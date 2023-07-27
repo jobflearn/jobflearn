@@ -127,7 +127,8 @@ class JobRepositoryCustomImplTest {
 	void listJobsWithSalaryTest() throws Exception {
 		//given
 		JobSearchCondition simpleCondition = JobSearchCondition.builder()
-			.salaryRange("3300,9999")
+			.minSalary(3300)
+			.maxSalary(9999)
 			.build();
 		PageRequest pageRequest = PageRequest.of(0, 4);
 		//when

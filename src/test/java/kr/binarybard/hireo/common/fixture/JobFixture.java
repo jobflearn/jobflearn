@@ -70,10 +70,9 @@ public class JobFixture {
 			.locationDto(TEST_LOCATION_CONDITION_1)
 			.jobType(JobType.FULLTIME)
 			.category(Category.WEB_SOFT)
-			.salaryRange("1500,9999")
+			.maxSalary(9999)
+			.minSalary(1500)
 			.build();
-		ReflectionTestUtils.setField(condition, "minSalary", 1500);
-		ReflectionTestUtils.setField(condition, "maxSalary", 9999);
 		return condition;
 	}
 
