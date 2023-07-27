@@ -1,11 +1,16 @@
 package kr.binarybard.hireo.api.docs;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.binarybard.hireo.api.auth.dto.RefreshTokenRequest;
-import kr.binarybard.hireo.api.auth.dto.SignInRequest;
-import kr.binarybard.hireo.api.auth.service.RefreshTokenService;
-import kr.binarybard.hireo.config.jwt.JwtTokenProvider;
-import kr.binarybard.hireo.web.auth.service.LoginService;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.snippet.Attributes.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,15 +24,15 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.userdetails.User;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import kr.binarybard.hireo.api.auth.dto.RefreshTokenRequest;
+import kr.binarybard.hireo.api.auth.dto.SignInRequest;
+import kr.binarybard.hireo.api.auth.dto.SignUpRequest;
+import kr.binarybard.hireo.api.auth.service.LoginService;
+import kr.binarybard.hireo.api.auth.service.RefreshTokenService;
+import kr.binarybard.hireo.config.jwt.JwtTokenProvider;
+import kr.binarybard.hireo.web.account.domain.AccountType;
 
 class AuthenticationApiControllerTest extends RestDocsConfiguration {
 
@@ -62,7 +67,8 @@ class AuthenticationApiControllerTest extends RestDocsConfiguration {
 		when(refreshTokenService.validateToken(anyString())).thenReturn(true);
 		when(jwtTokenProvider.getUsernameFromToken(anyString())).thenReturn(username);
 		when(loginService.loadUserByUsername(anyString())).thenReturn(new User(username, password, new ArrayList<>()));
-		when(jwtTokenProvider.getAuthentication(anyString())).thenReturn(new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>()));
+		when(jwtTokenProvider.getAuthentication(anyString())).thenReturn(
+			new UsernamePasswordAuthenticationToken(username, null, new ArrayList<>()));
 		when(authenticationManagerBuilder.getObject()).thenReturn(authenticationManager);
 	}
 
@@ -114,5 +120,35 @@ class AuthenticationApiControllerTest extends RestDocsConfiguration {
 					fieldWithPath("refresh_token").description("리프레시 토큰")
 				)
 			));
+	}
+
+	@Test
+	@DisplayName("회원가입 성공")
+	void registerAccountTest() throws Exception {
+		//Arrange
+		SignUpRequest signUpRequest = SignUpRequest.builder()
+			.email("freelancer@test.com")
+			.password("password123")
+			.passwordConfirm("password123")
+			.type(AccountType.JOBSEEKER)
+			.name("freelancerUser")
+			.build();
+		//Act&Assert
+		mockMvc.perform(post("/api/auth/new")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(signUpRequest)))
+			.andDo(print())
+			.andExpect(status().isCreated())
+			.andDo(document("create-account",
+				requestFields(
+					fieldWithPath("email").description("이메일"),
+					fieldWithPath("password").description("비밀번호"),
+					fieldWithPath("passwordConfirm").description("비밀번호 확인")
+						.attributes(key("constraint").value("비밀번호는 비밀번호 확인의 값과 항상 같아야 합니다.")),
+					fieldWithPath("type").description("회원 타입"),
+					fieldWithPath("name").description("회원 이름").optional()
+				)
+			));
+
 	}
 }

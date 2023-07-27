@@ -1,6 +1,8 @@
 package kr.binarybard.hireo.api.auth.controller;
 
+import static kr.binarybard.hireo.common.fixture.AccountFixture.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -9,18 +11,20 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 
 import kr.binarybard.hireo.api.auth.dto.RefreshTokenRequest;
 import kr.binarybard.hireo.api.auth.dto.SignInRequest;
+import kr.binarybard.hireo.api.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.api.auth.repository.RefreshTokenRepository;
 import kr.binarybard.hireo.common.AcceptanceTest;
+import kr.binarybard.hireo.common.fixture.LoginFixture;
 import kr.binarybard.hireo.web.account.domain.AccountType;
 import kr.binarybard.hireo.web.account.repository.AccountRepository;
 import kr.binarybard.hireo.web.account.service.AccountService;
-import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.web.review.repository.ReviewRepository;
 
 class AuthenticationApiControllerTest extends AcceptanceTest {
@@ -140,5 +144,43 @@ class AuthenticationApiControllerTest extends AcceptanceTest {
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.access_token").isNotEmpty())
 			.andExpect(jsonPath("$.refresh_token").isNotEmpty());
+	}
+
+	private ResultActions performSignUpRequest(SignUpRequest signUpRequest) throws Exception {
+
+		return mockMvc.perform(post("/api/auth/new")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(signUpRequest)))
+			.andDo(print());
+	}
+
+	@Test
+	@DisplayName("회원가입 요청")
+	void registerAccountTest() throws Exception {
+		SignUpRequest signUpRequest = LoginFixture.TEST_SIGNUP_REQUEST_JOBSEEKER;
+		performSignUpRequest(signUpRequest)
+			.andExpect(status().isCreated())
+			.andExpect(redirectedUrl("/members/" + TEST_ID));
+	}
+
+	@Test
+	@DisplayName("회원가입 요청 - 이메일 중복")
+	void registerAccountWithDuplicateEmailTest() throws Exception {
+		performSignUpRequest(LoginFixture.TEST_DUPLICATED_EMAIL)
+			.andExpect(status().isBadRequest());
+	}
+
+	@Test
+	@DisplayName("회원가입 요청 - 유효하지 않은 비밀번호")
+	void registerAccountWithBindingResultError() throws Exception {
+		SignUpRequest invalidRequest = SignUpRequest.builder()
+			.email("freelancer@test.com")
+			.password("password123")
+			.passwordConfirm("password456")
+			.name("freelancerUser")
+			.build();
+
+		performSignUpRequest(invalidRequest)
+			.andExpect(status().isBadRequest());
 	}
 }
