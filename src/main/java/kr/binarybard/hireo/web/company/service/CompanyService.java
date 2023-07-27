@@ -3,7 +3,9 @@ package kr.binarybard.hireo.web.company.service;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import kr.binarybard.hireo.api.file.dto.FileResponse;
 import kr.binarybard.hireo.api.file.service.FileService;
 import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
 import kr.binarybard.hireo.common.exceptions.ErrorCode;
@@ -28,13 +30,19 @@ public class CompanyService {
 	private final FileService fileService;
 
 	@Transactional
-	public CompanyResponse registerCompany(CompanyRegister companyRegister, User user) {
+	public Long registerCompany(CompanyRegister companyRegister, User user) {
 		Company company = companyMapper.toEntity(companyRegister);
-		var fileResponse = fileService.storeAsHash(companyRegister.getCompanyLogo());
-		company.changeLogo(fileResponse.getFileName());
 		Personnel personnel = (Personnel)accountRepository.findByEmailOrThrow(user.getUsername());
 		personnel.changeCompany(company);
-		return companyMapper.toDto(companyRepository.save(company));
+		return companyRepository.save(company).getId();
+	}
+
+	@Transactional
+	public FileResponse uploadLogo(Long id, MultipartFile companyLogo) {
+		Company foundCompany = companyRepository.findByIdOrThrow(id);
+		var fileResponse = fileService.storeAsHash(companyLogo);
+		foundCompany.changeLogo(fileResponse.getFileName());
+		return fileResponse;
 	}
 
 	public Company findById(Long id) {
