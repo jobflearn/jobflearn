@@ -1,4 +1,4 @@
-package kr.binarybard.hireo.web.account.service;
+package kr.binarybard.hireo.web.member.service;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import kr.binarybard.hireo.api.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
 import kr.binarybard.hireo.common.fixture.AccountFixture;
 import kr.binarybard.hireo.common.fixture.LoginFixture;
@@ -21,7 +22,7 @@ import kr.binarybard.hireo.web.account.domain.Account;
 import kr.binarybard.hireo.web.account.dto.AccountMapper;
 import kr.binarybard.hireo.web.account.dto.AccountResponse;
 import kr.binarybard.hireo.web.account.repository.AccountRepository;
-import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
+import kr.binarybard.hireo.web.account.service.AccountService;
 
 @ExtendWith(MockitoExtension.class)
 class AccountServiceTest {

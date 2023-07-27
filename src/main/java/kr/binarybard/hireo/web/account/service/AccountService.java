@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import kr.binarybard.hireo.api.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.common.exceptions.AuthenticationException;
 import kr.binarybard.hireo.common.exceptions.EntityNotFoundException;
 import kr.binarybard.hireo.common.exceptions.ErrorCode;
@@ -12,7 +13,6 @@ import kr.binarybard.hireo.web.account.domain.Account;
 import kr.binarybard.hireo.web.account.dto.AccountMapper;
 import kr.binarybard.hireo.web.account.dto.AccountResponse;
 import kr.binarybard.hireo.web.account.repository.AccountRepository;
-import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
