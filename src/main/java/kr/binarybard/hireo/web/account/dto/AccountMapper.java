@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ObjectFactory;
 
+import kr.binarybard.hireo.api.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.api.bookmark.dto.CompanyBookmarkMapper;
 import kr.binarybard.hireo.api.bookmark.dto.JobBookmarkMapper;
 import kr.binarybard.hireo.web.account.domain.Account;
@@ -11,7 +12,6 @@ import kr.binarybard.hireo.web.account.domain.AccountType;
 import kr.binarybard.hireo.web.account.domain.Employee;
 import kr.binarybard.hireo.web.account.domain.JobSeeker;
 import kr.binarybard.hireo.web.account.domain.Personnel;
-import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 
 @Mapper(componentModel = "spring", uses = {JobBookmarkMapper.class, CompanyBookmarkMapper.class})
 public interface AccountMapper {

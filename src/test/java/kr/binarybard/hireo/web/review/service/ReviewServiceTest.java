@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.binarybard.hireo.common.fixture.AccountFixture;
 import kr.binarybard.hireo.common.fixture.CompanyFixture;
@@ -32,6 +33,7 @@ import kr.binarybard.hireo.web.review.dto.ReviewResponse;
 import kr.binarybard.hireo.web.review.dto.ReviewResponseMapper;
 import kr.binarybard.hireo.web.review.repository.ReviewRepository;
 
+@Transactional
 @ExtendWith(MockitoExtension.class)
 class ReviewServiceTest {
 	@Mock

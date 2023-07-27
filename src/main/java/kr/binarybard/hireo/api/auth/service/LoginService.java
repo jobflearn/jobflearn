@@ -1,4 +1,4 @@
-package kr.binarybard.hireo.web.auth.service;
+package kr.binarybard.hireo.api.auth.service;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

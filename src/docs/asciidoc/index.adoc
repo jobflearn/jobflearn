@@ -8,6 +8,26 @@
 
 == 인증 API
 
+=== 회원가입
+
+사용자는 이메일과 비밀번호, 회원 타입을 통해 POST 요청을 `/api/auth/new` 엔드포인트로 보내어 회원가입 할 수 있습니다.
+
+[source,http]
+----
+POST /api/auth/new
+----
+
+include::{snippets}/create-account/curl-request.adoc[]
+==== HTTP 요청
+
+include::{snippets}/create-account/http-request.adoc[]
+
+include::{snippets}/create-account/request-fields.adoc[]
+
+==== HTTP 응답
+
+include::{snippets}/create-account/http-response.adoc[]
+
 === 로그인
 
 사용자는 이메일과 비밀번호를 통해 POST 요청을 `/api/auth/login` 엔드포인트로 보내어 로그인할 수 있습니다.
@@ -103,3 +123,103 @@ include::{snippets}/load-file/http-request.adoc[]
 ==== HTTP 응답
 
 include::{snippets}/load-file/http-response.adoc[]
+
+== 채용공고 API
+
+=== 채용공고 상세페이지 조회
+
+사용자는 GET 요청을 `/jobs/id` 엔드포인트로 보내어 id에 해당하는 채용공고를 조회 할 수 있습니다.
+
+[source,http]
+----
+POST /jobs/id
+----
+
+include::{snippets}/job-detail/curl-request.adoc[]
+==== HTTP 요청
+
+include::{snippets}/job-detail/http-request.adoc[]
+
+==== HTTP 응답
+
+include::{snippets}/job-detail/http-response.adoc[]
+include::{snippets}/job-detail/response-fields.adoc[]
+
+=== 구직 공고 페이지 조회
+
+사용자는 GET 요청을 `/jobs?page={page}` 엔드포인트로 보내어 페이지 단위로 공고를 조회할 수 있습니다.
+
+[source,http]
+----
+POST /jobs?page=1
+----
+
+include::{snippets}/job-list/curl-request.adoc[]
+==== HTTP 요청
+
+include::{snippets}/job-list/http-request.adoc[]
+
+==== HTTP 응답
+
+include::{snippets}/job-list/http-response.adoc[]
+include::{snippets}/job-list/response-fields.adoc[]
+
+=== 조건에 해당하는 공고 조회
+
+사용자는 GET 요청을 `/jobs/search` 엔드포인트로 보내 검색조건에 맞는 채용공고를 조회 할 수 있습니다.
+
+[source,http]
+----
+POST /jobs/search?locationDto.latitude=&locationDto.longitude=&keyword=category=&jobType=&minSalary=&maxSalary=
+----
+
+include::{snippets}/job-search-condition/curl-request.adoc[]
+==== HTTP 요청
+
+include::{snippets}/job-search-condition/http-request.adoc[]
+
+==== HTTP 응답
+
+include::{snippets}/job-search-condition/http-response.adoc[]
+include::{snippets}/job-search-condition/response-fields.adoc[]
+
+=== 조건에 해당하는 공고 조회
+
+사용자는 POST 요청을 `/jobs/search` 엔드포인트로 보내 검색조건에 맞는 채용공고를 조회 할 수 있습니다.
+
+[source,http]
+----
+POST /jobs/search?locationDto.latitude=&locationDto.longitude=&keyword=category=&jobType=&minSalary=&maxSalary=
+----
+
+include::{snippets}/job-search-condition/curl-request.adoc[]
+==== HTTP 요청
+
+include::{snippets}/job-search-condition/http-request.adoc[]
+
+==== HTTP 응답
+
+include::{snippets}/job-search-condition/http-response.adoc[]
+include::{snippets}/job-search-condition/response-fields.adoc[]
+
+== 리뷰 API
+
+=== 회사에 대한 리뷰 등록
+
+사용자는 POST 요청을 `/companies/{id}/review` 엔드포인트로 보내 회사에 대한 리뷰를 등록할 수 있습니다.
+
+[source,http]
+----
+POST /companies/1/review
+----
+
+include::{snippets}/review-register/curl-request.adoc[]
+
+==== HTTP 요청
+
+include::{snippets}/review-register/http-request.adoc[]
+include::{snippets}/review-register/request-fields.adoc[]
+
+==== HTTP 응답
+
+include::{snippets}/review-register/http-response.adoc[]

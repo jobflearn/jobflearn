@@ -25,6 +25,8 @@ public class ReviewFixture {
 	private static final String TEST_REVIEW_RESPONSE_NAME_3 = "Reviewer Name 3";
 	private static final int TEST_REVIEW_RATING_3 = 3;
 
+	private static final String TEST_REVIEW_CONTENT_LT_10 = "review";
+
 	public static Review createTestReview1(Company company) {
 		Account author = AccountFixture.createAccountWithId(1L);
 		return createReview(TEST_REVIEW_TITLE_1, TEST_REVIEW_CONTENT_1, TEST_REVIEW_RATING_1, author, company);
@@ -65,6 +67,11 @@ public class ReviewFixture {
 
 	public static ReviewRequest createTestReviewRequest3() {
 		return createReviewRequest(TEST_REVIEW_TITLE_3, TEST_REVIEW_CONTENT_3, TEST_REVIEW_RATING_3, LocalDate.now());
+	}
+
+	public static ReviewRequest createTestReviewRequestFail() {
+		return createReviewRequest(TEST_REVIEW_TITLE_1, TEST_REVIEW_CONTENT_LT_10, TEST_REVIEW_RATING_1,
+			LocalDate.now());
 	}
 
 	private static Review createReview(String title, String content, int rating, Account author, Company company) {

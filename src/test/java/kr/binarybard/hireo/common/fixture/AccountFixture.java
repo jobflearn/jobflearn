@@ -7,16 +7,17 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import kr.binarybard.hireo.api.auth.dto.SignInRequest;
+import kr.binarybard.hireo.api.auth.dto.SignUpRequest;
 import kr.binarybard.hireo.web.account.domain.Account;
 import kr.binarybard.hireo.web.account.domain.AccountType;
 import kr.binarybard.hireo.web.account.domain.Personnel;
 import kr.binarybard.hireo.web.account.dto.AccountResponse;
-import kr.binarybard.hireo.web.auth.dto.SignUpRequest;
 
 public class AccountFixture {
 	public static final String TEST_EMAIL = "test@test.com";
 	public static final String TEST_PASSWORD = "test123456";
 	public static final String TEST_USERNAME = "testUser";
+	public static final Long TEST_ID = 6L;
 
 	public static final AccountResponse ACCOUNT_RESPONSE = AccountResponse.builder()
 		.email(TEST_EMAIL)

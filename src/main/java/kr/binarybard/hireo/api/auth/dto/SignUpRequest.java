@@ -1,4 +1,4 @@
-package kr.binarybard.hireo.web.auth.dto;
+package kr.binarybard.hireo.api.auth.dto;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -6,12 +6,14 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import kr.binarybard.hireo.common.validation.constraints.FieldMatch;
 import kr.binarybard.hireo.web.account.domain.AccountType;
+import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
-@Builder
+@Getter
 @FieldMatch(first = "password", second = "passwordConfirm")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SignUpRequest {
 
 	@NotBlank
@@ -27,4 +29,13 @@ public class SignUpRequest {
 
 	private String name;
 	private AccountType type;
+
+	@Builder
+	public SignUpRequest(String email, String password, String passwordConfirm, String name, AccountType type) {
+		this.email = email;
+		this.password = password;
+		this.passwordConfirm = passwordConfirm;
+		this.name = name;
+		this.type = type;
+	}
 }

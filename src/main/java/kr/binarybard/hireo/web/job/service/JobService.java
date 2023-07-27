@@ -37,12 +37,8 @@ public class JobService {
 		return jobRepository.listJobs(pageable);
 	}
 
-
 	@Transactional(readOnly = true)
 	public Page<JobListResponse> findByPageWithCondition(JobSearchCondition condition, Pageable pageable) {
-		String[] range = condition.getSalaryRange().split(",");
-		condition.setMinSalary(Integer.parseInt(range[0]));
-		condition.setMaxSalary(Integer.parseInt(range[1]));
 		return jobRepository.listJobsWithCondition(condition, pageable);
 	}
 

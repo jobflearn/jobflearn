@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import kr.binarybard.hireo.common.dto.ErrorResponse;
 import kr.binarybard.hireo.common.exceptions.BusinessException;
@@ -39,6 +40,13 @@ public class RestApiExceptionHandler {
 	protected ResponseEntity<ErrorResponse> handleApiException(Exception e) {
 		var response = ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR);
 		log.error(e.getMessage(), e);
+		return new ResponseEntity<>(response, response.getStatus());
+	}
+
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(
+		MethodArgumentTypeMismatchException e) {
+		var response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
 		return new ResponseEntity<>(response, response.getStatus());
 	}
 }
